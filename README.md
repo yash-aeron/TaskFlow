@@ -4,17 +4,27 @@ TaskFlow is an advanced, high-performance desktop productivity suite built with 
 
 ---
 
+## Interface Showcase
+
+![TaskFlow NERV MAGI UI Mode](docs/assets/taskflow_nerv_ui.jpg)
+*TaskFlow NERV MAGI Mode — Pitch-black canvas, hazard caution warning lines, MAGI supercomputer nodes, Japanese kanji stencil alerts, and dense tactical task matrix.*
+
+![TaskFlow Persona Reload UI Mode](docs/assets/taskflow_persona_ui.jpg)
+*TaskFlow Persona 5 + 3 Reload Theme — Phantom Red and Electric Cyan skewed panels, ransomware cutout typography, starburst badges, and Focus Studio.*
+
+---
+
 ## Technical Overview & Key Features
 
 ### Dual Visual Theme Engine
 TaskFlow features a real-time switchable design system supporting two completely isolated, unpolluted visual aesthetic modes:
 
 1. **NERV MAGI Interface (`[ 警報 NERV UI ]`)**:
-   - Inspired by *Neon Genesis Evangelion*.
+   - Inspired by Neon Genesis Evangelion.
    - Features a pitch-black canvas, MAGI Supercomputer 6-sided hexagonal status nodes (`Melchior-1`, `Balthasar-2`, `Casper-3`), Japanese stencil typography (`第一種戦闘配置 // BATTLE STATIONS CONDITION ONE`), 45° diagonal hazard caution warning stripes, dual-line corner framing, and an entry-plug synchronization timer.
 
 2. **Persona Phantom Reload Theme (`[ ♠ PERSONA RELOAD ]`)**:
-   - A combined theme inspired by *Persona 5* and *Persona 3 Reload*.
+   - A combined theme inspired by Persona 5 and Persona 3 Reload.
    - Incorporates Phantom Red (`#e60012`), Reload Electric Cyan (`#00e5ff`), and Ocean Deep Blue (`#0055ff`) palettes with skewed rotated panels (`transform: skewX(-6deg)`), manga starburst action badges (`TAKE YOUR TIME // ALL-OUT ATTACK`), ransomware cutout headers, halftone dot backgrounds, and a P3 Reload `4:59:10` countdown clock.
 
 ### Core Task Management & Tactical Views
@@ -45,8 +55,8 @@ TaskFlow includes four frameless, translucent, always-on-top floating desktop wi
 ## Tech Stack & Dependencies
 
 - **Framework**: React 18.2
-- **Desktop Runtime**: Electron 31.0
-- **Bundler & Dev Server**: Vite 5.1
+- **Desktop Runtime**: Electron 31.7
+- **Bundler & Dev Server**: Vite 5.4
 - **Icons**: Lucide React 0.344
 - **Packaging & Distribution**: Electron Builder 24.13 (NSIS / Windows x64 Executable)
 - **Styling**: Pure Modular CSS with HSL design tokens and hardware-accelerated transitions
@@ -57,6 +67,8 @@ TaskFlow includes four frameless, translucent, always-on-top floating desktop wi
 ## Architecture & File Structure
 
 ```text
+├── docs/
+│   └── assets/              # Showcase screenshots for GitHub and LinkedIn media
 ├── electron/
 │   ├── assets/              # Native application and tray icon assets
 │   ├── main.cjs             # Electron main process (window creation, tray, IPC routing)
