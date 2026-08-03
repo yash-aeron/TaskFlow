@@ -22,7 +22,7 @@ export default function Navbar({
     <header className="navbar">
       <div className="nav-brand">
         <div className="brand-icon"><Zap size={14} /></div>
-        <span className="brand-title">TaskFlow</span>
+        <span className="brand-title">&gt;_ TASKFLOW</span>
       </div>
 
       <div className="nav-search">
@@ -41,13 +41,13 @@ export default function Navbar({
         <select 
           value={accent} onChange={(e) => { setAccent(e.target.value); }}
           className="form-select"
-          style={{ padding: '3px 6px', fontSize: '11px', width: 'auto', borderRadius: '4px' }}
+          style={{ padding: '3px 6px', fontSize: '11px', width: 'auto', borderRadius: '4px', fontFamily: 'var(--font)', letterSpacing: '0.04em', textTransform: 'uppercase' }}
         >
-          <option value="violet">Violet</option>
-          <option value="cyan">Cyan</option>
-          <option value="emerald">Green</option>
-          <option value="sunset">Red</option>
-          <option value="gold">Gold</option>
+          <option value="unit01">Unit-01</option>
+          <option value="unit00">Unit-00</option>
+          <option value="terminal">Terminal</option>
+          <option value="unit02">Unit-02</option>
+          <option value="warning">Warning</option>
         </select>
 
         <button className="btn-icon" onClick={onLoadDemoData} title="Load demo data">
@@ -68,7 +68,7 @@ export default function Navbar({
         
         <button className="btn btn-primary" onClick={onOpenNewTask}>
           <Plus size={14} />
-          <span>New</span>
+          <span>NEW</span>
         </button>
       </div>
     </header>

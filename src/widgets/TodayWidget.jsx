@@ -31,16 +31,16 @@ export default function TodayWidget() {
     <div className="widget-container">
       <div className="widget-header">
         <div className="widget-title">
-          <Calendar size={13} style={{ color: '#5e6ad2' }} />
-          <span>Today's Tasks ({todayTasks.filter(t => t.status !== 'completed').length})</span>
+          <Calendar size={12} />
+          <span>// TODAY OPS ({todayTasks.filter(t => t.status !== 'completed').length})</span>
         </div>
-        <button className="widget-close" onClick={handleClose}><X size={13} /></button>
+        <button className="widget-close" onClick={handleClose}><X size={12} /></button>
       </div>
 
       <div className="widget-body">
         {todayTasks.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '30px 10px', color: '#666' }}>
-            No tasks scheduled for today
+          <div style={{ textAlign: 'center', padding: '30px 10px', color: '#4a4a6e', fontFamily: 'var(--font)', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: 10 }}>
+            NO OPERATIONS SCHEDULED
           </div>
         ) : (
           todayTasks.map(task => {
@@ -52,18 +52,20 @@ export default function TodayWidget() {
                     className={`widget-checkbox ${isCompleted ? 'checked' : ''}`}
                     onClick={() => handleToggle(task.id)}
                   >
-                    {isCompleted && <Check size={11} />}
+                    {isCompleted && <Check size={9} />}
                   </div>
-                  <span style={{ fontSize: 12, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <span style={{ fontSize: 11, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {task.title}
                   </span>
                 </div>
                 {task.priority && (
                   <span style={{ 
-                    fontSize: 9, fontWeight: 700, textTransform: 'uppercase', 
-                    padding: '1px 4px', borderRadius: 3,
-                    background: task.priority === 'urgent' ? 'rgba(229,72,77,0.2)' : 'rgba(94,106,210,0.2)',
-                    color: task.priority === 'urgent' ? '#e5484d' : '#8890e0'
+                    fontSize: 8, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em',
+                    padding: '1px 4px', borderRadius: 1,
+                    border: '1px solid',
+                    background: task.priority === 'urgent' ? 'rgba(220,38,38,0.15)' : 'rgba(139,92,246,0.15)',
+                    color: task.priority === 'urgent' ? '#DC2626' : '#8B5CF6',
+                    borderColor: task.priority === 'urgent' ? '#DC2626' : '#8B5CF6'
                   }}>
                     {task.priority}
                   </span>

@@ -4,9 +4,9 @@ import confetti from 'canvas-confetti';
 import { sounds } from '../utils/audio';
 
 const MODES = {
-  work: { label: 'Focus Work', duration: 25 * 60, color: '#6366f1' },
-  shortBreak: { label: 'Short Break', duration: 5 * 60, color: '#10b981' },
-  longBreak: { label: 'Long Break', duration: 15 * 60, color: '#3b82f6' }
+  work: { label: 'SYNC', duration: 25 * 60, color: '#8B5CF6' },
+  shortBreak: { label: 'STANDBY', duration: 5 * 60, color: '#00cc34' },
+  longBreak: { label: 'COOLDOWN', duration: 15 * 60, color: '#3B82F6' }
 };
 
 export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime }) {
@@ -87,9 +87,9 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime }) 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', alignItems: 'center', maxWidth: '600px', margin: '0 auto', width: '100%' }}>
       <div style={{ textAlign: 'center' }}>
-        <h2>Pomodoro Focus Studio</h2>
+        <h2 style={{ fontFamily: 'var(--font-heading)', letterSpacing: '0.12em' }}>ENTRY PLUG SYNCHRONIZATION</h2>
         <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', marginTop: '4px' }}>
-          Boost deep work output with timed focus intervals.
+          Initialize neural synchronization sequence. AT Field deployment imminent.
         </p>
       </div>
 
@@ -110,13 +110,13 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime }) 
       <div className="card" style={{ width: '100%', padding: '40px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '24px', position: 'relative' }}>
         {/* Task Selection Dropdown */}
         <div style={{ width: '100%', maxWidth: '400px' }}>
-          <label className="form-label" style={{ textAlign: 'center', display: 'block', marginBottom: '6px' }}>Focus Target Task</label>
+          <label className="form-label" style={{ textAlign: 'center', display: 'block', marginBottom: '6px' }}>TARGET ACQUISITION</label>
           <select
             className="form-select"
             value={selectedTaskId}
             onChange={(e) => setSelectedTaskId(e.target.value)}
           >
-            <option value="">-- Select a task to focus on --</option>
+            <option value="">&gt;&gt; SELECT TARGET OPERATION &lt;&lt;</option>
             {tasks.filter(t => t.status !== 'completed').map(t => (
               <option key={t.id} value={t.id}>{t.title}</option>
             ))}
@@ -174,13 +174,13 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime }) 
         <div className="card" style={{ flex: 1, textAlign: 'center', padding: '16px' }}>
           <Award size={20} style={{ color: 'var(--accent-light)', margin: '0 auto 6px' }} />
           <div style={{ fontSize: '1.3rem', fontWeight: 800 }}>{completedSessions}</div>
-          <div style={{ fontSize: '0.78rem', color: 'var(--text-subtle)' }}>Sessions Completed</div>
+          <div style={{ fontSize: '0.78rem', color: 'var(--text-subtle)' }}>SESSIONS SYNCED</div>
         </div>
 
         <div className="card" style={{ flex: 1, textAlign: 'center', padding: '16px' }}>
           <Clock size={20} style={{ color: '#10b981', margin: '0 auto 6px' }} />
           <div style={{ fontSize: '1.3rem', fontWeight: 800 }}>{completedSessions * 25}m</div>
-          <div style={{ fontSize: '0.78rem', color: 'var(--text-subtle)' }}>Total Focused Time</div>
+          <div style={{ fontSize: '0.78rem', color: 'var(--text-subtle)' }}>TOTAL SYNC TIME</div>
         </div>
       </div>
     </div>

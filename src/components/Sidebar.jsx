@@ -26,7 +26,7 @@ export default function Sidebar({
   return (
     <aside className="sidebar">
       <div className="sidebar-section">
-        <div className="sidebar-label">Views</div>
+        <div className="sidebar-label">// SYSTEMS</div>
         {views.map(v => {
           const Icon = v.icon;
           return (
@@ -41,8 +41,8 @@ export default function Sidebar({
 
       <div className="sidebar-section">
         <div className="sidebar-label" style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <span>Categories</span>
-          {activeCategory && <span style={{ cursor: 'pointer', color: 'var(--text-primary)', textTransform: 'none' }} onClick={() => setActiveCategory(null)}>Clear</span>}
+          <span>// SECTORS</span>
+          {activeCategory && <span style={{ cursor: 'pointer', color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: '9px' }} onClick={() => setActiveCategory(null)}>Clear</span>}
         </div>
         {categories.map(cat => {
           const count = tasks.filter(t => t.category === cat.id && t.status !== 'completed').length;
@@ -61,7 +61,7 @@ export default function Sidebar({
 
       {allTags.length > 0 && (
         <div className="sidebar-section">
-          <div className="sidebar-label">Tags</div>
+          <div className="sidebar-label">// MARKERS</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 3, padding: '0 4px' }}>
             {allTags.map(tag => (
               <span key={tag} className="tag-badge"
@@ -76,13 +76,13 @@ export default function Sidebar({
 
       <div style={{ marginTop: 'auto', padding: '8px', borderTop: '1px solid var(--border)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--text-secondary)', marginBottom: 4 }}>
-          <span>Progress</span><span>{completionRate}%</span>
+          <span>SYNC RATE</span><span>{completionRate}%</span>
         </div>
-        <div className="progress-bar-container">
+        <div className="progress-bar-container" style={{ border: '1px solid var(--border)', height: '4px' }}>
           <div className="progress-bar-fill" style={{ width: `${completionRate}%` }} />
         </div>
         <div style={{ fontSize: 11, color: 'var(--text-tertiary)', marginTop: 3 }}>
-          {completedCount}/{tasks.length} tasks
+          {completedCount}/{tasks.length} OPS
         </div>
       </div>
     </aside>

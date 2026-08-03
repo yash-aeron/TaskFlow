@@ -21,6 +21,8 @@ export default function TimerWidget() {
     return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
   };
 
+  const progress = Math.round(((25 * 60 - timeLeft) / (25 * 60)) * 100);
+
   const handleClose = () => {
     if (window.widgetAPI) window.widgetAPI.closeWidget();
   };
@@ -29,23 +31,42 @@ export default function TimerWidget() {
     <div className="widget-container">
       <div className="widget-header">
         <div className="widget-title">
-          <Timer size={13} style={{ color: '#30a46c' }} />
-          <span>Focus Timer</span>
+          <Timer size={12} />
+          <span>// SYNC TIMER</span>
         </div>
-        <button className="widget-close" onClick={handleClose}><X size={13} /></button>
+        <button className="widget-close" onClick={handleClose}><X size={12} /></button>
       </div>
 
-      <div className="widget-body" style={{ alignItems: 'center', justifyContent: 'center', gap: 14 }}>
-        <div style={{ fontSize: 36, fontWeight: 700, fontFamily: 'monospace', letterSpacing: 2 }}>
+      <div className="widget-body" style={{ alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+        <div style={{ 
+          fontSize: 36, fontWeight: 800, 
+          fontFamily: "'Orbitron', sans-serif", 
+          letterSpacing: 3,
+          color: isActive ? '#8B5CF6' : '#d8d8ff',
+          textShadow: isActive ? '0 0 20px rgba(139,92,246,0.4)' : 'none',
+          transition: 'color 0.3s, text-shadow 0.3s'
+        }}>
           {formatTime(timeLeft)}
         </div>
 
-        <div style={{ display: 'flex', gap: 8 }}>
-          <button className="widget-btn" onClick={() => setIsActive(!isActive)}>
-            {isActive ? <Pause size={14} /> : <Play size={14} />}
+        {/* Sync progress bar */}
+        <div style={{ width: '80%', height: 3, background: '#1a1a3e', border: '1px solid #2a2a5e', borderRadius: 0 }}>
+          <div style={{ 
+            height: '100%', width: `${progress}%`, 
+            background: isActive ? '#8B5CF6' : '#FF6B00',
+            boxShadow: isActive ? '0 0 8px rgba(139,92,246,0.3)' : 'none',
+            transition: 'width 0.3s'
+          }} />
+        </div>
+
+        <div style={{ display: 'flex', gap: 6 }}>
+          <button className="widget-btn" onClick={() => setIsActive(!isActive)} style={{
+            boxShadow: isActive ? '0 0 12px rgba(139,92,246,0.3)' : 'none'
+          }}>
+            {isActive ? <Pause size={13} /> : <Play size={13} />}
           </button>
-          <button className="widget-btn" style={{ background: '#252525' }} onClick={() => { setIsActive(false); setTimeLeft(25 * 60); }}>
-            <RotateCcw size={14} />
+          <button className="widget-btn" style={{ background: '#1a1a3e', borderColor: '#2a2a5e' }} onClick={() => { setIsActive(false); setTimeLeft(25 * 60); }}>
+            <RotateCcw size={13} />
           </button>
         </div>
       </div>

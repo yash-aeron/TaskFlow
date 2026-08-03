@@ -46,10 +46,13 @@ export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWith
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       {/* Calendar Header Navigation */}
       <div className="controls-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <h2 style={{ fontSize: '1.4rem' }}>
-            {MONTHS[month]} {year}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <h2 style={{ fontSize: '1.4rem', fontFamily: 'var(--font-heading)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+            &gt;_ OPERATIONS SCHEDULE
           </h2>
+          <span style={{ fontSize: '1.1rem', fontFamily: 'var(--font-heading)', textTransform: 'uppercase', color: 'var(--text-secondary)' }}>
+            {'// '}{MONTHS[month]} {year}
+          </span>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -68,7 +71,7 @@ export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWith
       {/* Days Header */}
       <div className="calendar-grid">
         {DAYS.map(d => (
-          <div key={d} className="calendar-day-header">{d}</div>
+          <div key={d} className="calendar-day-header" style={{ fontFamily: 'var(--font)', textTransform: 'uppercase' }}>{d}</div>
         ))}
 
         {/* Day Cells */}

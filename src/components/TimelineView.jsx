@@ -5,21 +5,21 @@ export default function TimelineView({ tasks = [], categories = [], onEditTask }
   const sortedTasks = [...tasks].sort((a, b) => (a.dueDate || '').localeCompare(b.dueDate || ''));
 
   const getCategoryColor = (catId) => {
-    return categories.find(c => c.id === catId)?.color || '#3b82f6';
+    return categories.find(c => c.id === catId)?.color || 'var(--accent)';
   };
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%' }}>
       <div className="controls-header">
         <div>
-          <h2>Timeline & Schedule View</h2>
+          <h2 style={{ fontFamily: 'var(--font-heading)', letterSpacing: '0.1em' }}>&gt;_ CHRONOLOGICAL LOG</h2>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
             Sequential timeline breakdown of upcoming project deliverables and milestones.
           </p>
         </div>
       </div>
 
-      <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+      <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '16px', borderLeft: '2px solid var(--accent)' }}>
         {sortedTasks.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
             No scheduled tasks on timeline.
@@ -62,7 +62,7 @@ export default function TimelineView({ tasks = [], categories = [], onEditTask }
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '0.82rem', color: 'var(--text-muted)' }}>
                   {task.dueDate && (
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '4px', fontFamily: 'var(--font)', textTransform: 'uppercase' }}>
                       <Calendar size={14} />
                       {task.dueDate}
                     </span>

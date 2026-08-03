@@ -22,7 +22,7 @@ export default function Toast({ toast, onClose }) {
     <div className="toast-notification">
       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         {getIcon()}
-        <span style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-main)' }}>
+        <span style={{ fontSize: '11px', fontWeight: 600, color: 'var(--text-main)', fontFamily: 'var(--font)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
           {toast.message}
         </span>
       </div>

@@ -30,7 +30,7 @@ export default function GraphView({ tasks, categories, onEditTask }) {
         id: `cat-${cat.id}`,
         label: cat.name,
         type: 'category',
-        color: cat.color,
+        color: cat.color || '#FF6B00',
         radius: 20,
         x: cx + Math.cos(angle) * r,
         y: cy + Math.sin(angle) * r,
@@ -49,7 +49,7 @@ export default function GraphView({ tasks, categories, onEditTask }) {
         id: `tag-${tag}`,
         label: `#${tag}`,
         type: 'tag',
-        color: '#a855f7',
+        color: '#FF6B00',
         radius: 11,
         x: cx + Math.cos(angle) * r,
         y: cy + Math.sin(angle) * r,
@@ -58,10 +58,9 @@ export default function GraphView({ tasks, categories, onEditTask }) {
     });
 
     // Task nodes
-    const pColors = { urgent: '#ef4444', high: '#f97316', medium: '#3b82f6', low: '#10b981' };
     tasks.forEach((t, i) => {
       const isCompleted = t.status === 'completed';
-      const color = isCompleted ? '#52525b' : (pColors[t.priority] || '#3b82f6');
+      const color = isCompleted ? '#00cc34' : '#8B5CF6';
       const angle = (i / Math.max(tasks.length, 1)) * Math.PI * 2 + 1;
       const r = Math.min(width, height) * 0.15;
 
@@ -177,7 +176,7 @@ export default function GraphView({ tasks, categories, onEditTask }) {
         ctx.beginPath();
         ctx.moveTo(s.x, s.y);
         ctx.lineTo(t.x, t.y);
-        ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+        ctx.strokeStyle = '#FF6B00';
         ctx.lineWidth = 1;
         ctx.stroke();
       });
@@ -188,7 +187,7 @@ export default function GraphView({ tasks, categories, onEditTask }) {
         if (selectedNodeRef.current?.id === n.id) {
           ctx.beginPath();
           ctx.arc(n.x, n.y, n.radius + 5, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(255,255,255,0.12)';
+          ctx.fillStyle = 'rgba(139, 92, 246, 0.2)';
           ctx.fill();
         }
 
@@ -201,7 +200,7 @@ export default function GraphView({ tasks, categories, onEditTask }) {
         ctx.stroke();
 
         // Label
-        ctx.font = `${n.type === 'category' ? '600 12px' : '500 11px'} Inter, sans-serif`;
+        ctx.font = `${n.type === 'category' ? '600 12px' : '500 11px'} JetBrains Mono, monospace`;
         ctx.fillStyle = '#d4d4d8';
         ctx.textAlign = 'center';
         ctx.fillText(n.label, n.x, n.y + n.radius + 14);
@@ -262,7 +261,7 @@ export default function GraphView({ tasks, categories, onEditTask }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%' }}>
       <div className="controls-header">
         <div>
-          <h2>Task Relationship Graph</h2>
+          <h2 style={{ fontFamily: 'var(--font-heading)', letterSpacing: '0.1em' }}>&gt;_ NEURAL NETWORK MAP</h2>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
             Drag nodes to explore. Double-click a task node to edit it.
           </p>

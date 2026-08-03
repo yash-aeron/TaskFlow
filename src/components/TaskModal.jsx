@@ -117,7 +117,9 @@ export default function TaskModal({ isOpen, onClose, onSave, taskToEdit, categor
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <h2>{taskToEdit ? 'Edit Task' : 'Create New Task'}</h2>
+          <h2 style={{ fontFamily: 'var(--font-heading)', letterSpacing: '0.1em' }}>
+            {taskToEdit ? 'EDIT OPERATION' : 'NEW OPERATION'}
+          </h2>
           <button className="btn-icon" onClick={onClose}>
             <X size={18} />
           </button>
@@ -125,7 +127,7 @@ export default function TaskModal({ isOpen, onClose, onSave, taskToEdit, categor
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div className="form-group">
-            <label className="form-label">Task Title *</label>
+            <label className="form-label" style={{ textTransform: 'uppercase' }}>DESIGNATION *</label>
             <input
               type="text"
               className="form-input"
@@ -138,7 +140,7 @@ export default function TaskModal({ isOpen, onClose, onSave, taskToEdit, categor
           </div>
 
           <div className="form-group">
-            <label className="form-label">Description / Notes</label>
+            <label className="form-label" style={{ textTransform: 'uppercase' }}>BRIEFING / NOTES</label>
             <textarea
               className="form-textarea"
               rows={3}
@@ -150,7 +152,7 @@ export default function TaskModal({ isOpen, onClose, onSave, taskToEdit, categor
 
           <div className="form-row">
             <div className="form-group">
-              <label className="form-label">Category</label>
+              <label className="form-label" style={{ textTransform: 'uppercase' }}>SECTOR</label>
               <select 
                 className="form-select" 
                 value={category} 
@@ -163,7 +165,7 @@ export default function TaskModal({ isOpen, onClose, onSave, taskToEdit, categor
             </div>
 
             <div className="form-group">
-              <label className="form-label">Priority Level</label>
+              <label className="form-label" style={{ textTransform: 'uppercase' }}>THREAT LEVEL</label>
               <select 
                 className="form-select" 
                 value={priority} 
@@ -179,7 +181,7 @@ export default function TaskModal({ isOpen, onClose, onSave, taskToEdit, categor
 
           <div className="form-row">
             <div className="form-group">
-              <label className="form-label">Status</label>
+              <label className="form-label" style={{ textTransform: 'uppercase' }}>STATUS</label>
               <select 
                 className="form-select" 
                 value={status} 
@@ -193,7 +195,7 @@ export default function TaskModal({ isOpen, onClose, onSave, taskToEdit, categor
             </div>
 
             <div className="form-group">
-              <label className="form-label">Est. Time (Minutes)</label>
+              <label className="form-label" style={{ textTransform: 'uppercase' }}>EST. DURATION (MINUTES)</label>
               <input
                 type="number"
                 className="form-input"
@@ -208,7 +210,7 @@ export default function TaskModal({ isOpen, onClose, onSave, taskToEdit, categor
           <div className="form-row">
             <div className="form-group">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <label className="form-label">Due Date</label>
+                <label className="form-label" style={{ textTransform: 'uppercase' }}>DEADLINE</label>
                 <div style={{ display: 'flex', gap: '4px' }}>
                   <button type="button" className="pill-btn" style={{ padding: '2px 8px', fontSize: '0.7rem' }} onClick={() => setQuickDate(0)}>Today</button>
                   <button type="button" className="pill-btn" style={{ padding: '2px 8px', fontSize: '0.7rem' }} onClick={() => setQuickDate(1)}>Tomorrow</button>
@@ -224,7 +226,7 @@ export default function TaskModal({ isOpen, onClose, onSave, taskToEdit, categor
             </div>
 
             <div className="form-group">
-              <label className="form-label">Due Time</label>
+              <label className="form-label" style={{ textTransform: 'uppercase' }}>DUE TIME</label>
               <input
                 type="time"
                 className="form-input"
@@ -236,7 +238,7 @@ export default function TaskModal({ isOpen, onClose, onSave, taskToEdit, categor
 
           {/* Subtasks Section */}
           <div className="form-group">
-            <label className="form-label">Checklist & Subtasks</label>
+            <label className="form-label" style={{ textTransform: 'uppercase' }}>CHECKLIST & SUBTASKS</label>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
               {subtasks.map((st) => (
                 <div 
@@ -247,7 +249,7 @@ export default function TaskModal({ isOpen, onClose, onSave, taskToEdit, categor
                     justifyContent: 'space-between',
                     padding: '8px 12px',
                     background: 'var(--bg-secondary)',
-                    borderRadius: 'var(--radius-sm)',
+                    borderRadius: 'var(--radius)',
                     border: '1px solid var(--border-subtle)'
                   }}
                 >
@@ -286,7 +288,7 @@ export default function TaskModal({ isOpen, onClose, onSave, taskToEdit, categor
 
           {/* Tags Section */}
           <div className="form-group">
-            <label className="form-label">Tags</label>
+            <label className="form-label" style={{ textTransform: 'uppercase' }}>MARKERS</label>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '6px' }}>
               {tags.map((tag) => (
                 <span key={tag} className="tag-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
@@ -308,10 +310,10 @@ export default function TaskModal({ isOpen, onClose, onSave, taskToEdit, categor
           {/* Action Buttons */}
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', marginTop: '10px' }}>
             <button type="button" className="btn btn-secondary" onClick={onClose}>
-              Cancel
+              ABORT
             </button>
             <button type="submit" className="btn btn-primary">
-              {taskToEdit ? 'Save Changes' : 'Create Task'}
+              {taskToEdit ? 'DEPLOY' : 'INITIALIZE'}
             </button>
           </div>
         </form>

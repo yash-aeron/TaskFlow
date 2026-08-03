@@ -35,8 +35,8 @@ export default function AnalyticsView({ tasks = [], categories = [] }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
       <div>
-        <h2>Productivity Analytics</h2>
-        <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>
+        <h2 style={{ fontFamily: 'var(--font-heading)' }}>&gt;_ MAGI ANALYSIS OUTPUT</h2>
+        <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)', fontFamily: 'var(--font)' }}>
           Detailed metrics and breakdown of task performance and focus time.
         </p>
       </div>
@@ -44,41 +44,41 @@ export default function AnalyticsView({ tasks = [], categories = [] }) {
       {/* KPI Cards Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px' }}>
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)' }}>Completion Rate</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent-light)' }}>{completionRate}%</div>
+          <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', fontFamily: 'var(--font)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>SYNC RATE</span>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent-light)', fontFamily: 'var(--font)' }}>{completionRate}%</div>
           <div className="progress-bar-container">
             <div className="progress-bar-fill" style={{ width: `${completionRate}%` }} />
           </div>
         </div>
 
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)' }}>Total Tasks</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-main)' }}>{totalTasks}</div>
-          <span style={{ fontSize: '0.78rem', color: 'var(--text-subtle)' }}>{completedTasks} completed / {activeTasks} active</span>
+          <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', fontFamily: 'var(--font)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>TOTAL OPS</span>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-main)', fontFamily: 'var(--font)' }}>{totalTasks}</div>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-subtle)', fontFamily: 'var(--font)' }}>{completedTasks} completed / {activeTasks} active</span>
         </div>
 
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)' }}>Est. Time Planned</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#3b82f6' }}>{Math.floor(totalEstTime / 60)}h {totalEstTime % 60}m</div>
-          <span style={{ fontSize: '0.78rem', color: 'var(--text-subtle)' }}>Total scheduled duration</span>
+          <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', fontFamily: 'var(--font)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>EST. TIME PLANNED</span>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#3b82f6', fontFamily: 'var(--font)' }}>{Math.floor(totalEstTime / 60)}h {totalEstTime % 60}m</div>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-subtle)', fontFamily: 'var(--font)' }}>Total scheduled duration</span>
         </div>
 
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)' }}>Focused Time Spent</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#10b981' }}>{Math.floor(totalActualTime / 60)}h {totalActualTime % 60}m</div>
-          <span style={{ fontSize: '0.78rem', color: 'var(--text-subtle)' }}>Logged via Pomodoro Studio</span>
+          <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)', fontFamily: 'var(--font)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>FOCUSED TIME SPENT</span>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#10b981', fontFamily: 'var(--font)' }}>{Math.floor(totalActualTime / 60)}h {totalActualTime % 60}m</div>
+          <span style={{ fontSize: '0.78rem', color: 'var(--text-subtle)', fontFamily: 'var(--font)' }}>Logged via Pomodoro Studio</span>
         </div>
       </div>
 
       {/* Category Breakdown */}
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <h3>Category Completion Rates</h3>
+        <h3 style={{ fontFamily: 'var(--font)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>// CATEGORY SYNC RATES</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {catBreakdown.map((cat) => (
             <div key={cat.name} style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem', fontWeight: 600 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.88rem', fontWeight: 600, fontFamily: 'var(--font)' }}>
                 <span style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: cat.color }} />
+                  <span style={{ width: '10px', height: '10px', borderRadius: 'var(--radius)', background: cat.color }} />
                   {cat.name}
                 </span>
                 <span>{cat.completed} / {cat.total} ({cat.percent}%)</span>
@@ -93,23 +93,23 @@ export default function AnalyticsView({ tasks = [], categories = [] }) {
 
       {/* Priority Distribution */}
       <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-        <h3>Priority Distribution</h3>
+        <h3 style={{ fontFamily: 'var(--font)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>// PRIORITY DISTRIBUTION</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '12px' }}>
-          <div style={{ padding: '12px', background: 'var(--priority-urgent-bg)', borderRadius: 'var(--radius-md)', border: '1px solid rgba(239, 68, 68, 0.3)' }}>
-            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--priority-urgent)' }}>Urgent</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--priority-urgent)' }}>{priorities.urgent}</div>
+          <div style={{ padding: '12px', background: 'var(--priority-urgent-bg)', borderRadius: 'var(--radius)', border: '1px solid rgba(239, 68, 68, 0.3)' }}>
+            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--priority-urgent)', fontFamily: 'var(--font)', textTransform: 'uppercase' }}>Urgent</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--priority-urgent)', fontFamily: 'var(--font)' }}>{priorities.urgent}</div>
           </div>
-          <div style={{ padding: '12px', background: 'var(--priority-high-bg)', borderRadius: 'var(--radius-md)', border: '1px solid rgba(249, 115, 22, 0.3)' }}>
-            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--priority-high)' }}>High</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--priority-high)' }}>{priorities.high}</div>
+          <div style={{ padding: '12px', background: 'var(--priority-high-bg)', borderRadius: 'var(--radius)', border: '1px solid rgba(249, 115, 22, 0.3)' }}>
+            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--priority-high)', fontFamily: 'var(--font)', textTransform: 'uppercase' }}>High</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--priority-high)', fontFamily: 'var(--font)' }}>{priorities.high}</div>
           </div>
-          <div style={{ padding: '12px', background: 'var(--priority-medium-bg)', borderRadius: 'var(--radius-md)', border: '1px solid rgba(59, 130, 246, 0.3)' }}>
-            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--priority-medium)' }}>Medium</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--priority-medium)' }}>{priorities.medium}</div>
+          <div style={{ padding: '12px', background: 'var(--priority-medium-bg)', borderRadius: 'var(--radius)', border: '1px solid rgba(59, 130, 246, 0.3)' }}>
+            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--priority-medium)', fontFamily: 'var(--font)', textTransform: 'uppercase' }}>Medium</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--priority-medium)', fontFamily: 'var(--font)' }}>{priorities.medium}</div>
           </div>
-          <div style={{ padding: '12px', background: 'var(--priority-low-bg)', borderRadius: 'var(--radius-md)', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
-            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--priority-low)' }}>Low</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--priority-low)' }}>{priorities.low}</div>
+          <div style={{ padding: '12px', background: 'var(--priority-low-bg)', borderRadius: 'var(--radius)', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
+            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--priority-low)', fontFamily: 'var(--font)', textTransform: 'uppercase' }}>Low</div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--priority-low)', fontFamily: 'var(--font)' }}>{priorities.low}</div>
           </div>
         </div>
       </div>

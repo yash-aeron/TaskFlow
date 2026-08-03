@@ -40,17 +40,17 @@ export default function QuickAddWidget() {
     <div className="widget-container">
       <div className="widget-header">
         <div className="widget-title">
-          <Plus size={13} style={{ color: '#5e6ad2' }} />
-          <span>Quick Add Task</span>
+          <Plus size={12} />
+          <span>// QUICK DEPLOY</span>
         </div>
-        <button className="widget-close" onClick={handleClose}><X size={13} /></button>
+        <button className="widget-close" onClick={handleClose}><X size={12} /></button>
       </div>
 
       <form className="widget-body" onSubmit={handleSubmit}>
         <input 
           type="text" 
           className="widget-input" 
-          placeholder="Task title..." 
+          placeholder=">_ OPERATION DESIGNATION..." 
           value={title} 
           onChange={e => setTitle(e.target.value)}
           autoFocus 
@@ -58,16 +58,16 @@ export default function QuickAddWidget() {
         <div style={{ display: 'flex', gap: 6, justifyContent: 'space-between', alignItems: 'center' }}>
           <select 
             className="widget-input" 
-            style={{ width: 'auto', padding: '4px 6px' }}
+            style={{ width: 'auto', padding: '4px 6px', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.04em' }}
             value={priority} 
             onChange={e => setPriority(e.target.value)}
           >
-            <option value="urgent">Urgent</option>
-            <option value="high">High</option>
-            <option value="medium">Medium</option>
-            <option value="low">Low</option>
+            <option value="urgent">CRITICAL</option>
+            <option value="high">HIGH</option>
+            <option value="medium">MEDIUM</option>
+            <option value="low">LOW</option>
           </select>
-          <button type="submit" className="widget-btn">Add Task</button>
+          <button type="submit" className="widget-btn">DEPLOY</button>
         </div>
       </form>
     </div>

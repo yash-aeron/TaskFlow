@@ -4,10 +4,10 @@ import confetti from 'canvas-confetti';
 import { sounds } from '../utils/audio';
 
 const COLUMNS = [
-  { id: 'backlog', title: 'Backlog', color: '#6b7280', icon: '📦' },
-  { id: 'todo', title: 'To Do', color: '#3b82f6', icon: '📋' },
-  { id: 'in_progress', title: 'In Progress', color: '#f59e0b', icon: '⚡' },
-  { id: 'completed', title: 'Completed', color: '#10b981', icon: '✅' }
+  { id: 'backlog', title: '>> BACKLOG', color: '#6b7280', icon: '📦' },
+  { id: 'todo', title: '>> TO DO', color: '#3b82f6', icon: '📋' },
+  { id: 'in_progress', title: '>> IN PROGRESS', color: '#f59e0b', icon: '⚡' },
+  { id: 'completed', title: '>> COMPLETED', color: '#10b981', icon: '✅' }
 ];
 
 export default function KanbanView({ 
@@ -58,7 +58,14 @@ export default function KanbanView({
         return (
           <div key={col.id} className="kanban-column">
             <div className="column-header">
-              <div className="column-title">
+              <div 
+                className="column-title" 
+                style={{ 
+                  fontFamily: 'var(--font)', 
+                  textTransform: 'uppercase', 
+                  letterSpacing: '0.06em' 
+                }}
+              >
                 <span>{col.icon}</span>
                 <span>{col.title}</span>
                 <span className="badge" style={{ marginLeft: '4px' }}>{colTasks.length}</span>
@@ -77,7 +84,7 @@ export default function KanbanView({
             {/* Column Cards */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', flex: 1, overflowY: 'auto' }}>
               {colTasks.length === 0 ? (
-                <div style={{ padding: '24px', textAlign: 'center', color: 'var(--text-subtle)', fontSize: '0.82rem', border: '1px dashed var(--border-subtle)', borderRadius: 'var(--radius-md)' }}>
+                <div style={{ padding: '24px', textAlign: 'center', color: 'var(--text-subtle)', fontSize: '0.82rem', border: '1px dashed var(--border-subtle)', borderRadius: 'var(--radius-md)', fontFamily: 'var(--font)' }}>
                   Empty column
                 </div>
               ) : (

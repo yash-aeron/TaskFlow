@@ -10,17 +10,17 @@ export default function MatrixView({ tasks = [], onEditTask, onUpdateTaskStatus,
   const completed = tasks.filter(t => t.status === 'completed');
 
   const quadrants = [
-    { id: 'do_first', title: '1. DO FIRST (Urgent & Important)', icon: Flame, color: '#ef4444', bg: 'rgba(239, 68, 68, 0.05)', tasks: doFirst },
-    { id: 'schedule', title: '2. SCHEDULE (Important, Not Urgent)', icon: Clock, color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.05)', tasks: schedule },
-    { id: 'delegate', title: '3. DELEGATE / QUICK (Urgent, Low Impact)', icon: Users, color: '#f97316', bg: 'rgba(249, 115, 22, 0.05)', tasks: delegate },
-    { id: 'completed', title: '4. ARCHIVE / COMPLETED', icon: CheckSquare, color: '#10b981', bg: 'rgba(16, 185, 129, 0.05)', tasks: completed },
+    { id: 'do_first', title: 'SECTOR-1: CRITICAL', icon: Flame, color: '#ef4444', bg: 'rgba(239, 68, 68, 0.05)', tasks: doFirst },
+    { id: 'schedule', title: 'SECTOR-2: STRATEGIC', icon: Clock, color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.05)', tasks: schedule },
+    { id: 'delegate', title: 'SECTOR-3: TACTICAL', icon: Users, color: '#f97316', bg: 'rgba(249, 115, 22, 0.05)', tasks: delegate },
+    { id: 'completed', title: 'SECTOR-4: DEFERRED', icon: CheckSquare, color: '#10b981', bg: 'rgba(16, 185, 129, 0.05)', tasks: completed },
   ];
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%' }}>
       <div className="controls-header">
         <div>
-          <h2>Eisenhower Priority Matrix</h2>
+          <h2 style={{ fontFamily: 'var(--font-heading)', letterSpacing: '0.1em' }}>&gt;_ PRIORITY MATRIX</h2>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
             Categorize tasks by urgency and importance to maximize daily focus.
           </p>
@@ -51,7 +51,7 @@ export default function MatrixView({ tasks = [], onEditTask, onUpdateTaskStatus,
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '10px', borderBottom: '1px solid var(--border-subtle)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.92rem', fontWeight: 700, color: q.color }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.92rem', fontWeight: 700, color: q.color, fontFamily: 'var(--font)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                   <Icon size={16} />
                   <span>{q.title}</span>
                 </div>

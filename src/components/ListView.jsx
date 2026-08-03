@@ -138,20 +138,20 @@ export default function ListView({
               style={{ fontSize: '0.8rem', padding: '6px 12px' }}
               onClick={handleClearCompleted}
             >
-              Clear Completed ({completedTasksCount})
+              PURGE COMPLETED ({completedTasksCount})
             </button>
           )}
 
-          <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-muted)' }}>Sort by:</span>
+          <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em', fontFamily: 'var(--font)' }}>SORT:</span>
           <select 
             className="form-select" 
             style={{ padding: '6px 12px', fontSize: '0.82rem', width: 'auto', borderRadius: 'var(--radius-sm)' }}
             value={sortBy} 
             onChange={(e) => setSortBy(e.target.value)}
           >
-            <option value="dueDate">Due Date</option>
-            <option value="priority">Priority</option>
-            <option value="title">Title</option>
+            <option value="dueDate">DEADLINE</option>
+            <option value="priority">THREAT LVL</option>
+            <option value="title">DESIGNATION</option>
           </select>
         </div>
       </div>
@@ -163,23 +163,23 @@ export default function ListView({
             <div className="empty-icon-wrapper">
               <Inbox size={32} />
             </div>
-            <h3>No tasks found</h3>
+            <h3>NO OPERATIONS FOUND</h3>
             <p>
               {tasks.length === 0 
-                ? "Your task workspace is completely clear. Create your first task or load sample demo data to explore."
-                : "No tasks match your current filter criteria."}
+                ? "Operations workspace clear. Initialize first operation or deploy sample data."
+                : "No operations match current filter parameters."}
             </p>
             
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '12px', flexWrap: 'wrap' }}>
               <button className="btn btn-primary" onClick={onOpenNewTask}>
                 <Plus size={16} />
-                <span>Create Task</span>
+                <span>INITIALIZE OP</span>
               </button>
 
               {tasks.length === 0 && (
                 <button className="btn btn-secondary" onClick={onLoadDemoData}>
                   <Sparkles size={16} />
-                  <span>Load Sample Demo Data</span>
+                  <span>DEPLOY SAMPLE DATA</span>
                 </button>
               )}
             </div>
@@ -259,7 +259,7 @@ export default function ListView({
                     >
                       <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                         {isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-                        <span>Subtasks ({completedSubtasks}/{subtaskCount})</span>
+                        <span>SUB-OPS ({completedSubtasks}/{subtaskCount})</span>
                       </div>
                       <span>{subtaskProgress}%</span>
                     </div>
@@ -297,7 +297,7 @@ export default function ListView({
                     {task.estimatedMinutes > 0 && (
                       <span style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
                         <Clock size={13} />
-                        {task.estimatedMinutes}m est.
+                        {task.estimatedMinutes}M EST
                       </span>
                     )}
 

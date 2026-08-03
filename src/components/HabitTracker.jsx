@@ -70,7 +70,7 @@ export default function HabitTracker({ habits = [], onSaveHabit, onDeleteHabit, 
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <div className="controls-header">
         <div>
-          <h2>Daily Habits & Streak Tracker</h2>
+          <h2 style={{ fontFamily: 'var(--font-heading)' }}>&gt;_ PATTERN RECOGNITION SYSTEM</h2>
           <p style={{ fontSize: '0.88rem', color: 'var(--text-muted)' }}>
             Build consistency and track your recurring daily routines.
           </p>
@@ -81,14 +81,14 @@ export default function HabitTracker({ habits = [], onSaveHabit, onDeleteHabit, 
           onClick={() => { sounds.playClick(); setShowAddForm(!showAddForm); }}
         >
           <Plus size={18} />
-          <span>{showAddForm ? 'Cancel' : 'New Habit'}</span>
+          <span>{showAddForm ? 'Cancel' : 'NEW PATTERN'}</span>
         </button>
       </div>
 
       {/* Add Habit Form */}
       {showAddForm && (
         <form className="card" onSubmit={handleAddHabit} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-          <h3>Create Daily Habit</h3>
+          <h3 style={{ fontFamily: 'var(--font-heading)' }}>CREATE NEW PATTERN</h3>
           <div className="form-row">
             <div className="form-group">
               <label className="form-label">Habit Name</label>
@@ -105,14 +105,14 @@ export default function HabitTracker({ habits = [], onSaveHabit, onDeleteHabit, 
             <div className="form-group">
               <label className="form-label">Target Days per Week</label>
               <select className="form-select" value={targetDays} onChange={(e) => setTargetDays(e.target.value)}>
-                <option value={7}>7 Days / Week</option>
-                <option value={5}>5 Days / Week</option>
-                <option value={3}>3 Days / Week</option>
+                <option value={7}>7D / Week</option>
+                <option value={5}>5D / Week</option>
+                <option value={3}>3D / Week</option>
               </select>
             </div>
           </div>
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
-            <button type="submit" className="btn btn-primary">Save Habit</button>
+            <button type="submit" className="btn btn-primary">Save Pattern</button>
           </div>
         </form>
       )}
@@ -121,7 +121,7 @@ export default function HabitTracker({ habits = [], onSaveHabit, onDeleteHabit, 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
         {habits.length === 0 ? (
           <div className="card" style={{ textAlign: 'center', padding: '40px', color: 'var(--text-muted)' }}>
-            No habits created yet. Click "New Habit" to start building your streak!
+            No patterns logged yet. Click "NEW PATTERN" to start building your STREAK!
           </div>
         ) : (
           habits.map((habit) => {
@@ -135,9 +135,9 @@ export default function HabitTracker({ habits = [], onSaveHabit, onDeleteHabit, 
                       <Flame size={20} />
                     </div>
                     <div>
-                      <h4 style={{ fontSize: '1.05rem', fontWeight: 700 }}>{habit.title}</h4>
+                      <h4 style={{ fontSize: '1.05rem', fontWeight: 700, fontFamily: 'var(--font-heading)' }}>{habit.title}</h4>
                       <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                        Target: {habit.targetDays} days/week
+                        Target: {habit.targetDays}D/week
                       </span>
                     </div>
                   </div>
@@ -145,13 +145,13 @@ export default function HabitTracker({ habits = [], onSaveHabit, onDeleteHabit, 
                   <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '1rem', fontWeight: 800, color: '#f97316' }}>
                       <Flame size={18} />
-                      <span>{streak} Day Streak</span>
+                      <span>{streak}D STREAK</span>
                     </div>
 
                     <button 
                       className="btn-icon" 
                       onClick={() => { sounds.playDelete(); onDeleteHabit(habit.id); }}
-                      title="Delete Habit"
+                      title="PURGE"
                     >
                       <Trash2 size={16} />
                     </button>

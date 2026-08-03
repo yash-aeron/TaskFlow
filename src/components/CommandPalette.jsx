@@ -61,14 +61,19 @@ export default function CommandPalette({
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" style={{ maxWidth: '540px', padding: '16px' }} onClick={(e) => e.stopPropagation()}>
+        {/* Modal Title / Header */}
+        <div style={{ fontSize: '0.75rem', fontFamily: 'var(--font-heading)', letterSpacing: '0.1em', color: 'var(--accent)', textTransform: 'uppercase', marginBottom: '8px', paddingLeft: '4px' }}>
+          COMMAND TERMINAL
+        </div>
+
         {/* Search Header */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '8px 12px', borderBottom: '1px solid var(--border-subtle)' }}>
           <Search size={18} style={{ color: 'var(--text-subtle)' }} />
           <input
             type="text"
             className="form-input"
-            style={{ background: 'transparent', border: 'none', padding: '4px', fontSize: '1rem' }}
-            placeholder="Type a command or search tasks... (Press Esc to exit)"
+            style={{ background: 'transparent', border: 'none', padding: '4px', fontSize: '1rem', fontFamily: 'var(--font)' }}
+            placeholder=">_ ENTER COMMAND..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             autoFocus
@@ -85,7 +90,7 @@ export default function CommandPalette({
             Actions
           </div>
 
-          <button className="nav-item" onClick={handleCreateTask}>
+          <button className="nav-item" style={{ textTransform: 'uppercase', letterSpacing: '0.04em' }} onClick={handleCreateTask}>
             <div className="nav-item-left">
               <Plus size={16} />
               <span>Create New Task</span>
@@ -93,7 +98,7 @@ export default function CommandPalette({
             <kbd className="badge">Ctrl+N</kbd>
           </button>
 
-          <button className="nav-item" onClick={handleDemoData}>
+          <button className="nav-item" style={{ textTransform: 'uppercase', letterSpacing: '0.04em' }} onClick={handleDemoData}>
             <div className="nav-item-left">
               <Sparkles size={16} />
               <span>Load Sample Demo Data</span>
@@ -108,7 +113,7 @@ export default function CommandPalette({
           {views.map((v) => {
             const Icon = v.icon;
             return (
-              <button key={v.id} className="nav-item" onClick={() => handleSelectView(v.id)}>
+              <button key={v.id} className="nav-item" style={{ textTransform: 'uppercase', letterSpacing: '0.04em' }} onClick={() => handleSelectView(v.id)}>
                 <div className="nav-item-left">
                   <Icon size={16} />
                   <span>{v.label}</span>
@@ -127,6 +132,7 @@ export default function CommandPalette({
                 <button 
                   key={t.id} 
                   className="nav-item" 
+                  style={{ textTransform: 'uppercase', letterSpacing: '0.04em' }}
                   onClick={() => { onClose(); onEditTask(t); }}
                 >
                   <div className="nav-item-left">
