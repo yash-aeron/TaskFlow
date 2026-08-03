@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Flame, Plus, Check, Trash2 } from 'lucide-react';
 
-export default function HabitTracker({ habits = [], onSaveHabit, onDeleteHabit, onToggleHabitDay }) {
+export default function HabitTracker({ habits = [], onSaveHabit, onDeleteHabit, onToggleHabitDay, themeMode = 'nerv' }) {
   const [newHabitTitle, setNewHabitTitle] = useState('');
   const [newHabitFreq, setNewHabitFreq] = useState('daily');
-  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
+  const isPersona = themeMode === 'persona';
 
   const handleAddHabit = (e) => {
     e.preventDefault();

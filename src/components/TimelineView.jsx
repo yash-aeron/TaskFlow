@@ -1,8 +1,8 @@
 import React from 'react';
 import { Calendar, Clock, CheckCircle } from 'lucide-react';
 
-export default function TimelineView({ tasks = [], onEditTask }) {
-  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
+export default function TimelineView({ tasks = [], onEditTask, themeMode = 'nerv' }) {
+  const isPersona = themeMode === 'persona';
 
   const sortedTasks = [...tasks].sort((a, b) => {
     if (!a.dueDate) return 1;

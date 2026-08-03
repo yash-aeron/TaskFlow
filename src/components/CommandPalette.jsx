@@ -3,10 +3,10 @@ import { Search, CheckSquare, Plus, Flame, Timer, BarChart3, X } from 'lucide-re
 import { sounds } from '../utils/audio';
 
 export default function CommandPalette({ 
-  isOpen, onClose, tasks = [], onSelectTask, onOpenNewTask, setCurrentView 
+  isOpen, onClose, tasks = [], onSelectTask, onOpenNewTask, setCurrentView, themeMode = 'nerv'
 }) {
   const [query, setQuery] = useState('');
-  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
+  const isPersona = themeMode === 'persona';
 
   useEffect(() => {
     if (isOpen) {

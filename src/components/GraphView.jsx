@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 
-export default function GraphView({ tasks = [], categories = [] }) {
+export default function GraphView({ tasks = [], categories = [], themeMode = 'nerv' }) {
   const canvasRef = useRef(null);
-  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
+  const isPersona = themeMode === 'persona';
 
   useEffect(() => {
     const canvas = canvasRef.current;

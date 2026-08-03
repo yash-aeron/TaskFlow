@@ -1,8 +1,8 @@
 import React from 'react';
 import { X, Command } from 'lucide-react';
 
-export default function ShortcutsModal({ isOpen, onClose }) {
-  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
+export default function ShortcutsModal({ isOpen, onClose, themeMode = 'nerv' }) {
+  const isPersona = themeMode === 'persona';
 
   if (!isOpen) return null;
 

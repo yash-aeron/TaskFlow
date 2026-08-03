@@ -9,14 +9,14 @@ const MODES = {
   longBreak: { label: 'COOLDOWN', duration: 15 * 60, color: '#00ffcc' }
 };
 
-export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime }) {
+export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, themeMode = 'nerv' }) {
   const [mode, setMode] = useState('work');
   const [timeLeft, setTimeLeft] = useState(MODES.work.duration);
   const [isActive, setIsActive] = useState(false);
   const [selectedTaskId, setSelectedTaskId] = useState(initialTask?.id || '');
   const [completedSessions, setCompletedSessions] = useState(0);
 
-  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
+  const isPersona = themeMode === 'persona';
 
   useEffect(() => {
     if (initialTask) {

@@ -3,7 +3,7 @@ import { X, Check } from 'lucide-react';
 import { sounds } from '../utils/audio';
 
 export default function TaskModal({ 
-  isOpen, onClose, onSave, taskToEdit, categories = [] 
+  isOpen, onClose, onSave, taskToEdit, categories = [], themeMode = 'nerv'
 }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -16,7 +16,7 @@ export default function TaskModal({
   const [subtasks, setSubtasks] = useState([]);
   const [newSubtaskTitle, setNewSubtaskTitle] = useState('');
 
-  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
+  const isPersona = themeMode === 'persona';
 
   useEffect(() => {
     if (taskToEdit) {

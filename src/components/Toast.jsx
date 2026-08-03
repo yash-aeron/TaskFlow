@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { AlertCircle, CheckCircle2, Info, X } from 'lucide-react';
 
-export default function Toast({ toast, onClose }) {
-  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
+export default function Toast({ toast, onClose, themeMode = 'nerv' }) {
+  const isPersona = themeMode === 'persona';
 
   useEffect(() => {
     if (!toast) return;
