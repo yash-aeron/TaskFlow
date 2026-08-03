@@ -1,6 +1,6 @@
-# TaskFlow Pro
+# TaskFlow
 
-TaskFlow Pro is a desktop productivity application built with Electron, React, and Vite. Designed for speed and focus, TaskFlow Pro features a dense, minimalist user interface inspired by modern developer tools, alongside floating Windows desktop widgets for quick task tracking and habits management.
+TaskFlow is a desktop productivity application built with Electron, React, and Vite. Designed for speed and focus, TaskFlow features a dense, minimalist user interface inspired by modern developer tools, alongside floating Windows desktop widgets for quick task tracking and habits management.
 
 ---
 
@@ -124,8 +124,8 @@ npm run electron:build
 ```
 
 Output directory: `release/`
-- **Installer**: `release/TaskFlow Pro Setup 1.0.0.exe`
-- **Unpacked / Portable**: `release/win-unpacked/TaskFlow Pro.exe`
+- **Installer**: `release/TaskFlow Setup 1.0.0.exe`
+- **Unpacked / Portable**: `release/win-unpacked/TaskFlow.exe`
 
 ---
 

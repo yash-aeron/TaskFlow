@@ -1,5 +1,5 @@
 {
-  "name": "taskflow-pro",
+  "name": "taskflow",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -13,8 +13,8 @@
     "electron:build": "vite build && electron-builder --win --x64"
   },
   "build": {
-    "appId": "com.taskflow.pro",
-    "productName": "TaskFlow Pro",
+    "appId": "com.taskflow.app",
+    "productName": "TaskFlow",
     "directories": {
       "output": "release"
     },

@@ -48,7 +48,7 @@ function createMainWindow() {
     minHeight: 600,
     backgroundColor: '#101010',
     icon: path.join(__dirname, 'assets/icon.png'),
-    title: 'TaskFlow Pro',
+    title: 'TaskFlow',
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,
@@ -180,7 +180,7 @@ function createTray() {
   }
 
   tray = new Tray(trayIcon);
-  tray.setToolTip('TaskFlow Pro');
+  tray.setToolTip('TaskFlow');
   tray.on('double-click', () => {
     if (mainWindow) {
       mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
