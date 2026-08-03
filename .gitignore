@@ -1,3 +1,7 @@
+# Agent & AI config
+.agents/
+.gemini/
+
 # Dependencies
 node_modules/
 .pnpm-store/
