@@ -25,37 +25,32 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
   }, [initialTask]);
 
   useEffect(() => {
-    let interval = null;
+    let timer = null;
     if (isActive && timeLeft > 0) {
-      interval = setInterval(() => {
+      timer = setInterval(() => {
         setTimeLeft(prev => prev - 1);
       }, 1000);
-    } else if (timeLeft === 0 && isActive) {
+    } else if (timeLeft === 0) {
+      sounds.playComplete();
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
       setIsActive(false);
-      sounds.playTimerEnd();
-
+      
       if (mode === 'work') {
-        confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
         setCompletedSessions(prev => prev + 1);
-
-        if (selectedTaskId) {
+        if (selectedTaskId && onLogFocusTime) {
           onLogFocusTime(selectedTaskId, 25);
         }
-
-        if ((completedSessions + 1) % 4 === 0) {
-          setMode('longBreak');
-          setTimeLeft(MODES.longBreak.duration);
-        } else {
-          setMode('shortBreak');
-          setTimeLeft(MODES.shortBreak.duration);
-        }
-      } else {
-        setMode('work');
-        setTimeLeft(MODES.work.duration);
       }
     }
-    return () => clearInterval(interval);
-  }, [isActive, timeLeft, mode, selectedTaskId, completedSessions, onLogFocusTime]);
+    return () => clearInterval(timer);
+  }, [isActive, timeLeft, mode, selectedTaskId, onLogFocusTime]);
+
+  const changeMode = (newMode) => {
+    sounds.playClick();
+    setMode(newMode);
+    setTimeLeft(MODES[newMode].duration);
+    setIsActive(false);
+  };
 
   const toggleTimer = () => {
     sounds.playClick();
@@ -66,13 +61,6 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
     sounds.playClick();
     setIsActive(false);
     setTimeLeft(MODES[mode].duration);
-  };
-
-  const changeMode = (newMode) => {
-    sounds.playClick();
-    setMode(newMode);
-    setIsActive(false);
-    setTimeLeft(MODES[newMode].duration);
   };
 
   const formatTime = (seconds) => {
@@ -121,7 +109,8 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
       {/* Timer Circle Glass Card */}
       <div className={isPersona ? "persona-card" : "card nerv-frame"} style={{
         padding: '30px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px',
-        background: isPersona ? 'linear-gradient(180deg, #090918 0%, #002266 100%)' : '#050505'
+        background: isPersona ? '#0e0f24' : '#050505',
+        overflow: 'hidden'
       }}>
         {/* Task Selection Dropdown */}
         <div style={{ width: '100%', maxWidth: '440px' }}>
@@ -175,14 +164,29 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
         </div>
 
         {/* Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '8px' }}>
-          <button className="btn-icon" onClick={resetTimer} title="Reset Timer">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '8px', background: 'transparent' }}>
+          <button 
+            className="btn-icon" 
+            onClick={resetTimer} 
+            title="Reset Timer"
+            style={{
+              background: isPersona ? '#090918' : '#000000',
+              border: isPersona ? '1px solid #00e5ff' : '1px solid #ff6600',
+              color: isPersona ? '#00e5ff' : '#ff8800'
+            }}
+          >
             <RotateCcw size={18} />
           </button>
 
           <button 
             className="btn btn-primary" 
-            style={{ padding: '12px 40px', fontSize: '1.2rem' }}
+            style={{ 
+              padding: '12px 40px', fontSize: '1.2rem',
+              background: isPersona ? '#e60012' : '#ff0000',
+              color: '#ffffff',
+              border: isPersona ? '2px solid #00e5ff' : '1px solid #ffffff',
+              boxShadow: isPersona ? '-4px 4px 0px #00e5ff' : '0 0 14px rgba(255,0,0,0.6)'
+            }}
             onClick={toggleTimer}
           >
             {isActive ? <Pause size={22} /> : <Play size={22} />}
@@ -193,6 +197,11 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
             className="btn-icon" 
             onClick={() => setTimeLeft(0)} 
             title="Skip Interval"
+            style={{
+              background: isPersona ? '#090918' : '#000000',
+              border: isPersona ? '1px solid #00e5ff' : '1px solid #ff6600',
+              color: isPersona ? '#00e5ff' : '#ff8800'
+            }}
           >
             <SkipForward size={18} />
           </button>
