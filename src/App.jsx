@@ -39,7 +39,11 @@ export default function App() {
   const [toast, setToast] = useState(null);
   const [activeFocusTask, setActiveFocusTask] = useState(null);
 
-  const themeMode = settings?.themeMode || 'nerv';
+  const ALLOWED_THEME_MODES = ['nerv', 'persona'];
+  const ALLOWED_ACCENTS = ['magi_red', 'nerv_amber', 'terminal_cyan', 'terminal_green', 'seele_monolith'];
+
+  const themeMode = ALLOWED_THEME_MODES.includes(settings?.themeMode) ? settings.themeMode : 'nerv';
+  const safeAccent = ALLOWED_ACCENTS.includes(settings?.accent) ? settings.accent : 'magi_red';
 
   // Sync settings and HTML root theme attributes
   useEffect(() => {
@@ -51,12 +55,9 @@ export default function App() {
       document.documentElement.removeAttribute('data-theme');
     }
 
-    if (settings?.accent) {
-      document.documentElement.setAttribute('data-accent', settings.accent);
-    }
-
+    document.documentElement.setAttribute('data-accent', safeAccent);
     document.documentElement.setAttribute('data-theme-mode', themeMode);
-  }, [settings, themeMode]);
+  }, [settings, safeAccent, themeMode]);
 
   // Sync changes back to storage
   useEffect(() => {

@@ -35,6 +35,20 @@ const WIDGETS = {
   quickadd: { width: 290, height: 190, title: 'Quick Add',      url: 'quickadd.html' },
 };
 
+// Security helper: attach window navigation interceptors to prevent untrusted navigation
+function attachNavigationInterceptors(win) {
+  if (!win || !win.webContents) return;
+  win.webContents.on('will-navigate', (event, url) => {
+    // Intercept and prevent navigating away from bundled app files
+    const isAllowedDev = isDev && url.startsWith('http://localhost:5173');
+    const isAllowedFile = url.startsWith('file://');
+    if (!isAllowedDev && !isAllowedFile) {
+      event.preventDefault();
+    }
+  });
+  win.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
+}
+
 // ── Main Window ───────────────────────────────────────────────────────────────
 function createMainWindow() {
   const config = loadConfig();
@@ -56,6 +70,8 @@ function createMainWindow() {
     },
   });
 
+  attachNavigationInterceptors(mainWindow);
+
   if (isDev) {
     mainWindow.loadURL('http://localhost:5173');
     mainWindow.webContents.openDevTools({ mode: 'detach' });
@@ -63,7 +79,6 @@ function createMainWindow() {
     mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
   }
 
-  // Save bounds on resize/move
   const saveBounds = () => {
     if (!mainWindow || mainWindow.isDestroyed()) return;
     const b = mainWindow.getBounds();
@@ -74,7 +89,6 @@ function createMainWindow() {
   mainWindow.on('resized', saveBounds);
   mainWindow.on('moved', saveBounds);
 
-  // Hide to tray instead of quitting
   mainWindow.on('close', (e) => {
     if (!app.isQuitting) {
       e.preventDefault();
@@ -118,6 +132,7 @@ function createWidget(id) {
     },
   });
 
+  attachNavigationInterceptors(win);
   win.setAlwaysOnTop(true, 'screen-saver');
 
   if (isDev) {
@@ -126,7 +141,6 @@ function createWidget(id) {
     win.loadFile(path.join(__dirname, `../dist/${cfg.url}`));
   }
 
-  // Persist position
   win.on('moved', () => {
     if (!win || win.isDestroyed()) return;
     const [x, y] = win.getPosition();
@@ -160,7 +174,6 @@ function toggleWidget(id) {
   }
 }
 
-// ── Broadcast to all widget windows ──────────────────────────────────────────
 function broadcastToWidgets(channel, data) {
   Object.values(widgetWindows).forEach((win) => {
     if (win && !win.isDestroyed()) {
@@ -201,19 +214,18 @@ function updateTrayMenu() {
 
   const menu = Menu.buildFromTemplate([
     {
-      label: mainWindow?.isVisible() ? 'Hide Main Window' : 'Show Main Window',
+      label: mainWindow && mainWindow.isVisible() ? 'Hide TaskFlow' : 'Open TaskFlow',
       click: () => {
         if (!mainWindow) return;
         mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
-        updateTrayMenu();
       },
     },
     { type: 'separator' },
-    { label: 'Widgets', enabled: false },
+    { label: 'Desktop Widgets', enabled: false },
     ...widgetItems,
     { type: 'separator' },
     {
-      label: 'Quit',
+      label: 'Quit TaskFlow',
       click: () => {
         app.isQuitting = true;
         app.quit();
@@ -226,17 +238,30 @@ function updateTrayMenu() {
 
 // ── IPC Handlers ──────────────────────────────────────────────────────────────
 
-ipcMain.on('sync-data', (_, { tasks, habits }) => {
-  appTasks  = tasks  ?? appTasks;
-  appHabits = habits ?? appHabits;
+ipcMain.on('sync-data', (_, payload) => {
+  if (payload && Array.isArray(payload.tasks)) {
+    appTasks = payload.tasks;
+  }
+  if (payload && Array.isArray(payload.habits)) {
+    appHabits = payload.habits;
+  }
   broadcastToWidgets('data-update', { tasks: appTasks, habits: appHabits });
 });
 
 ipcMain.handle('get-tasks',  () => appTasks);
 ipcMain.handle('get-habits', () => appHabits);
 
+// Fix 2B: Validate task payload before adding to prevent malformed IPC data
 ipcMain.on('add-task', (_, task) => {
-  appTasks = [task, ...appTasks];
+  if (!task || typeof task !== 'object') return;
+  const safeTask = {
+    ...task,
+    id: (task.id && typeof task.id === 'string') ? task.id : `task-${Date.now()}`,
+    title: typeof task.title === 'string' ? task.title : 'Untitled Task',
+    status: typeof task.status === 'string' ? task.status : 'todo',
+    priority: typeof task.priority === 'string' ? task.priority : 'medium',
+  };
+  appTasks = [safeTask, ...appTasks.filter(t => t.id !== safeTask.id)];
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.webContents.send('data-updated', { tasks: appTasks });
   }
@@ -244,6 +269,7 @@ ipcMain.on('add-task', (_, task) => {
 });
 
 ipcMain.on('toggle-task', (_, taskId) => {
+  if (!taskId || typeof taskId !== 'string') return;
   appTasks = appTasks.map(t => {
     if (t.id !== taskId) return t;
     const completed = t.status !== 'completed';
@@ -259,7 +285,15 @@ ipcMain.on('toggle-task', (_, taskId) => {
   broadcastToWidgets('data-update', { tasks: appTasks, habits: appHabits });
 });
 
-ipcMain.on('toggle-habit', (_, { habitId, dateStr }) => {
+// Fix 1A: Validate dateStr regex & prototype pollution prevention
+ipcMain.on('toggle-habit', (_, payload) => {
+  if (!payload || typeof payload !== 'object') return;
+  const { habitId, dateStr } = payload;
+
+  if (!habitId || typeof habitId !== 'string' || !dateStr || typeof dateStr !== 'string') return;
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) return; // Strict YYYY-MM-DD validation
+  if (['__proto__', 'constructor', 'prototype'].includes(dateStr)) return;
+
   appHabits = appHabits.map(h => {
     if (h.id !== habitId) return h;
     const history = { ...(h.history || {}) };
@@ -272,10 +306,17 @@ ipcMain.on('toggle-habit', (_, { habitId, dateStr }) => {
   broadcastToWidgets('data-update', { tasks: appTasks, habits: appHabits });
 });
 
-ipcMain.on('log-focus', (_, { taskId, minutes }) => {
+// Fix 2A: Coerce minutes parameter to Number to prevent string concatenation ("4525")
+ipcMain.on('log-focus', (_, payload) => {
+  if (!payload || typeof payload !== 'object') return;
+  const { taskId, minutes } = payload;
+  if (!taskId || typeof taskId !== 'string') return;
+
+  const addedMins = Number(minutes) || 0;
   appTasks = appTasks.map(t => {
     if (t.id !== taskId) return t;
-    return { ...t, actualMinutes: (t.actualMinutes || 0) + minutes };
+    const currentMins = Number(t.actualMinutes) || 0;
+    return { ...t, actualMinutes: currentMins + addedMins };
   });
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.webContents.send('data-updated', { tasks: appTasks });

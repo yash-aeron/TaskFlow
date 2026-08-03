@@ -1,4 +1,4 @@
-// Local Storage Management for TaskFlow Pro
+// Local Storage Management for TaskFlow
 
 export const DEFAULT_CATEGORIES = [
   { id: 'work', name: 'Work', color: '#6366f1', icon: 'Briefcase' },
@@ -8,11 +8,9 @@ export const DEFAULT_CATEGORIES = [
   { id: 'learning', name: 'Learning', color: '#8b5cf6', icon: 'BookOpen' }
 ];
 
-// Clean empty initial state - NO dummy data by default
 export const INITIAL_TASKS = [];
 export const INITIAL_HABITS = [];
 
-// Optional Demo Seed Data if user clicks "Load Demo Data"
 export const DEMO_TASKS = [
   {
     id: 'demo-task-1',
@@ -41,26 +39,23 @@ export const DEMO_TASKS = [
     status: 'completed',
     priority: 'high',
     category: 'health',
-    tags: ['Fitness', 'Routine'],
+    tags: ['Fitness', 'Morning'],
     dueDate: new Date().toISOString().split('T')[0],
     dueTime: '08:00',
     estimatedMinutes: 30,
     actualMinutes: 30,
     createdAt: new Date().toISOString(),
     completedAt: new Date().toISOString(),
-    subtasks: [
-      { id: 'st-201', title: 'Dynamic stretch warmup', completed: true },
-      { id: 'st-202', title: 'Core intervals', completed: true }
-    ]
+    subtasks: []
   }
 ];
 
 export const DEMO_HABITS = [
   {
     id: 'demo-habit-1',
-    title: 'Drink 2.5L Water Daily',
-    category: 'health',
-    targetDays: 7,
+    title: 'Drink 2L Water Daily',
+    frequency: 'daily',
+    createdAt: new Date().toISOString(),
     history: {
       [new Date().toISOString().split('T')[0]]: true,
       [new Date(Date.now() - 86400000).toISOString().split('T')[0]]: true
@@ -80,7 +75,6 @@ export const loadTasks = () => {
     const data = localStorage.getItem(KEYS.TASKS);
     return data ? JSON.parse(data) : INITIAL_TASKS;
   } catch (e) {
-    console.error('Failed to load tasks:', e);
     return INITIAL_TASKS;
   }
 };
@@ -130,9 +124,9 @@ export const saveHabits = (habits) => {
 export const loadSettings = () => {
   try {
     const data = localStorage.getItem(KEYS.SETTINGS);
-    return data ? JSON.parse(data) : { theme: 'dark', sound: true, accent: 'violet' };
+    return data ? JSON.parse(data) : { theme: 'dark', sound: true, accent: 'magi_red', themeMode: 'nerv' };
   } catch (e) {
-    return { theme: 'dark', sound: true, accent: 'violet' };
+    return { theme: 'dark', sound: true, accent: 'magi_red', themeMode: 'nerv' };
   }
 };
 
@@ -144,31 +138,90 @@ export const saveSettings = (settings) => {
   }
 };
 
-export const exportAllData = () => {
-  const backup = {
-    version: 1,
-    exportedAt: new Date().toISOString(),
-    tasks: loadTasks(),
-    categories: loadCategories(),
-    habits: loadHabits(),
-    settings: loadSettings()
-  };
-  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backup, null, 2));
-  const downloadAnchor = document.createElement('a');
-  downloadAnchor.setAttribute("href", dataStr);
-  downloadAnchor.setAttribute("download", `TaskFlow_Backup_${new Date().toISOString().split('T')[0]}.json`);
-  document.body.appendChild(downloadAnchor);
-  downloadAnchor.click();
-  downloadAnchor.remove();
-};
+function sanitizeString(str) {
+  if (typeof str !== 'string') return '';
+  return str
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/on\w+="[^"]*"/gi, '')
+    .replace(/javascript:[^"]*/gi, '')
+    .trim();
+}
 
 export const importData = (jsonData) => {
   try {
     const parsed = JSON.parse(jsonData);
-    if (parsed.tasks && Array.isArray(parsed.tasks)) saveTasks(parsed.tasks);
-    if (parsed.categories && Array.isArray(parsed.categories)) saveCategories(parsed.categories);
-    if (parsed.habits && Array.isArray(parsed.habits)) saveHabits(parsed.habits);
-    if (parsed.settings) saveSettings(parsed.settings);
+    if (!parsed || typeof parsed !== 'object') return false;
+
+    // Whitelist and sanitize Tasks
+    if (Array.isArray(parsed.tasks)) {
+      const safeTasks = parsed.tasks.map(t => ({
+        id: sanitizeString(t.id) || `task-${Date.now()}-${Math.random().toString(36).substring(2, 7)}`,
+        title: sanitizeString(t.title) || 'Untitled Task',
+        description: sanitizeString(t.description),
+        status: ['todo', 'in_progress', 'completed', 'backlog'].includes(t.status) ? t.status : 'todo',
+        priority: ['urgent', 'high', 'medium', 'low'].includes(t.priority) ? t.priority : 'medium',
+        category: sanitizeString(t.category) || 'work',
+        tags: Array.isArray(t.tags) ? t.tags.map(sanitizeString).filter(Boolean) : [],
+        dueDate: /^\d{4}-\d{2}-\d{2}$/.test(t.dueDate) ? t.dueDate : null,
+        dueTime: typeof t.dueTime === 'string' ? sanitizeString(t.dueTime) : null,
+        estimatedMinutes: Number(t.estimatedMinutes) || 0,
+        actualMinutes: Number(t.actualMinutes) || 0,
+        createdAt: typeof t.createdAt === 'string' ? t.createdAt : new Date().toISOString(),
+        completedAt: typeof t.completedAt === 'string' ? t.completedAt : null,
+        subtasks: Array.isArray(t.subtasks) ? t.subtasks.map(st => ({
+          id: sanitizeString(st.id) || `subtask-${Date.now()}`,
+          title: sanitizeString(st.title),
+          completed: Boolean(st.completed)
+        })) : []
+      }));
+      saveTasks(safeTasks);
+    }
+
+    // Whitelist and sanitize Categories
+    if (Array.isArray(parsed.categories)) {
+      const safeCategories = parsed.categories.map(c => ({
+        id: sanitizeString(c.id) || 'work',
+        name: sanitizeString(c.name) || 'General',
+        color: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(c.color) ? c.color : '#6366f1',
+        icon: sanitizeString(c.icon) || 'Briefcase'
+      }));
+      saveCategories(safeCategories);
+    }
+
+    // Whitelist and sanitize Habits (preventing Prototype Pollution)
+    if (Array.isArray(parsed.habits)) {
+      const safeHabits = parsed.habits.map(h => {
+        const safeHistory = {};
+        if (h.history && typeof h.history === 'object') {
+          Object.keys(h.history).forEach(k => {
+            if (/^\d{4}-\d{2}-\d{2}$/.test(k) && !['__proto__', 'constructor', 'prototype'].includes(k)) {
+              safeHistory[k] = Boolean(h.history[k]);
+            }
+          });
+        }
+        return {
+          id: sanitizeString(h.id) || `habit-${Date.now()}`,
+          title: sanitizeString(h.title) || 'Untitled Habit',
+          frequency: ['daily', 'weekly'].includes(h.frequency) ? h.frequency : 'daily',
+          createdAt: typeof h.createdAt === 'string' ? h.createdAt : new Date().toISOString(),
+          history: safeHistory
+        };
+      });
+      saveHabits(safeHabits);
+    }
+
+    // Whitelist and sanitize Settings
+    if (parsed.settings && typeof parsed.settings === 'object') {
+      const ALLOWED_THEME_MODES = ['nerv', 'persona'];
+      const ALLOWED_ACCENTS = ['magi_red', 'nerv_amber', 'terminal_cyan', 'terminal_green', 'seele_monolith'];
+      const safeSettings = {
+        theme: parsed.settings.theme === 'light' ? 'light' : 'dark',
+        sound: Boolean(parsed.settings.sound ?? true),
+        themeMode: ALLOWED_THEME_MODES.includes(parsed.settings.themeMode) ? parsed.settings.themeMode : 'nerv',
+        accent: ALLOWED_ACCENTS.includes(parsed.settings.accent) ? parsed.settings.accent : 'magi_red'
+      };
+      saveSettings(safeSettings);
+    }
     return true;
   } catch (e) {
     console.error('Import failed:', e);
@@ -189,6 +242,4 @@ export const storage = {
 
 export const demoTasks = DEMO_TASKS;
 export const demoCategories = DEFAULT_CATEGORIES;
-export const demoHabits = DEMO_HABITS || [];
-
-
+export const demoHabits = DEMO_HABITS;
