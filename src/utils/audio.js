@@ -42,6 +42,13 @@ class SoundEffects {
       osc.connect(gain);
       gain.connect(this.audioCtx.destination);
 
+      osc.onended = () => {
+        try {
+          osc.disconnect();
+          gain.disconnect();
+        } catch (e) {}
+      };
+
       osc.start();
       osc.stop(this.audioCtx.currentTime + 0.05);
     } catch (e) {
@@ -55,7 +62,6 @@ class SoundEffects {
     if (!this.audioCtx) return;
 
     try {
-      // Pleasant multi-tone success chord (C5 - E5 - G5 - C6)
       const notes = [523.25, 659.25, 783.99, 1046.50];
       notes.forEach((freq, idx) => {
         const osc = this.audioCtx.createOscillator();
@@ -71,6 +77,13 @@ class SoundEffects {
 
         osc.connect(gain);
         gain.connect(this.audioCtx.destination);
+
+        osc.onended = () => {
+          try {
+            osc.disconnect();
+            gain.disconnect();
+          } catch (e) {}
+        };
 
         osc.start(startTime);
         osc.stop(startTime + 0.35);
@@ -99,6 +112,13 @@ class SoundEffects {
       osc.connect(gain);
       gain.connect(this.audioCtx.destination);
 
+      osc.onended = () => {
+        try {
+          osc.disconnect();
+          gain.disconnect();
+        } catch (e) {}
+      };
+
       osc.start();
       osc.stop(this.audioCtx.currentTime + 0.08);
     } catch (e) {
@@ -125,6 +145,13 @@ class SoundEffects {
       osc.connect(gain);
       gain.connect(this.audioCtx.destination);
 
+      osc.onended = () => {
+        try {
+          osc.disconnect();
+          gain.disconnect();
+        } catch (e) {}
+      };
+
       osc.start();
       osc.stop(this.audioCtx.currentTime + 0.1);
     } catch (e) {
@@ -138,7 +165,6 @@ class SoundEffects {
     if (!this.audioCtx) return;
 
     try {
-      // Alarm chime
       const times = [0, 0.2, 0.4];
       times.forEach((t) => {
         const osc = this.audioCtx.createOscillator();
@@ -153,6 +179,13 @@ class SoundEffects {
 
         osc.connect(gain);
         gain.connect(this.audioCtx.destination);
+
+        osc.onended = () => {
+          try {
+            osc.disconnect();
+            gain.disconnect();
+          } catch (e) {}
+        };
 
         osc.start(startTime);
         osc.stop(startTime + 0.15);

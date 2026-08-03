@@ -6,9 +6,15 @@ export default function GraphView({ tasks, categories, onEditTask }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const [selectedNode, setSelectedNode] = useState(null);
+  const selectedNodeRef = useRef(null);
   const graphDataRef = useRef({ nodes: [], links: [] });
   const draggedNodeRef = useRef(null);
   const animRef = useRef(null);
+
+  const setSelectedNodeSync = (node) => {
+    selectedNodeRef.current = node;
+    setSelectedNode(node);
+  };
 
   const buildGraphData = useCallback((width, height) => {
     const nodes = [];
@@ -179,7 +185,7 @@ export default function GraphView({ tasks, categories, onEditTask }) {
       // Draw nodes
       nodes.forEach(n => {
         // Selection ring
-        if (selectedNode?.id === n.id) {
+        if (selectedNodeRef.current?.id === n.id) {
           ctx.beginPath();
           ctx.arc(n.x, n.y, n.radius + 5, 0, Math.PI * 2);
           ctx.fillStyle = 'rgba(255,255,255,0.12)';
@@ -206,7 +212,7 @@ export default function GraphView({ tasks, categories, onEditTask }) {
 
     animRef.current = requestAnimationFrame(render);
     return () => { if (animRef.current) cancelAnimationFrame(animRef.current); };
-  }, [selectedNode]);
+  }, []);
 
   // Get CSS-space mouse coords (accounts for devicePixelRatio)
   const getMousePos = (e) => {
@@ -220,10 +226,10 @@ export default function GraphView({ tasks, categories, onEditTask }) {
     const hit = nodes.find(n => Math.hypot(n.x - x, n.y - y) <= n.radius + 5);
     if (hit) {
       draggedNodeRef.current = hit;
-      setSelectedNode(hit);
+      setSelectedNodeSync(hit);
       sounds.playClick();
     } else {
-      setSelectedNode(null);
+      setSelectedNodeSync(null);
     }
   };
 
