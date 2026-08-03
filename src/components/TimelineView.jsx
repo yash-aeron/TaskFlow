@@ -1,7 +1,7 @@
 import React from 'react';
 import { Calendar, Clock, CheckCircle2 } from 'lucide-react';
 
-export default function TimelineView({ tasks, categories, onEditTask }) {
+export default function TimelineView({ tasks = [], categories = [], onEditTask }) {
   const sortedTasks = [...tasks].sort((a, b) => (a.dueDate || '').localeCompare(b.dueDate || ''));
 
   const getCategoryColor = (catId) => {

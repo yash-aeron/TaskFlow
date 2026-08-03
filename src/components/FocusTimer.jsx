@@ -9,7 +9,7 @@ const MODES = {
   longBreak: { label: 'Long Break', duration: 15 * 60, color: '#3b82f6' }
 };
 
-export default function FocusTimer({ tasks, initialTask, onLogFocusTime }) {
+export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime }) {
   const [mode, setMode] = useState('work');
   const [timeLeft, setTimeLeft] = useState(MODES.work.duration);
   const [isActive, setIsActive] = useState(false);

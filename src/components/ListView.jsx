@@ -17,11 +17,11 @@ import confetti from 'canvas-confetti';
 import { sounds } from '../utils/audio';
 
 export default function ListView({ 
-  tasks, 
+  tasks = [], 
   onToggleTask, 
   onDeleteTask, 
   onEditTask, 
-  categories,
+  categories = [],
   onStartFocusTimer,
   onOpenNewTask,
   onLoadDemoData

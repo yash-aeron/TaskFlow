@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Search, Plus, CheckSquare, Kanban, Calendar, Flame, Timer, BarChart3, Sun, Moon, Sparkles, X } from 'lucide-react';
+import { Search, Plus, CheckSquare, Kanban, Calendar, Flame, Timer, BarChart3, Network, Grid, Clock, Sparkles, X } from 'lucide-react';
 import { sounds } from '../utils/audio';
 
 export default function CommandPalette({ 
@@ -8,7 +8,7 @@ export default function CommandPalette({
   setCurrentView, 
   onOpenNewTask, 
   onLoadDemoData, 
-  tasks, 
+  tasks = [], 
   onEditTask 
 }) {
   const [query, setQuery] = useState('');
@@ -24,6 +24,9 @@ export default function CommandPalette({
   const views = [
     { id: 'list', label: 'Go to Task List', icon: CheckSquare },
     { id: 'kanban', label: 'Go to Kanban Board', icon: Kanban },
+    { id: 'graph', label: 'Go to Relationship Graph', icon: Network },
+    { id: 'matrix', label: 'Go to Priority Matrix', icon: Grid },
+    { id: 'timeline', label: 'Go to Timeline & Schedule', icon: Clock },
     { id: 'calendar', label: 'Go to Calendar View', icon: Calendar },
     { id: 'habits', label: 'Go to Habit Tracker', icon: Flame },
     { id: 'focus', label: 'Go to Focus Timer', icon: Timer },

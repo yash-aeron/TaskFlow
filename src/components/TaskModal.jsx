@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { X, Plus, Trash2, CheckCircle } from 'lucide-react';
 import { sounds } from '../utils/audio';
 
-export default function TaskModal({ isOpen, onClose, onSave, taskToEdit, categories }) {
+export default function TaskModal({ isOpen, onClose, onSave, taskToEdit, categories = [] }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [status, setStatus] = useState('todo');
