@@ -1,49 +1,45 @@
 /* ══════════════════════════════════════════════════════════════════════════════
-   TASKFLOW PRO — AUTHENTIC SIDEBAR & MULTI-THEME DESIGN SYSTEM
+   TASKFLOW — CRISP, HIGH-CONTRAST & ULTRA-LEGIBLE MULTI-THEME DESIGN SYSTEM
    ══════════════════════════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Noto+Sans+JP:wght@700;900&family=Orbitron:wght@600;800;900&family=Impact&display=swap');
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   1. AUTHENTIC NERV MAGI DESIGN SYSTEM ([data-theme-mode="nerv"])
+   1. CRISP & HIGH-CONTRAST NERV MAGI DESIGN SYSTEM ([data-theme-mode="nerv"])
    ══════════════════════════════════════════════════════════════════════════════ */
 
 :root, [data-theme-mode="nerv"] {
   --bg-0: #000000;
-  --bg-1: #050505;
-  --bg-2: #0a0a0a;
-  --bg-3: #121212;
-  --bg-hover: #1c0a00;
-  --bg-active: #331400;
+  --bg-1: #0a0a0a;
+  --bg-2: #121212;
+  --bg-3: #1a1a1a;
+  --bg-hover: #260d00;
+  --bg-active: #401800;
 
   --nerv-red: #ff0000;
   --nerv-red-dark: #800000;
   --nerv-red-glow: rgba(255, 0, 0, 0.4);
 
-  --nerv-amber: #ff6600;
+  --nerv-amber: #ff8800;
   --nerv-amber-dark: #993d00;
-  --nerv-amber-glow: rgba(255, 102, 0, 0.3);
+  --nerv-amber-glow: rgba(255, 136, 0, 0.3);
 
   --nerv-yellow: #ffe600;
   --nerv-yellow-glow: rgba(255, 230, 0, 0.3);
 
   --terminal-green: #00ff66;
   --terminal-green-dim: #009933;
-  --terminal-green-glow: rgba(0, 255, 102, 0.25);
-
-  --chevron-cyan: #00ffcc;
 
   --accent: var(--nerv-red);
   --accent-dark: var(--nerv-red-dark);
-  --accent-glow: var(--nerv-red-glow);
 
-  --border: #330d00;
+  --border: #441500;
   --border-hover: #ff0000;
-  --border-amber: #ff6600;
+  --border-amber: #ff8800;
 
   --text-primary: #ffffff;
-  --text-secondary: #ff9966;
-  --text-tertiary: #994422;
+  --text-secondary: #ffaa55;
+  --text-tertiary: #ff7733;
 
   --font: 'JetBrains Mono', monospace;
   --font-heading: 'Orbitron', sans-serif;
@@ -51,19 +47,19 @@
   --radius: 0px;
 
   --priority-urgent: var(--nerv-red);
-  --priority-urgent-bg: rgba(255, 0, 0, 0.2);
+  --priority-urgent-bg: rgba(255, 0, 0, 0.25);
   --priority-high: var(--nerv-amber);
-  --priority-high-bg: rgba(255, 102, 0, 0.2);
+  --priority-high-bg: rgba(255, 136, 0, 0.25);
   --priority-medium: var(--nerv-yellow);
-  --priority-medium-bg: rgba(255, 230, 0, 0.15);
+  --priority-medium-bg: rgba(255, 230, 0, 0.2);
   --priority-low: var(--terminal-green);
-  --priority-low-bg: rgba(0, 255, 102, 0.15);
+  --priority-low-bg: rgba(0, 255, 102, 0.2);
 }
 
 /* NERV SIDEBAR HIGH-IMPACT STYLING */
 [data-theme-mode="nerv"] .sidebar {
   width: 230px;
-  background: #050505;
+  background: #080808;
   border-right: 2px solid #ff0000;
   display: flex;
   flex-direction: column;
@@ -72,20 +68,19 @@
   overflow-y: auto;
   flex-shrink: 0;
   font-size: 12px;
-  box-shadow: inset -5px 0 15px rgba(255, 0, 0, 0.15);
 }
 
 [data-theme-mode="nerv"] .sidebar-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: #ff6600;
+  letter-spacing: 0.12em;
+  color: #ff8800;
   padding: 6px 8px;
-  background: #0d0500;
-  border: 1px solid #331400;
-  border-left: 3px solid #ff6600;
+  background: #140800;
+  border: 1px solid #551c00;
+  border-left: 4px solid #ff8800;
   margin-bottom: 6px;
 }
 
@@ -94,16 +89,16 @@
   align-items: center;
   justify-content: space-between;
   padding: 8px 12px;
-  color: #ffaa80;
+  color: #ffccaa;
   font-size: 11px;
   font-weight: 800;
   cursor: pointer;
-  background: #050505;
-  border: 1px solid #331400;
-  border-left: 3px solid #331400;
+  background: #0d0d0d;
+  border: 1px solid #441500;
+  border-left: 3px solid #441500;
   width: 100%;
   text-align: left;
-  transition: all 0.12s ease-in-out;
+  transition: all 0.1s ease-in-out;
   font-family: 'JetBrains Mono', monospace;
   margin-bottom: 3px;
   letter-spacing: 0.05em;
@@ -111,11 +106,10 @@
 }
 
 [data-theme-mode="nerv"] .nav-item:hover {
-  background: #1f0a00;
+  background: #260d00;
   color: #ffffff;
-  border-color: #ff6600;
-  border-left-color: #ff6600;
-  box-shadow: 0 0 8px rgba(255, 102, 0, 0.4);
+  border-color: #ff8800;
+  border-left-color: #ff8800;
 }
 
 [data-theme-mode="nerv"] .nav-item.active {
@@ -124,7 +118,6 @@
   font-weight: 900 !important;
   border: 1px solid #ffffff !important;
   border-left: 4px solid #ffffff !important;
-  box-shadow: 0 0 14px rgba(255, 0, 0, 0.9) !important;
 }
 
 [data-theme-mode="nerv"] .badge {
@@ -167,11 +160,10 @@
   border: 2px solid #ffffff;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 16px; position: relative;
-  box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
 }
 
 .nerv-frame {
-  position: relative; background: #050505; border: 1px solid var(--border-amber); padding: 14px;
+  position: relative; background: #0a0a0a; border: 1px solid var(--border-amber); padding: 14px;
 }
 .nerv-frame::before {
   content: ''; position: absolute; top: -1px; left: -1px; width: 8px; height: 8px;
@@ -183,29 +175,24 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   2. PURE PERSONA 5 + 3 RELOAD DESIGN SYSTEM ([data-theme-mode="persona"])
+   2. CRISP PERSONA 5 + 3 RELOAD DESIGN SYSTEM ([data-theme-mode="persona"])
    ══════════════════════════════════════════════════════════════════════════════ */
 
 [data-theme-mode="persona"] {
   --bg-0: #04040c;
-  --bg-1: #090918;
-  --bg-2: #0f1026;
-  --bg-3: #181938;
+  --bg-1: #0e0f24;
+  --bg-2: #141636;
+  --bg-3: #1d204a;
   --bg-hover: #e60012;
   --bg-active: #00e5ff;
 
   --p5-red: #e60012;
-  --p5-red-glow: rgba(230, 0, 18, 0.5);
-
   --p3-cyan: #00e5ff;
-  --p3-cyan-glow: rgba(0, 229, 255, 0.5);
-
   --p3-blue: #0055ff;
-  --p3-dark-blue: #0a0b2e;
+  --p3-dark-blue: #0e0f24;
 
   --accent: var(--p5-red);
   --accent-dark: #99000c;
-  --accent-glow: var(--p5-red-glow);
 
   --border: #00e5ff;
   --border-hover: #ffffff;
@@ -213,7 +200,7 @@
 
   --text-primary: #ffffff;
   --text-secondary: #00e5ff;
-  --text-tertiary: #88aaff;
+  --text-tertiary: #99bbff;
 
   --font: 'JetBrains Mono', monospace;
   --font-heading: 'Impact', sans-serif;
@@ -232,7 +219,7 @@
 
 [data-theme-mode="persona"] .sidebar {
   width: 230px;
-  background: #090918;
+  background: #0e0f24;
   border-right: 2px solid #00e5ff;
   display: flex;
   flex-direction: column;
@@ -244,11 +231,11 @@
 
 [data-theme-mode="persona"] .sidebar-label {
   font-family: 'Impact', sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   letter-spacing: 0.12em;
   color: #00e5ff;
   padding: 6px 8px;
-  background: #0a0b2e;
+  background: #141636;
   border: 1px solid #00e5ff;
   transform: skewX(-6deg);
   margin-bottom: 6px;
@@ -259,7 +246,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 8px 12px;
-  background: #090918;
+  background: #0e0f24;
   border: 1px solid #00e5ff;
   color: #ffffff;
   transform: skewX(-6deg);
@@ -281,17 +268,9 @@
   box-shadow: -4px 4px 0px #00e5ff !important;
 }
 
-[data-theme-mode="persona"] .app-container {
-  background: #04040c;
-  background-image: 
-    radial-gradient(rgba(230, 0, 18, 0.15) 1px, transparent 0),
-    linear-gradient(135deg, rgba(0, 85, 255, 0.1) 0%, rgba(230, 0, 18, 0.1) 100%);
-  background-size: 16px 16px, 100% 100%;
-}
-
 [data-theme-mode="persona"] .card, 
 [data-theme-mode="persona"] .persona-card {
-  background: #090918 !important;
+  background: #0e0f24 !important;
   border: 2px solid #00e5ff !important;
   box-shadow: -4px 4px 0px #e60012 !important;
   transform: rotate(-0.5deg) !important;
@@ -308,22 +287,22 @@
 }
 
 [data-theme-mode="persona"] .btn-secondary {
-  background: #0a0b2e !important;
+  background: #141636 !important;
   color: #00e5ff !important;
   border: 2px solid #00e5ff !important;
   transform: skewX(-6deg) !important;
 }
 
 [data-theme-mode="persona"] .task-item {
-  background: #090918 !important;
+  background: #0e0f24 !important;
   border: 2px solid #00e5ff !important;
   border-left: 6px solid #e60012 !important;
-  box-shadow: -3px 3px 0px rgba(0, 229, 255, 0.3) !important;
+  box-shadow: -3px 3px 0px rgba(0, 229, 255, 0.4) !important;
   transform: rotate(-0.3deg) !important;
 }
 
 [data-theme-mode="persona"] .pill-btn {
-  background: #090918 !important;
+  background: #0e0f24 !important;
   border: 2px solid #00e5ff !important;
   color: #00e5ff !important;
   transform: skewX(-10deg) !important;
@@ -337,7 +316,7 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   RESET & BASE STRUCTURAL LAYOUT
+   RESET & BASE STRUCTURAL LAYOUT (SCANLINES REMOVED FOR PURE LEGIBILITY)
    ══════════════════════════════════════════════════════════════════════════════ */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -353,12 +332,7 @@ body {
   height: 100vh;
 }
 
-body::after {
-  content: '';
-  position: fixed; inset: 0; pointer-events: none; z-index: 9999;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-  background-size: 100% 4px;
-}
+/* REMOVED body::after SCANLINES FOR MAXIMUM READABILITY */
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
