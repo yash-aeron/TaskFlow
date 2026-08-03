@@ -73,7 +73,7 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
   const progressPercent = Math.round(((currentModeInfo.duration - timeLeft) / currentModeInfo.duration) * 100);
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '750px', margin: '0 auto', width: '100%' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', maxWidth: '720px', margin: '0 auto', width: '100%' }}>
       {/* Header */}
       <div className={isPersona ? "persona-card" : "card nerv-frame"} style={{ padding: '16px', textAlign: 'center', position: 'relative' }}>
         {!isPersona && <div className="hazard-stripe-red" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px' }} />}
@@ -110,14 +110,18 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
         ))}
       </div>
 
-      {/* Unified Single Tactical Timer Card */}
-      <div className={isPersona ? "persona-card" : "card nerv-frame"} style={{
-        padding: '28px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px',
-        background: isPersona ? '#0e0f24' : '#000000', border: isPersona ? '2px solid #00e5ff' : '1px solid #ff8800'
-      }}>
-        {/* Task Selection Dropdown */}
-        <div style={{ width: '100%', maxWidth: '460px' }}>
-          <label className="form-label" style={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyCenter: 'center', gap: '6px', marginBottom: '8px', color: isPersona ? '#00e5ff' : '#ff8800' }}>
+      {/* Sleek Integrated Focus Card */}
+      <div 
+        className={isPersona ? "persona-card" : "card nerv-frame"} 
+        style={{
+          padding: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px',
+          background: isPersona ? '#0e0f24' : '#000000',
+          border: isPersona ? '2px solid #00e5ff' : '1px solid #ff8800'
+        }}
+      >
+        {/* Target Dropdown */}
+        <div style={{ width: '100%', maxWidth: '480px' }}>
+          <label className="form-label" style={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '8px', color: isPersona ? '#00e5ff' : '#ff8800' }}>
             <Target size={14} />
             <span>{isPersona ? "[ TARGET MISSION ] SELECT MISSION TARGET" : "[ TARGET ACQUISITION ] SELECT ANGEL / OPERATION TARGET"}</span>
           </label>
@@ -134,10 +138,10 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
           </select>
         </div>
 
-        {/* Display Timer Clock */}
+        {/* Big Clock Display */}
         <div 
           style={{ 
-            fontSize: '5.5rem', 
+            fontSize: '5.2rem', 
             fontWeight: 900, 
             fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)',
             letterSpacing: '6px',
@@ -145,7 +149,7 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
             textShadow: isPersona ? '-5px 5px 0px #e60012' : `0 0 25px ${currentModeInfo.color}`,
             background: isPersona ? '#04040c' : '#080808',
             border: isPersona ? '2px solid #00e5ff' : '2px solid #ff0000',
-            padding: '12px 32px',
+            padding: '16px 32px',
             width: '100%',
             textAlign: 'center',
             boxShadow: isPersona ? '-6px 6px 0px #e60012' : '0 0 15px rgba(255,0,0,0.3)'
@@ -154,28 +158,14 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
           {formatTime(timeLeft)}
         </div>
 
-        {/* Progress chevrons */}
-        <div className="chevron-bar-container" style={{ width: '100%', height: '14px', margin: '2px 0' }}>
-          {Array.from({ length: 16 }).map((_, i) => {
-            const isActive = i < Math.round((progressPercent / 100) * 16);
-            return (
-              <div 
-                key={i} 
-                className={`chevron-segment ${isActive ? (isPersona ? 'active-green' : 'active-red') : ''}`}
-                style={{ flex: 1, height: '14px', background: isActive ? (isPersona ? '#00e5ff' : '#ff0000') : '#111111' }}
-              />
-            );
-          })}
-        </div>
-
-        {/* Unified Integrated Controls (No Dark Overlay Box) */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', width: '100%', marginTop: '6px' }}>
+        {/* Action Controls Directly Under Clock */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', width: '100%' }}>
           <button 
             className="btn-icon" 
             onClick={resetTimer} 
             title="Reset Timer"
             style={{
-              width: '42px', height: '42px',
+              width: '44px', height: '44px',
               background: isPersona ? '#04040c' : '#0d0d0d',
               border: isPersona ? '2px solid #00e5ff' : '1px solid #ff8800',
               color: isPersona ? '#00e5ff' : '#ff8800',
@@ -188,7 +178,7 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
           <button 
             className={`btn btn-primary ${!isPersona ? 'hazard-stripe-red' : ''}`}
             style={{ 
-              padding: '14px 48px', fontSize: '1.3rem',
+              padding: '14px 44px', fontSize: '1.25rem',
               background: isPersona ? '#e60012' : '#ff0000',
               color: '#ffffff',
               border: isPersona ? '2px solid #ffffff' : '1px solid #ffffff',
@@ -208,7 +198,7 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
             onClick={() => setTimeLeft(0)} 
             title="Skip Interval"
             style={{
-              width: '42px', height: '42px',
+              width: '44px', height: '44px',
               background: isPersona ? '#04040c' : '#0d0d0d',
               border: isPersona ? '2px solid #00e5ff' : '1px solid #ff8800',
               color: isPersona ? '#00e5ff' : '#ff8800',
@@ -217,6 +207,20 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
           >
             <SkipForward size={20} />
           </button>
+        </div>
+
+        {/* Chevron Progress Bar */}
+        <div className="chevron-bar-container" style={{ width: '100%', height: '12px', marginTop: '6px' }}>
+          {Array.from({ length: 16 }).map((_, i) => {
+            const isActiveSegment = i < Math.round((progressPercent / 100) * 16);
+            return (
+              <div 
+                key={i} 
+                className={`chevron-segment ${isActiveSegment ? (isPersona ? 'active-green' : 'active-red') : ''}`}
+                style={{ flex: 1, height: '12px', background: isActiveSegment ? (isPersona ? '#00e5ff' : '#ff0000') : '#111111' }}
+              />
+            );
+          })}
         </div>
       </div>
 
