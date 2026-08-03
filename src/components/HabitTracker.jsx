@@ -3,7 +3,7 @@ import { Flame, Check, Plus, Trash2, Calendar, Target } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { sounds } from '../utils/audio';
 
-export default function HabitTracker({ habits, onSaveHabit, onDeleteHabit, onToggleHabitDay }) {
+export default function HabitTracker({ habits = [], onSaveHabit, onDeleteHabit, onToggleHabitDay }) {
   const [newHabitTitle, setNewHabitTitle] = useState('');
   const [newHabitCategory, setNewHabitCategory] = useState('health');
   const [targetDays, setTargetDays] = useState(7);

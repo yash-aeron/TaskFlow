@@ -1,7 +1,7 @@
 import React from 'react';
 import { Plus } from 'lucide-react';
 
-export default function HeroHeader({ tasks, onOpenNewTask }) {
+export default function HeroHeader({ tasks = [], onOpenNewTask }) {
   const completed = tasks.filter(t => t.status === 'completed').length;
   const active = tasks.length - completed;
 

@@ -12,11 +12,18 @@ export default function QuickAddWidget() {
     const newTask = {
       id: `task-${Date.now()}`,
       title: title.trim(),
+      description: '',
       status: 'todo',
       priority,
       category: 'work',
+      tags: [],
+      subtasks: [],
       dueDate: new Date().toISOString().split('T')[0],
+      dueTime: '12:00',
+      estimatedMinutes: 30,
+      actualMinutes: 0,
       createdAt: new Date().toISOString(),
+      completedAt: null,
     };
 
     if (window.widgetAPI) {

@@ -5,8 +5,8 @@ import {
 } from 'lucide-react';
 
 export default function Sidebar({ 
-  currentView, setCurrentView, categories, activeCategory, setActiveCategory, 
-  tasks, allTags, activeTag, setActiveTag
+  currentView, setCurrentView, categories = [], activeCategory, setActiveCategory, 
+  tasks = [], allTags = [], activeTag, setActiveTag
 }) {
   const views = [
     { id: 'list', label: 'Tasks', icon: CheckSquare, count: tasks.length },

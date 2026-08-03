@@ -1,7 +1,7 @@
 import React from 'react';
 import { BarChart3, PieChart, CheckCircle2, AlertCircle, Clock, Target, Award } from 'lucide-react';
 
-export default function AnalyticsView({ tasks, categories }) {
+export default function AnalyticsView({ tasks = [], categories = [] }) {
   const totalTasks = tasks.length;
   const completedTasks = tasks.filter(t => t.status === 'completed').length;
   const activeTasks = totalTasks - completedTasks;
@@ -59,13 +59,13 @@ export default function AnalyticsView({ tasks, categories }) {
 
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)' }}>Est. Time Planned</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#3b82f6' }}>{Math.round(totalEstTime / 60)}h {totalEstTime % 60}m</div>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#3b82f6' }}>{Math.floor(totalEstTime / 60)}h {totalEstTime % 60}m</div>
           <span style={{ fontSize: '0.78rem', color: 'var(--text-subtle)' }}>Total scheduled duration</span>
         </div>
 
         <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-muted)' }}>Focused Time Spent</span>
-          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#10b981' }}>{Math.round(totalActualTime / 60)}h {totalActualTime % 60}m</div>
+          <div style={{ fontSize: '2rem', fontWeight: 800, color: '#10b981' }}>{Math.floor(totalActualTime / 60)}h {totalActualTime % 60}m</div>
           <span style={{ fontSize: '0.78rem', color: 'var(--text-subtle)' }}>Logged via Pomodoro Studio</span>
         </div>
       </div>

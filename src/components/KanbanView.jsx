@@ -11,11 +11,11 @@ const COLUMNS = [
 ];
 
 export default function KanbanView({ 
-  tasks, 
+  tasks = [], 
   onUpdateTaskStatus, 
   onEditTask, 
   onDeleteTask, 
-  categories,
+  categories = [],
   onOpenNewTask
 }) {
   const getCategoryInfo = (catId) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import { Flame, Clock, Users, Trash2, Plus, Edit3, CheckSquare } from 'lucide-react';
 import { sounds } from '../utils/audio';
 
-export default function MatrixView({ tasks, onEditTask, onUpdateTaskStatus, onDeleteTask, onOpenNewTask }) {
+export default function MatrixView({ tasks = [], onEditTask, onUpdateTaskStatus, onDeleteTask, onOpenNewTask }) {
   // Quadrants logic
   const doFirst = tasks.filter(t => (t.priority === 'urgent' || t.priority === 'high') && t.status !== 'completed');
   const schedule = tasks.filter(t => t.priority === 'medium' && t.status !== 'completed');
