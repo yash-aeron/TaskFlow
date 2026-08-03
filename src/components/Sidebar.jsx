@@ -9,7 +9,7 @@ export default function Sidebar({
   tasks = [], allTags = [], activeTag, setActiveTag,
   themeMode = 'nerv'
 }) {
-  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
+  const isPersona = themeMode === 'persona';
 
   const views = [
     { id: 'list', label: isPersona ? 'SKiLL / TaSKs' : 'Tasks', icon: CheckSquare, count: tasks.length },
@@ -60,7 +60,6 @@ export default function Sidebar({
           return (
             <button key={v.id} className={`nav-item ${currentView === v.id ? 'active' : ''}`}
               onClick={() => setCurrentView(v.id)}
-              style={isPersona ? { fontFamily: "'Impact', sans-serif", fontSize: '13px', letterSpacing: '0.08em' } : {}}
             >
               <div className="nav-item-left"><Icon size={14} /><span>{v.label}</span></div>
               {v.count != null && <span className="badge">{v.count}</span>}

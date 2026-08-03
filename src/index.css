@@ -1,14 +1,14 @@
 /* ══════════════════════════════════════════════════════════════════════════════
-   TASKFLOW PRO — MULTI-THEME SYSTEM
-   Supports:
-   1. [data-theme-mode="nerv"]    : Authentic NERV MAGI Evangelion Interface
-   2. [data-theme-mode="persona"] : Persona 5 + Persona 3 Reload Combined Interface
+   TASKFLOW PRO — STRICT SEPARATED MULTI-THEME SYSTEM
+   
+   THEME 1: NERV UI      ([data-theme-mode="nerv"])    : Pure Evangelion MAGI Interface
+   THEME 2: PERSONA UI   ([data-theme-mode="persona"]) : Pure Persona 5 + 3 Reload Interface
    ══════════════════════════════════════════════════════════════════════════════ */
 
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Noto+Sans+JP:wght@700;900&family=Orbitron:wght@600;800;900&family=Impact&display=swap');
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   1. NERV MAGI DESIGN SYSTEM
+   1. PURE NERV MAGI DESIGN SYSTEM ([data-theme-mode="nerv"])
    ══════════════════════════════════════════════════════════════════════════════ */
 
 :root, [data-theme-mode="nerv"] {
@@ -63,8 +63,53 @@
   --priority-low-bg: rgba(0, 255, 102, 0.15);
 }
 
+/* NERV HAZARD STRIPES & MAGI HEX NODES */
+[data-theme-mode="nerv"] .hazard-stripe-yellow {
+  background: repeating-linear-gradient(
+    -45deg,
+    #ffe600,
+    #ffe600 12px,
+    #000000 12px,
+    #000000 24px
+  ) !important;
+  color: #000000 !important;
+}
+
+[data-theme-mode="nerv"] .hazard-stripe-red {
+  background: repeating-linear-gradient(
+    -45deg,
+    #ff0000,
+    #ff0000 12px,
+    #000000 12px,
+    #000000 24px
+  ) !important;
+  color: #ffffff !important;
+}
+
+[data-theme-mode="nerv"] .magi-hex-node {
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  background: #ff0000;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 16px; position: relative;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+}
+
+[data-theme-mode="nerv"] .nerv-frame {
+  position: relative; background: #050505; border: 1px solid var(--border-amber); padding: 14px;
+}
+[data-theme-mode="nerv"] .nerv-frame::before {
+  content: ''; position: absolute; top: -1px; left: -1px; width: 8px; height: 8px;
+  border-top: 2px solid var(--accent); border-left: 2px solid var(--accent);
+}
+[data-theme-mode="nerv"] .nerv-frame::after {
+  content: ''; position: absolute; bottom: -1px; right: -1px; width: 8px; height: 8px;
+  border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent);
+}
+
 /* ══════════════════════════════════════════════════════════════════════════════
-   2. PERSONA 5 + 3 RELOAD COMBINED DESIGN SYSTEM
+   2. PURE PERSONA 5 + 3 RELOAD DESIGN SYSTEM ([data-theme-mode="persona"])
    ══════════════════════════════════════════════════════════════════════════════ */
 
 [data-theme-mode="persona"] {
@@ -97,7 +142,7 @@
   --text-tertiary: #88aaff;
 
   --font: 'JetBrains Mono', monospace;
-  --font-heading: 'Impact', 'Orbitron', sans-serif;
+  --font-heading: 'Impact', sans-serif;
   --font-kanji: 'Noto Sans JP', sans-serif;
   --radius: 0px;
 
@@ -111,10 +156,7 @@
   --priority-low-bg: #0055ff;
 }
 
-/* ══════════════════════════════════════════════════════════════════════════════
-   PERSONA SPECIAL UTILITY CLASSES (SKEW, STARBURST, Ransom Note)
-   ══════════════════════════════════════════════════════════════════════════════ */
-
+/* PERSONA SKEWED CARDS & STARBURST BADGES */
 [data-theme-mode="persona"] .app-container {
   background: #04040c;
   background-image: 
@@ -123,179 +165,70 @@
   background-size: 16px 16px, 100% 100%;
 }
 
-[data-theme-mode="persona"] .persona-skew {
-  transform: skewX(-10deg) rotate(-1deg);
-}
-
+[data-theme-mode="persona"] .card, 
 [data-theme-mode="persona"] .persona-card {
-  background: #090918;
-  border: 2px solid #00e5ff;
-  box-shadow: -4px 4px 0px #e60012;
-  transform: rotate(-0.5deg);
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-[data-theme-mode="persona"] .persona-card:hover {
-  transform: rotate(-1deg) scale(1.01);
-  box-shadow: -6px 6px 0px #00e5ff, 0 0 15px rgba(0, 229, 255, 0.4);
-  border-color: #ffffff;
-}
-
-[data-theme-mode="persona"] .persona-starburst {
-  clip-path: polygon(0% 0%, 100% 0%, 95% 50%, 100% 100%, 0% 100%, 5% 50%);
-  background: #e60012;
-  color: #ffffff;
-  padding: 8px 16px;
-  font-family: 'Impact', sans-serif;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  background: #090918 !important;
+  border: 2px solid #00e5ff !important;
+  box-shadow: -4px 4px 0px #e60012 !important;
+  transform: rotate(-0.5deg) !important;
 }
 
 [data-theme-mode="persona"] .btn-primary {
   background: #e60012 !important;
   color: #ffffff !important;
   border: 2px solid #ffffff !important;
-  transform: skewX(-8deg);
+  transform: skewX(-8deg) !important;
   box-shadow: -3px 3px 0px #00e5ff !important;
   font-family: 'Impact', sans-serif !important;
   letter-spacing: 0.1em !important;
-}
-[data-theme-mode="persona"] .btn-primary:hover {
-  background: #00e5ff !important;
-  color: #000000 !important;
-  box-shadow: -4px 4px 0px #e60012 !important;
 }
 
 [data-theme-mode="persona"] .btn-secondary {
   background: #0a0b2e !important;
   color: #00e5ff !important;
   border: 2px solid #00e5ff !important;
-  transform: skewX(-6deg);
-}
-[data-theme-mode="persona"] .btn-secondary:hover {
-  background: #00e5ff !important;
-  color: #000000 !important;
+  transform: skewX(-6deg) !important;
 }
 
 [data-theme-mode="persona"] .nav-item {
-  background: #090918;
-  border: 1px solid #00e5ff;
-  color: #ffffff;
-  transform: skewX(-6deg);
-  margin-bottom: 4px;
-}
-[data-theme-mode="persona"] .nav-item:hover {
-  background: #00e5ff;
-  color: #000000;
-  border-color: #ffffff;
+  background: #090918 !important;
+  border: 1px solid #00e5ff !important;
+  color: #ffffff !important;
+  transform: skewX(-6deg) !important;
+  margin-bottom: 4px !important;
+  font-family: 'Impact', sans-serif !important;
 }
 [data-theme-mode="persona"] .nav-item.active {
-  background: #e60012;
-  color: #ffffff;
-  border-color: #ffffff;
-  box-shadow: -4px 4px 0px #00e5ff;
-  font-weight: 900;
+  background: #e60012 !important;
+  color: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow: -4px 4px 0px #00e5ff !important;
 }
 
 [data-theme-mode="persona"] .task-item {
-  background: #090918;
-  border: 2px solid #00e5ff;
-  border-left: 6px solid #e60012;
-  box-shadow: -3px 3px 0px rgba(0, 229, 255, 0.3);
-  transform: rotate(-0.3deg);
-}
-[data-theme-mode="persona"] .task-item:hover {
-  border-color: #ffffff;
-  border-left-color: #00e5ff;
-  box-shadow: -5px 5px 0px #e60012;
+  background: #090918 !important;
+  border: 2px solid #00e5ff !important;
+  border-left: 6px solid #e60012 !important;
+  box-shadow: -3px 3px 0px rgba(0, 229, 255, 0.3) !important;
+  transform: rotate(-0.3deg) !important;
 }
 
 [data-theme-mode="persona"] .pill-btn {
-  background: #090918;
-  border: 2px solid #00e5ff;
-  color: #00e5ff;
-  transform: skewX(-10deg);
-  font-family: 'Impact', sans-serif;
-  letter-spacing: 0.08em;
+  background: #090918 !important;
+  border: 2px solid #00e5ff !important;
+  color: #00e5ff !important;
+  transform: skewX(-10deg) !important;
+  font-family: 'Impact', sans-serif !important;
 }
 [data-theme-mode="persona"] .pill-btn.active {
-  background: #e60012;
-  color: #ffffff;
-  border-color: #ffffff;
-  box-shadow: -3px 3px 0px #00e5ff;
-}
-
-/* ══════════════════════════════════════════════════════════════════════════════
-   NERV SPECIFIC HAZARD & HEX CLASSES
-   ══════════════════════════════════════════════════════════════════════════════ */
-
-.hazard-stripe-yellow {
-  background: repeating-linear-gradient(
-    -45deg,
-    #ffe600,
-    #ffe600 12px,
-    #000000 12px,
-    #000000 24px
-  ) !important;
-  color: #000000 !important;
-}
-
-.hazard-stripe-red {
-  background: repeating-linear-gradient(
-    -45deg,
-    #ff0000,
-    #ff0000 12px,
-    #000000 12px,
-    #000000 24px
-  ) !important;
+  background: #e60012 !important;
   color: #ffffff !important;
+  border-color: #ffffff !important;
+  box-shadow: -3px 3px 0px #00e5ff !important;
 }
-
-.hazard-stripe-cyan {
-  background: repeating-linear-gradient(
-    -45deg,
-    #00ffcc,
-    #00ffcc 12px,
-    #000000 12px,
-    #000000 24px
-  ) !important;
-  color: #000000 !important;
-}
-
-.magi-hex-node {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  background: #ff0000;
-  color: #ffffff;
-  border: 2px solid #ffffff;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 16px; position: relative;
-  box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
-}
-
-.magi-hex-node-dark {
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  background: #0d0d0d; border: 2px solid #ff0000; color: #ff3333;
-}
-
-.nerv-frame {
-  position: relative; background: #050505; border: 1px solid var(--border-amber); padding: 14px;
-}
-.nerv-frame::before {
-  content: ''; position: absolute; top: -1px; left: -1px; width: 8px; height: 8px;
-  border-top: 2px solid var(--accent); border-left: 2px solid var(--accent);
-}
-.nerv-frame::after {
-  content: ''; position: absolute; bottom: -1px; right: -1px; width: 8px; height: 8px;
-  border-bottom: 2px solid var(--accent); border-right: 2px solid var(--accent);
-}
-
-.chevron-bar-container { display: flex; gap: 3px; align-items: center; overflow: hidden; }
-.chevron-segment { width: 12px; height: 16px; transform: skewX(-20deg); background: #151515; border: 1px solid #333333; }
-.chevron-segment.active-green { background: var(--terminal-green); box-shadow: 0 0 6px var(--terminal-green-glow); }
-.chevron-segment.active-red { background: var(--nerv-red); box-shadow: 0 0 6px var(--nerv-red-glow); }
-.chevron-segment.active-amber { background: var(--nerv-amber); box-shadow: 0 0 6px var(--nerv-amber-glow); }
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   RESET & BASE LAYOUT
+   RESET & BASE STRUCTURAL LAYOUT
    ══════════════════════════════════════════════════════════════════════════════ */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -343,11 +276,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .nav-brand { display: flex; align-items: center; gap: 10px; }
-.brand-icon {
-  width: 32px; height: 32px; background: var(--accent); color: #ffffff;
-  display: flex; align-items: center; justify-content: center; font-weight: 900;
-  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-}
 .brand-title {
   font-family: var(--font-heading); font-size: 14px; font-weight: 900;
   color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase;
@@ -406,8 +334,6 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font); font-size: 11px; font-weight: 800; text-transform: uppercase;
   letter-spacing: 0.06em; cursor: pointer; transition: all 0.1s;
 }
-.pill-btn:hover { background: var(--bg-hover); color: #ffffff; border-color: #ffffff; }
-.pill-btn.active { background: var(--accent); color: #ffffff; border-color: #ffffff; }
 
 .card { background: var(--bg-1); border: 1px solid var(--border); border-radius: 0; padding: 14px 16px; position: relative; }
 

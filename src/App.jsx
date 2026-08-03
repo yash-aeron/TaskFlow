@@ -290,6 +290,7 @@ export default function App() {
           allTags={allTags}
           activeTag={activeTag}
           setActiveTag={setActiveTag}
+          themeMode={settings?.themeMode || 'nerv'}
         />
 
         <div className="content-wrapper">

@@ -7,6 +7,7 @@ const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 
 export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWithDate, categories = [] }) {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
 
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
@@ -30,13 +31,10 @@ export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWith
     return categories.find(c => c.id === catId)?.color || '#6366f1';
   };
 
-  // Build grid calendar cells
   const calendarCells = [];
-  // Empty lead cells
   for (let i = 0; i < firstDayOfMonth; i++) {
     calendarCells.push(null);
   }
-  // Days of month
   for (let day = 1; day <= daysInMonth; day++) {
     const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     calendarCells.push({ day, dateStr: formattedDate });
@@ -44,14 +42,14 @@ export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWith
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      {/* Calendar Header Navigation & Banner */}
+      {/* Calendar Header */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
-        <div className="controls-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+        <div className={isPersona ? "persona-card controls-header" : "controls-header nerv-frame"} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-            <h2 style={{ fontSize: '1.3rem', fontFamily: 'var(--font-heading)', letterSpacing: '0.12em', color: 'var(--text-primary)', margin: 0 }}>
-              &gt;_ MAGI OPERATIONS SCHEDULE <span style={{ color: 'var(--nerv-red)', fontFamily: 'var(--font-kanji)' }}>// 東京3 NERV</span>
+            <h2 style={{ fontSize: '1.3rem', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', letterSpacing: '0.12em', color: isPersona ? '#00e5ff' : 'var(--text-primary)', margin: 0 }}>
+              {isPersona ? "PERSONA CALENDAR // MISSION SCHEDULE" : ">_ MAGI OPERATIONS SCHEDULE // 東京3 NERV"}
             </h2>
-            <div style={{ fontSize: '1.05rem', fontFamily: 'var(--font)', fontWeight: 800, color: 'var(--nerv-amber)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            <div style={{ fontSize: '1.05rem', fontFamily: 'var(--font)', fontWeight: 800, color: isPersona ? '#ffffff' : 'var(--nerv-amber)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
               /// {MONTHS[month]} {year}
             </div>
           </div>
@@ -69,14 +67,13 @@ export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWith
           </div>
         </div>
 
-        {/* Red Hazard Banner Underline */}
-        <div className="hazard-stripe-red" style={{ height: '6px', width: '100%', border: '1px solid #ff0000', boxShadow: '0 0 10px rgba(255, 0, 0, 0.4)' }} />
+        {!isPersona && <div className="hazard-stripe-red" style={{ height: '6px', width: '100%', border: '1px solid #ff0000' }} />}
       </div>
 
       {/* Days Header */}
       <div className="calendar-grid">
         {DAYS.map(d => (
-          <div key={d} className="calendar-day-header" style={{ fontFamily: 'var(--font)', textTransform: 'uppercase', color: 'var(--nerv-amber)', fontWeight: 800, letterSpacing: '0.1em' }}>
+          <div key={d} className="calendar-day-header" style={{ fontFamily: 'var(--font)', textTransform: 'uppercase', color: isPersona ? '#00e5ff' : 'var(--nerv-amber)', fontWeight: 800, letterSpacing: '0.1em' }}>
             {d}
           </div>
         ))}
@@ -99,35 +96,28 @@ export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWith
           return (
             <div 
               key={cell.dateStr} 
-              className={`calendar-day-cell ${isToday ? 'today nerv-frame' : ''}`}
+              className={`calendar-day-cell ${isToday ? 'today' : ''} ${isPersona ? 'persona-card' : ''}`}
               style={{
-                border: isToday ? '2px solid #ff0000' : '1px solid var(--border-amber)',
-                background: isToday ? 'rgba(255, 0, 0, 0.08)' : '#050505',
+                border: isToday ? (isPersona ? '2px solid #00e5ff' : '2px solid #ff0000') : '1px solid var(--border)',
+                background: isToday ? (isPersona ? 'rgba(0, 229, 255, 0.15)' : 'rgba(255, 0, 0, 0.08)') : '#050505',
                 position: 'relative'
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-                  <span className="calendar-day-number" style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, color: isToday ? '#ffffff' : 'var(--nerv-amber)' }}>
+                  <span className="calendar-day-number" style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, color: isToday ? '#ffffff' : 'var(--text-secondary)' }}>
                     {cell.day}
                   </span>
 
                   {isToday && (
                     <span 
-                      className="hazard-stripe-red" 
                       style={{ 
-                        fontSize: '9px', 
-                        fontWeight: 900, 
-                        padding: '1px 5px', 
-                        letterSpacing: '0.04em',
-                        border: '1px solid #ffffff',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '2px',
-                        fontFamily: 'var(--font)'
+                        fontSize: '9px', fontWeight: 900, padding: '1px 5px',
+                        background: isPersona ? '#e60012' : '#ff0000',
+                        color: '#ffffff', border: '1px solid #ffffff', fontFamily: 'var(--font)'
                       }}
                     >
-                      [ TODAY <span className="kanji-text">警報</span> ]
+                      {isPersona ? "[ TODAY ]" : "[ TODAY 警報 ]"}
                     </span>
                   )}
                 </div>
@@ -142,7 +132,7 @@ export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWith
                 </button>
               </div>
 
-              {/* Task Items on Date */}
+              {/* Task Items */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '4px', overflowY: 'auto', maxHeight: '110px' }}>
                 {dayTasks.map(task => {
                   const catColor = getCategoryColor(task.category);
@@ -153,21 +143,12 @@ export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWith
                       key={task.id}
                       onClick={() => onEditTask(task)}
                       style={{
-                        padding: '3px 6px',
-                        borderRadius: '0px',
-                        fontSize: '0.74rem',
-                        fontWeight: 700,
+                        padding: '3px 6px', fontSize: '0.74rem', fontWeight: 700,
                         backgroundColor: isCompleted ? 'rgba(0, 255, 102, 0.1)' : `${catColor}25`,
-                        borderLeft: `3px solid ${isCompleted ? 'var(--terminal-green)' : catColor}`,
-                        borderTop: '1px solid rgba(255,255,255,0.05)',
-                        borderBottom: '1px solid rgba(255,255,255,0.05)',
-                        borderRight: '1px solid rgba(255,255,255,0.05)',
+                        borderLeft: `3px solid ${isCompleted ? '#00ff66' : catColor}`,
                         color: isCompleted ? 'var(--text-subtle)' : 'var(--text-main)',
                         textDecoration: isCompleted ? 'line-through' : 'none',
-                        cursor: 'pointer',
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
+                        cursor: 'pointer', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                         fontFamily: 'var(--font)'
                       }}
                       title={`${task.title} (${task.priority})`}
