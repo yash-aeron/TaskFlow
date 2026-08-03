@@ -74,6 +74,13 @@ export default function App() {
     storage.saveHabits(habits);
   }, [habits]);
 
+  // Sync data and themeMode to Electron main process / widgets
+  useEffect(() => {
+    if (window.electronAPI) {
+      window.electronAPI.syncData({ tasks, habits, themeMode });
+    }
+  }, [tasks, habits, themeMode]);
+
   // Keyboard Shortcuts Listener
   useEffect(() => {
     const handleKeyDown = (e) => {

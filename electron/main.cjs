@@ -238,6 +238,8 @@ function updateTrayMenu() {
 
 // ── IPC Handlers ──────────────────────────────────────────────────────────────
 
+let appThemeMode = 'nerv';
+
 ipcMain.on('sync-data', (_, payload) => {
   if (payload && Array.isArray(payload.tasks)) {
     appTasks = payload.tasks;
@@ -245,7 +247,10 @@ ipcMain.on('sync-data', (_, payload) => {
   if (payload && Array.isArray(payload.habits)) {
     appHabits = payload.habits;
   }
-  broadcastToWidgets('data-update', { tasks: appTasks, habits: appHabits });
+  if (payload && typeof payload.themeMode === 'string') {
+    appThemeMode = payload.themeMode;
+  }
+  broadcastToWidgets('data-update', { tasks: appTasks, habits: appHabits, themeMode: appThemeMode });
 });
 
 ipcMain.handle('get-tasks',  () => appTasks);
@@ -335,7 +340,7 @@ app.whenReady().then(() => {
   createTray();
 
   const config = loadConfig();
-  const openWidgets = config.openWidgets ?? ['today', 'timer'];
+  const openWidgets = config.openWidgets ?? [];
   openWidgets.forEach(id => {
     if (WIDGETS[id]) createWidget(id);
   });

@@ -1,9 +1,8 @@
 /* ══════════════════════════════════════════════════════════════════════════════
-   TASKFLOW PRO WIDGETS — AUTHENTIC NERV / MAGI INTERFACE
-   Pitch Black Canvas (#000000), Hazard Caution Stripes, Corner Brackets
+   TASKFLOW WIDGETS — DUAL-THEME STYLING SYSTEM
    ══════════════════════════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Orbitron:wght@700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Orbitron:wght@700;900&family=Impact&display=swap');
 
 * {
   box-sizing: border-box;
@@ -22,6 +21,7 @@ body {
   width: 100vw;
 }
 
+/* NERV DEFAULT WIDGET STYLE */
 .widget-container {
   width: 100%;
   height: 100%;
@@ -34,7 +34,6 @@ body {
   position: relative;
 }
 
-/* Yellow/Black Caution Hazard Line on top header */
 .widget-header {
   height: 32px;
   background: repeating-linear-gradient(
@@ -98,7 +97,6 @@ body {
   background: #000000;
 }
 
-/* NERV Corner Bracket Frame */
 .widget-item-row {
   display: flex;
   align-items: center;
@@ -168,7 +166,72 @@ body {
   box-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
 }
 
-/* Scrollbar */
+/* PERSONA WIDGET OVERRIDES */
+[data-theme-mode="persona"] .widget-container {
+  background: #090918 !important;
+  border: 2px solid #00e5ff !important;
+  box-shadow: -4px 4px 0px #e60012 !important;
+}
+
+[data-theme-mode="persona"] .widget-header {
+  background: linear-gradient(90deg, #e60012, #00e5ff) !important;
+  border-bottom: 2px solid #00e5ff !important;
+}
+
+[data-theme-mode="persona"] .widget-title {
+  background: #090918 !important;
+  color: #00e5ff !important;
+  border: 1px solid #00e5ff !important;
+  font-family: 'Impact', sans-serif !important;
+  transform: skewX(-6deg) !important;
+}
+
+[data-theme-mode="persona"] .widget-close {
+  background: #090918 !important;
+  border: 1px solid #00e5ff !important;
+  color: #00e5ff !important;
+}
+[data-theme-mode="persona"] .widget-close:hover {
+  background: #e60012 !important;
+  color: #ffffff !important;
+}
+
+[data-theme-mode="persona"] .widget-body {
+  background: #090918 !important;
+}
+
+[data-theme-mode="persona"] .widget-item-row {
+  background: #141636 !important;
+  border: 1px solid #00e5ff !important;
+  border-left: 4px solid #e60012 !important;
+  transform: rotate(-0.3deg) !important;
+}
+
+[data-theme-mode="persona"] .widget-checkbox {
+  border-color: #00e5ff !important;
+  background: #090918 !important;
+}
+[data-theme-mode="persona"] .widget-checkbox.checked {
+  background: #00e5ff !important;
+  border-color: #00e5ff !important;
+  color: #000000 !important;
+}
+
+[data-theme-mode="persona"] .widget-input {
+  background: #090918 !important;
+  border: 1px solid #00e5ff !important;
+  color: #ffffff !important;
+}
+
+[data-theme-mode="persona"] .widget-btn {
+  background: #e60012 !important;
+  color: #ffffff !important;
+  border: 1px solid #00e5ff !important;
+  transform: skewX(-6deg) !important;
+  box-shadow: -3px 3px 0px #00e5ff !important;
+  font-family: 'Impact', sans-serif !important;
+}
+
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: #000000; }
 ::-webkit-scrollbar-thumb { background: #ff0000; }
