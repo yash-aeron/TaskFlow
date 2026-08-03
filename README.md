@@ -4,16 +4,6 @@ TaskFlow is an advanced, high-performance desktop productivity suite built with 
 
 ---
 
-## Interface Showcase
-
-![TaskFlow NERV MAGI UI Mode](docs/assets/taskflow_nerv_ui.jpg)
-*TaskFlow NERV MAGI Mode — Pitch-black canvas, hazard caution warning lines, MAGI supercomputer nodes, Japanese kanji stencil alerts, and dense tactical task matrix.*
-
-![TaskFlow Persona Reload UI Mode](docs/assets/taskflow_persona_ui.jpg)
-*TaskFlow Persona 5 + 3 Reload Theme — Phantom Red and Electric Cyan skewed panels, ransomware cutout typography, starburst badges, and Focus Studio.*
-
----
-
 ## Technical Overview & Key Features
 
 ### Dual Visual Theme Engine
@@ -67,8 +57,6 @@ TaskFlow includes four frameless, translucent, always-on-top floating desktop wi
 ## Architecture & File Structure
 
 ```text
-├── docs/
-│   └── assets/              # Showcase screenshots for GitHub and LinkedIn media
 ├── electron/
 │   ├── assets/              # Native application and tray icon assets
 │   ├── main.cjs             # Electron main process (window creation, tray, IPC routing)
