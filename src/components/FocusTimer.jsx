@@ -210,14 +210,14 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
         </div>
 
         {/* Chevron Progress Bar */}
-        <div className="chevron-bar-container" style={{ width: '100%', height: '12px', marginTop: '6px' }}>
+        <div className="chevron-bar-container" style={{ display: 'flex', gap: '3px', width: '100%', height: '12px', marginTop: '6px' }}>
           {Array.from({ length: 16 }).map((_, i) => {
             const isActiveSegment = i < Math.round((progressPercent / 100) * 16);
             return (
               <div 
                 key={i} 
                 className={`chevron-segment ${isActiveSegment ? (isPersona ? 'active-green' : 'active-red') : ''}`}
-                style={{ flex: 1, height: '12px', background: isActiveSegment ? (isPersona ? '#00e5ff' : '#ff0000') : '#111111' }}
+                style={{ flex: 1, height: '12px', background: isActiveSegment ? (isPersona ? '#00e5ff' : '#ff0000') : '#222222' }}
               />
             );
           })}
