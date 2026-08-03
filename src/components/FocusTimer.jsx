@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Play, Pause, RotateCcw, SkipForward, Award, Clock } from 'lucide-react';
+import { Play, Pause, RotateCcw, SkipForward, Award, Clock, Target } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { sounds } from '../utils/audio';
 
@@ -93,35 +93,39 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
             className={`pill-btn ${mode === m ? 'active' : ''}`}
             onClick={() => changeMode(m)}
             style={isPersona ? {
-              padding: '6px 16px', fontSize: '12px', fontFamily: "'Impact', sans-serif",
-              background: mode === m ? '#e60012' : '#090918',
+              padding: '6px 18px', fontSize: '12px', fontFamily: "'Impact', sans-serif",
+              background: mode === m ? '#e60012' : '#0e0f24',
               color: mode === m ? '#ffffff' : '#00e5ff',
               border: '2px solid #00e5ff',
               transform: 'skewX(-10deg)',
               boxShadow: mode === m ? '-3px 3px 0px #00e5ff' : 'none'
-            } : {}}
+            } : {
+              background: mode === m ? '#ff0000' : '#0d0d0d',
+              color: '#ffffff',
+              border: mode === m ? '1px solid #ffffff' : '1px solid #ff8800'
+            }}
           >
             {isPersona ? (m === 'work' ? 'SKiLL FOCUS' : m === 'shortBreak' ? 'STANDBY' : 'RELOAD') : MODES[m].label}
           </button>
         ))}
       </div>
 
-      {/* Timer Circle Glass Card */}
+      {/* Unified Single Tactical Timer Card */}
       <div className={isPersona ? "persona-card" : "card nerv-frame"} style={{
-        padding: '30px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px',
-        background: isPersona ? '#0e0f24' : '#050505',
-        overflow: 'hidden'
+        padding: '28px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px',
+        background: isPersona ? '#0e0f24' : '#000000', border: isPersona ? '2px solid #00e5ff' : '1px solid #ff8800'
       }}>
         {/* Task Selection Dropdown */}
-        <div style={{ width: '100%', maxWidth: '440px' }}>
-          <label className="form-label" style={{ textAlign: 'center', display: 'block', marginBottom: '6px', color: isPersona ? '#00e5ff' : 'var(--nerv-amber)' }}>
-            {isPersona ? "[ TARGET MISSION ] SELECT TARGET" : "[ TARGET ACQUISITION ] SELECT ANGEL / OPERATION TARGET"}
+        <div style={{ width: '100%', maxWidth: '460px' }}>
+          <label className="form-label" style={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyCenter: 'center', gap: '6px', marginBottom: '8px', color: isPersona ? '#00e5ff' : '#ff8800' }}>
+            <Target size={14} />
+            <span>{isPersona ? "[ TARGET MISSION ] SELECT MISSION TARGET" : "[ TARGET ACQUISITION ] SELECT ANGEL / OPERATION TARGET"}</span>
           </label>
           <select
             className="form-select"
             value={selectedTaskId}
             onChange={(e) => setSelectedTaskId(e.target.value)}
-            style={isPersona ? { background: '#090918', color: '#00e5ff', border: '2px solid #00e5ff' } : {}}
+            style={isPersona ? { background: '#04040c', color: '#00e5ff', border: '2px solid #00e5ff' } : { background: '#0a0a0a', color: '#ffffff', border: '1px solid #ff8800' }}
           >
             <option value="">{isPersona ? "-- SELECT MISSION TARGET --" : "-- SELECT ANGEL OPERATION --"}</option>
             {tasks.filter(t => t.status !== 'completed').map(t => (
@@ -130,29 +134,30 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
           </select>
         </div>
 
-        {/* Display Timer */}
+        {/* Display Timer Clock */}
         <div 
           style={{ 
-            fontSize: '5rem', 
+            fontSize: '5.5rem', 
             fontWeight: 900, 
             fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)',
-            letterSpacing: '4px',
+            letterSpacing: '6px',
             color: isPersona ? '#00e5ff' : currentModeInfo.color,
-            textShadow: isPersona ? '-4px 4px 0px #e60012' : `0 0 20px ${currentModeInfo.color}`,
-            background: isPersona ? '#090918' : '#000000',
-            border: isPersona ? '2px solid #00e5ff' : '2px solid #ff6600',
-            padding: '10px 24px',
+            textShadow: isPersona ? '-5px 5px 0px #e60012' : `0 0 25px ${currentModeInfo.color}`,
+            background: isPersona ? '#04040c' : '#080808',
+            border: isPersona ? '2px solid #00e5ff' : '2px solid #ff0000',
+            padding: '12px 32px',
             width: '100%',
-            textAlign: 'center'
+            textAlign: 'center',
+            boxShadow: isPersona ? '-6px 6px 0px #e60012' : '0 0 15px rgba(255,0,0,0.3)'
           }}
         >
           {formatTime(timeLeft)}
         </div>
 
         {/* Progress chevrons */}
-        <div className="chevron-bar-container" style={{ width: '90%', height: '14px', margin: '4px 0' }}>
-          {Array.from({ length: 14 }).map((_, i) => {
-            const isActive = i < Math.round((progressPercent / 100) * 14);
+        <div className="chevron-bar-container" style={{ width: '100%', height: '14px', margin: '2px 0' }}>
+          {Array.from({ length: 16 }).map((_, i) => {
+            const isActive = i < Math.round((progressPercent / 100) * 16);
             return (
               <div 
                 key={i} 
@@ -163,34 +168,39 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
           })}
         </div>
 
-        {/* Controls */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '8px', background: 'transparent' }}>
+        {/* Unified Integrated Controls (No Dark Overlay Box) */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '20px', width: '100%', marginTop: '6px' }}>
           <button 
             className="btn-icon" 
             onClick={resetTimer} 
             title="Reset Timer"
             style={{
-              background: isPersona ? '#090918' : '#000000',
-              border: isPersona ? '1px solid #00e5ff' : '1px solid #ff6600',
-              color: isPersona ? '#00e5ff' : '#ff8800'
+              width: '42px', height: '42px',
+              background: isPersona ? '#04040c' : '#0d0d0d',
+              border: isPersona ? '2px solid #00e5ff' : '1px solid #ff8800',
+              color: isPersona ? '#00e5ff' : '#ff8800',
+              transform: isPersona ? 'skewX(-6deg)' : 'none'
             }}
           >
-            <RotateCcw size={18} />
+            <RotateCcw size={20} />
           </button>
 
           <button 
-            className="btn btn-primary" 
+            className={`btn btn-primary ${!isPersona ? 'hazard-stripe-red' : ''}`}
             style={{ 
-              padding: '12px 40px', fontSize: '1.2rem',
+              padding: '14px 48px', fontSize: '1.3rem',
               background: isPersona ? '#e60012' : '#ff0000',
               color: '#ffffff',
-              border: isPersona ? '2px solid #00e5ff' : '1px solid #ffffff',
-              boxShadow: isPersona ? '-4px 4px 0px #00e5ff' : '0 0 14px rgba(255,0,0,0.6)'
+              border: isPersona ? '2px solid #ffffff' : '1px solid #ffffff',
+              boxShadow: isPersona ? '-5px 5px 0px #00e5ff' : '0 0 16px rgba(255,0,0,0.8)',
+              fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)',
+              transform: isPersona ? 'skewX(-10deg)' : 'none',
+              letterSpacing: '0.12em'
             }}
             onClick={toggleTimer}
           >
-            {isActive ? <Pause size={22} /> : <Play size={22} />}
-            <span>{isActive ? 'PAUSE' : 'EXECUTE'}</span>
+            {isActive ? <Pause size={24} /> : <Play size={24} />}
+            <span>{isActive ? 'PAUSE' : (isPersona ? 'ALL-OUT ATTACK' : 'EXECUTE')}</span>
           </button>
 
           <button 
@@ -198,12 +208,14 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
             onClick={() => setTimeLeft(0)} 
             title="Skip Interval"
             style={{
-              background: isPersona ? '#090918' : '#000000',
-              border: isPersona ? '1px solid #00e5ff' : '1px solid #ff6600',
-              color: isPersona ? '#00e5ff' : '#ff8800'
+              width: '42px', height: '42px',
+              background: isPersona ? '#04040c' : '#0d0d0d',
+              border: isPersona ? '2px solid #00e5ff' : '1px solid #ff8800',
+              color: isPersona ? '#00e5ff' : '#ff8800',
+              transform: isPersona ? 'skewX(-6deg)' : 'none'
             }}
           >
-            <SkipForward size={18} />
+            <SkipForward size={20} />
           </button>
         </div>
       </div>
@@ -211,7 +223,7 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
       {/* Session Stats */}
       <div style={{ display: 'flex', gap: '16px', width: '100%' }}>
         <div className={isPersona ? "persona-card" : "card nerv-frame"} style={{ flex: 1, textAlign: 'center', padding: '16px' }}>
-          <Award size={22} style={{ color: isPersona ? '#00e5ff' : '#ff6600', margin: '0 auto 6px' }} />
+          <Award size={22} style={{ color: isPersona ? '#00e5ff' : '#ff8800', margin: '0 auto 6px' }} />
           <div style={{ fontSize: '1.6rem', fontWeight: 900, fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#ffffff' : '#ff0000' }}>
             {completedSessions}
           </div>
