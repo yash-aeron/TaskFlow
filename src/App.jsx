@@ -15,11 +15,13 @@ import ShortcutsModal from './components/ShortcutsModal';
 import GraphView from './components/GraphView';
 import MatrixView from './components/MatrixView';
 import TimelineView from './components/TimelineView';
+import SplashIntro from './components/SplashIntro';
 
 import { storage, demoTasks, demoCategories, demoHabits } from './utils/storage';
 import { sounds } from './utils/audio';
 
 export default function App() {
+  const [showSplash, setShowSplash] = useState(true);
   const [tasks, setTasks] = useState(() => storage.loadTasks());
   const [categories, setCategories] = useState(() => storage.loadCategories());
   const [habits, setHabits] = useState(() => storage.loadHabits());
@@ -246,6 +248,7 @@ export default function App() {
 
   return (
     <div className="app-container">
+      {showSplash && <SplashIntro onComplete={() => setShowSplash(false)} />}
       <Navbar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
