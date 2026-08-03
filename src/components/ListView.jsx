@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { 
-  CheckCircle, 
   Clock, 
   Calendar, 
   Edit3, 
@@ -104,12 +103,55 @@ export default function ListView({
 
   const completedTasksCount = tasks.filter(t => t.status === 'completed').length;
 
+  const renderThreatBadge = (priority) => {
+    switch (priority) {
+      case 'urgent':
+        return (
+          <span className="priority-badge urgent" style={{ letterSpacing: '0.06em' }}>
+            [ <span className="kanji-text">警報</span> URGENT ]
+          </span>
+        );
+      case 'high':
+        return (
+          <span className="priority-badge high" style={{ letterSpacing: '0.06em' }}>
+            [ <span className="kanji-text">警報</span> HIGH ]
+          </span>
+        );
+      case 'medium':
+        return (
+          <span className="priority-badge medium" style={{ letterSpacing: '0.06em' }}>
+            [ MEDIUM ]
+          </span>
+        );
+      case 'low':
+        return (
+          <span className="priority-badge low" style={{ letterSpacing: '0.06em' }}>
+            [ LOW ]
+          </span>
+        );
+      default:
+        return <span className="priority-badge low">[ {priority?.toUpperCase()} ]</span>;
+    }
+  };
+
+  const getTaskLeftBorderColor = (task) => {
+    if (task.status === 'completed') return 'var(--terminal-green)';
+    switch (task.priority) {
+      case 'urgent': return '#ff0000';
+      case 'high': return '#ff6600';
+      case 'medium': return '#ffe600';
+      case 'low': return '#00ff66';
+      default: return '#ff6600';
+    }
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%' }}>
       {/* Filter and Sort Controls Bar */}
-      <div className="controls-header">
-        <div className="filter-group">
+      <div className="controls-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '12px' }}>
+        <div className="filter-group" style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
           {['all', 'active', 'completed', 'urgent', 'today'].map((f) => {
+            const isActive = filter === f;
             const count = tasks.filter(t => {
               if (f === 'active') return t.status !== 'completed';
               if (f === 'completed') return t.status === 'completed';
@@ -121,11 +163,28 @@ export default function ListView({
             return (
               <button
                 key={f}
-                className={`pill-btn ${filter === f ? 'active' : ''}`}
+                className={`pill-btn ${isActive ? 'active' : ''}`}
                 onClick={() => { sounds.playClick(); setFilter(f); }}
+                style={{
+                  fontFamily: 'var(--font)',
+                  fontSize: '11px',
+                  fontWeight: 800,
+                  letterSpacing: '0.08em',
+                  padding: '6px 12px',
+                  background: isActive ? '#0a0900' : '#050505',
+                  color: isActive ? '#ffe600' : 'var(--text-secondary)',
+                  border: isActive ? '2px solid #ffe600' : '1px solid var(--border)',
+                  boxShadow: isActive ? '0 0 10px rgba(255, 230, 0, 0.4)' : 'none',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  borderRadius: 0,
+                  transition: 'all 0.15s ease'
+                }}
               >
-                <span>{f.charAt(0).toUpperCase() + f.slice(1)}</span>
-                <span style={{ opacity: 0.75, fontSize: '0.75rem' }}>({count})</span>
+                <span>{f.toUpperCase()}</span>
+                <span style={{ opacity: 0.8, fontSize: '0.75rem', color: isActive ? '#ffe600' : 'var(--text-tertiary)' }}>({count})</span>
               </button>
             );
           })}
@@ -159,7 +218,7 @@ export default function ListView({
       {/* Task Cards List */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%' }}>
         {sortedTasks.length === 0 ? (
-          <div className="empty-state-card">
+          <div className="empty-state-card nerv-frame">
             <div className="empty-icon-wrapper">
               <Inbox size={32} />
             </div>
@@ -193,18 +252,44 @@ export default function ListView({
             const completedSubtasks = task.subtasks?.filter(st => st.completed).length || 0;
             const subtaskProgress = subtaskCount > 0 ? Math.round((completedSubtasks / subtaskCount) * 100) : 0;
             const isExpanded = expandedTasks[task.id];
+            const leftBorderColor = getTaskLeftBorderColor(task);
 
             return (
               <div 
                 key={task.id} 
-                className={`task-item priority-${task.priority} ${isCompleted ? 'completed' : ''}`}
+                className={`task-item nerv-frame priority-${task.priority} ${isCompleted ? 'completed' : ''}`}
+                style={{ borderLeft: `4px solid ${leftBorderColor}` }}
               >
                 <div className="task-header">
+                  {/* Hexagon Checkbox */}
                   <div 
-                    className={`checkbox-custom ${isCompleted ? 'checked' : ''}`}
+                    className={`hex-checkbox ${isCompleted ? 'checked' : ''}`}
                     onClick={(e) => handleTaskCheckbox(task, e)}
+                    style={{
+                      width: '24px',
+                      height: '24px',
+                      position: 'relative',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      flexShrink: 0
+                    }}
+                    title={isCompleted ? "Mark operational" : "Mark completed"}
                   >
-                    {isCompleted && <Check size={14} />}
+                    <svg width="24" height="24" viewBox="0 0 24 24" style={{ position: 'absolute', inset: 0 }}>
+                      <polygon 
+                        points="6,2 18,2 23,12 18,22 6,22 1,12" 
+                        fill={isCompleted ? 'rgba(0, 255, 102, 0.25)' : '#0d0d0d'}
+                        stroke={isCompleted ? '#00ff66' : '#ff6600'}
+                        strokeWidth="2"
+                      />
+                    </svg>
+                    {isCompleted ? (
+                      <Check size={14} style={{ color: '#00ff66', strokeWidth: 3, zIndex: 2 }} />
+                    ) : (
+                      <div style={{ width: '6px', height: '6px', background: '#ff6600', clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)', zIndex: 2 }} />
+                    )}
                   </div>
 
                   <div className="task-title-group">
@@ -218,9 +303,8 @@ export default function ListView({
                         {cat.name}
                       </span>
 
-                      <span className={`priority-badge ${task.priority}`}>
-                        {task.priority}
-                      </span>
+                      {/* Threat Badge */}
+                      {renderThreatBadge(task.priority)}
                     </div>
 
                     {task.description && (
@@ -250,7 +334,7 @@ export default function ListView({
                   </div>
                 </div>
 
-                {/* Subtask Progress Bar if available */}
+                {/* Subtask Progress Bar rendered as multi-segment chevrons /// /// /// */}
                 {subtaskCount > 0 && (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '2px' }}>
                     <div 
@@ -261,10 +345,36 @@ export default function ListView({
                         {isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
                         <span>SUB-OPS ({completedSubtasks}/{subtaskCount})</span>
                       </div>
-                      <span>{subtaskProgress}%</span>
+                      <span style={{ fontFamily: 'var(--font)', color: 'var(--nerv-amber)', fontWeight: 700 }}>
+                        {subtaskProgress}%
+                      </span>
                     </div>
-                    <div className="progress-bar-container">
-                      <div className="progress-bar-fill" style={{ width: `${subtaskProgress}%` }} />
+
+                    {/* Chevron Bar */}
+                    <div className="chevron-bar-container" style={{ display: 'flex', gap: '3px', alignItems: 'center' }}>
+                      {Array.from({ length: 12 }).map((_, idx) => {
+                        const threshold = ((idx + 1) / 12) * 100;
+                        const isActive = subtaskProgress >= threshold || (subtaskProgress > 0 && idx === 0);
+                        const isComplete = subtaskProgress === 100;
+                        return (
+                          <span
+                            key={idx}
+                            className={`chevron-segment ${isActive ? (isComplete ? 'active-green' : 'active-amber') : ''}`}
+                            style={{
+                              display: 'inline-block',
+                              width: '12px',
+                              height: '14px',
+                              transform: 'skewX(-20deg)',
+                              background: isActive ? (isComplete ? 'var(--terminal-green)' : 'var(--nerv-amber)') : '#1a1a1a',
+                              border: `1px solid ${isActive ? 'transparent' : '#333333'}`,
+                              boxShadow: isActive ? `0 0 6px ${isComplete ? 'var(--terminal-green-glow)' : 'var(--nerv-amber-glow)'}` : 'none'
+                            }}
+                          />
+                        );
+                      })}
+                      <span style={{ fontFamily: 'var(--font)', fontSize: '0.72rem', color: 'var(--text-subtle)', marginLeft: '4px', letterSpacing: '0.1em' }}>
+                        /// /// ///
+                      </span>
                     </div>
 
                     {/* Subtask List Drawer */}
@@ -272,7 +382,7 @@ export default function ListView({
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '4px', paddingLeft: '20px' }}>
                         {task.subtasks.map(st => (
                           <div key={st.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.84rem' }}>
-                            <span style={{ color: st.completed ? 'var(--text-main)' : 'var(--text-subtle)' }}>
+                            <span style={{ color: st.completed ? 'var(--terminal-green)' : 'var(--text-subtle)' }}>
                               {st.completed ? '✓' : '•'}
                             </span>
                             <span style={{ textDecoration: st.completed ? 'line-through' : 'none', color: st.completed ? 'var(--text-subtle)' : 'var(--text-main)' }}>

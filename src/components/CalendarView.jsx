@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, Plus, Calendar as CalendarIcon, Clock } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { sounds } from '../utils/audio';
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -44,34 +44,41 @@ export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWith
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-      {/* Calendar Header Navigation */}
-      <div className="controls-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-          <h2 style={{ fontSize: '1.4rem', fontFamily: 'var(--font-heading)', letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-            &gt;_ OPERATIONS SCHEDULE
-          </h2>
-          <span style={{ fontSize: '1.1rem', fontFamily: 'var(--font-heading)', textTransform: 'uppercase', color: 'var(--text-secondary)' }}>
-            {'// '}{MONTHS[month]} {year}
-          </span>
+      {/* Calendar Header Navigation & Banner */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%' }}>
+        <div className="controls-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <h2 style={{ fontSize: '1.3rem', fontFamily: 'var(--font-heading)', letterSpacing: '0.12em', color: 'var(--text-primary)', margin: 0 }}>
+              &gt;_ MAGI OPERATIONS SCHEDULE <span style={{ color: 'var(--nerv-red)', fontFamily: 'var(--font-kanji)' }}>// 東京3 NERV</span>
+            </h2>
+            <div style={{ fontSize: '1.05rem', fontFamily: 'var(--font)', fontWeight: 800, color: 'var(--nerv-amber)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+              /// {MONTHS[month]} {year}
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <button className="btn-icon" onClick={prevMonth} title="Previous Month">
+              <ChevronLeft size={18} />
+            </button>
+            <button className="btn btn-secondary" onClick={() => setCurrentDate(new Date())}>
+              TODAY
+            </button>
+            <button className="btn-icon" onClick={nextMonth} title="Next Month">
+              <ChevronRight size={18} />
+            </button>
+          </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <button className="btn-icon" onClick={prevMonth} title="Previous Month">
-            <ChevronLeft size={18} />
-          </button>
-          <button className="btn btn-secondary" onClick={() => setCurrentDate(new Date())}>
-            Today
-          </button>
-          <button className="btn-icon" onClick={nextMonth} title="Next Month">
-            <ChevronRight size={18} />
-          </button>
-        </div>
+        {/* Red Hazard Banner Underline */}
+        <div className="hazard-stripe-red" style={{ height: '6px', width: '100%', border: '1px solid #ff0000', boxShadow: '0 0 10px rgba(255, 0, 0, 0.4)' }} />
       </div>
 
       {/* Days Header */}
       <div className="calendar-grid">
         {DAYS.map(d => (
-          <div key={d} className="calendar-day-header" style={{ fontFamily: 'var(--font)', textTransform: 'uppercase' }}>{d}</div>
+          <div key={d} className="calendar-day-header" style={{ fontFamily: 'var(--font)', textTransform: 'uppercase', color: 'var(--nerv-amber)', fontWeight: 800, letterSpacing: '0.1em' }}>
+            {d}
+          </div>
         ))}
 
         {/* Day Cells */}
@@ -81,7 +88,7 @@ export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWith
               <div 
                 key={`empty-${idx}`} 
                 className="calendar-day-cell" 
-                style={{ opacity: 0.3, background: 'transparent', borderColor: 'transparent' }} 
+                style={{ opacity: 0.2, background: 'transparent', borderColor: 'transparent' }} 
               />
             );
           }
@@ -92,11 +99,39 @@ export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWith
           return (
             <div 
               key={cell.dateStr} 
-              className={`calendar-day-cell ${isToday ? 'today' : ''}`}
+              className={`calendar-day-cell ${isToday ? 'today nerv-frame' : ''}`}
+              style={{
+                border: isToday ? '2px solid #ff0000' : '1px solid var(--border-amber)',
+                background: isToday ? 'rgba(255, 0, 0, 0.08)' : '#050505',
+                position: 'relative'
+              }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span className="calendar-day-number">{cell.day}</span>
-                
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '4px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+                  <span className="calendar-day-number" style={{ fontFamily: 'var(--font-heading)', fontWeight: 800, color: isToday ? '#ffffff' : 'var(--nerv-amber)' }}>
+                    {cell.day}
+                  </span>
+
+                  {isToday && (
+                    <span 
+                      className="hazard-stripe-red" 
+                      style={{ 
+                        fontSize: '9px', 
+                        fontWeight: 900, 
+                        padding: '1px 5px', 
+                        letterSpacing: '0.04em',
+                        border: '1px solid #ffffff',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '2px',
+                        fontFamily: 'var(--font)'
+                      }}
+                    >
+                      [ TODAY <span className="kanji-text">警報</span> ]
+                    </span>
+                  )}
+                </div>
+
                 <button 
                   className="btn-icon" 
                   style={{ width: '20px', height: '20px', padding: 0 }}
@@ -119,17 +154,21 @@ export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWith
                       onClick={() => onEditTask(task)}
                       style={{
                         padding: '3px 6px',
-                        borderRadius: '4px',
+                        borderRadius: '0px',
                         fontSize: '0.74rem',
-                        fontWeight: 600,
-                        backgroundColor: `${catColor}25`,
-                        borderLeft: `3px solid ${catColor}`,
+                        fontWeight: 700,
+                        backgroundColor: isCompleted ? 'rgba(0, 255, 102, 0.1)' : `${catColor}25`,
+                        borderLeft: `3px solid ${isCompleted ? 'var(--terminal-green)' : catColor}`,
+                        borderTop: '1px solid rgba(255,255,255,0.05)',
+                        borderBottom: '1px solid rgba(255,255,255,0.05)',
+                        borderRight: '1px solid rgba(255,255,255,0.05)',
                         color: isCompleted ? 'var(--text-subtle)' : 'var(--text-main)',
                         textDecoration: isCompleted ? 'line-through' : 'none',
                         cursor: 'pointer',
                         whiteSpace: 'nowrap',
                         overflow: 'hidden',
-                        textOverflow: 'ellipsis'
+                        textOverflow: 'ellipsis',
+                        fontFamily: 'var(--font)'
                       }}
                       title={`${task.title} (${task.priority})`}
                     >

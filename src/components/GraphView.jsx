@@ -22,15 +22,15 @@ export default function GraphView({ tasks, categories, onEditTask }) {
     const cx = width / 2;
     const cy = height / 2;
 
-    // Category nodes — placed in a ring around center
+    // Category nodes — MAGI Red (#ff0000) / NERV Amber (#ff6600)
     categories.forEach((cat, i) => {
-      const angle = (i / categories.length) * Math.PI * 2;
+      const angle = (i / Math.max(categories.length, 1)) * Math.PI * 2;
       const r = Math.min(width, height) * 0.25;
       nodes.push({
         id: `cat-${cat.id}`,
-        label: cat.name,
+        label: `[CAT] ${cat.name}`,
         type: 'category',
-        color: cat.color || '#FF6B00',
+        color: cat.color || '#ff0000', // MAGI Red
         radius: 20,
         x: cx + Math.cos(angle) * r,
         y: cy + Math.sin(angle) * r,
@@ -38,18 +38,18 @@ export default function GraphView({ tasks, categories, onEditTask }) {
       });
     });
 
-    // Tag nodes
+    // Tag nodes — Chevron Cyan (#00ffcc)
     const tagSet = new Set();
     tasks.forEach(t => t.tags?.forEach(tag => tagSet.add(tag)));
     const tagArr = Array.from(tagSet);
     tagArr.forEach((tag, i) => {
-      const angle = (i / tagArr.length) * Math.PI * 2 + 0.5;
+      const angle = (i / Math.max(tagArr.length, 1)) * Math.PI * 2 + 0.5;
       const r = Math.min(width, height) * 0.35;
       nodes.push({
         id: `tag-${tag}`,
         label: `#${tag}`,
         type: 'tag',
-        color: '#FF6B00',
+        color: '#00ffcc', // Chevron Cyan
         radius: 11,
         x: cx + Math.cos(angle) * r,
         y: cy + Math.sin(angle) * r,
@@ -57,10 +57,16 @@ export default function GraphView({ tasks, categories, onEditTask }) {
       });
     });
 
-    // Task nodes
+    // Task nodes — MAGI Red (#ff0000) for Urgent, NERV Amber (#ff6600) for Active, Sync Green (#00ff66) for Completed
     tasks.forEach((t, i) => {
       const isCompleted = t.status === 'completed';
-      const color = isCompleted ? '#00cc34' : '#8B5CF6';
+      let color = '#ff6600'; // NERV Amber default
+      if (isCompleted) {
+        color = '#00ff66'; // Sync Green
+      } else if (t.priority === 'urgent' || t.priority === 'high') {
+        color = '#ff0000'; // MAGI Red
+      }
+
       const angle = (i / Math.max(tasks.length, 1)) * Math.PI * 2 + 1;
       const r = Math.min(width, height) * 0.15;
 
@@ -166,18 +172,36 @@ export default function GraphView({ tasks, categories, onEditTask }) {
         n.y = Math.max(n.radius + 4, Math.min(height - n.radius - 4, n.y));
       });
 
-      // Clear
-      ctx.clearRect(0, 0, width, height);
+      // Clear pitch black canvas
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(0, 0, width, height);
 
-      // Draw links
+      // Draw background grid lines (MAGI Hex/CRT style)
+      ctx.strokeStyle = 'rgba(255, 0, 0, 0.07)';
+      ctx.lineWidth = 1;
+      const gridSize = 40;
+      for (let x = 0; x < width; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+        ctx.stroke();
+      }
+      for (let y = 0; y < height; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+        ctx.stroke();
+      }
+
+      // Draw links with NERV CRT glow effect
       links.forEach(({ source, target }) => {
         const s = nodeMap.get(source), t = nodeMap.get(target);
         if (!s || !t) return;
         ctx.beginPath();
         ctx.moveTo(s.x, s.y);
         ctx.lineTo(t.x, t.y);
-        ctx.strokeStyle = '#FF6B00';
-        ctx.lineWidth = 1;
+        ctx.strokeStyle = '#ff6600';
+        ctx.lineWidth = 1.5;
         ctx.stroke();
       });
 
@@ -186,24 +210,34 @@ export default function GraphView({ tasks, categories, onEditTask }) {
         // Selection ring
         if (selectedNodeRef.current?.id === n.id) {
           ctx.beginPath();
-          ctx.arc(n.x, n.y, n.radius + 5, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(139, 92, 246, 0.2)';
+          ctx.arc(n.x, n.y, n.radius + 7, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255, 0, 0, 0.25)';
           ctx.fill();
+          ctx.strokeStyle = '#ff0000';
+          ctx.lineWidth = 2;
+          ctx.stroke();
         }
 
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
         ctx.fillStyle = n.color;
         ctx.fill();
-        ctx.strokeStyle = '#18181b';
+        ctx.strokeStyle = '#000000';
         ctx.lineWidth = 2;
         ctx.stroke();
 
+        // Outer neon glow ring
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.radius + 1.5, 0, Math.PI * 2);
+        ctx.strokeStyle = n.color;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
         // Label
-        ctx.font = `${n.type === 'category' ? '600 12px' : '500 11px'} JetBrains Mono, monospace`;
-        ctx.fillStyle = '#d4d4d8';
+        ctx.font = `${n.type === 'category' ? '700 12px' : '600 11px'} JetBrains Mono, monospace`;
+        ctx.fillStyle = '#ffffff';
         ctx.textAlign = 'center';
-        ctx.fillText(n.label, n.x, n.y + n.radius + 14);
+        ctx.fillText(n.label, n.x, n.y + n.radius + 15);
       });
 
       animRef.current = requestAnimationFrame(render);
@@ -213,7 +247,7 @@ export default function GraphView({ tasks, categories, onEditTask }) {
     return () => { if (animRef.current) cancelAnimationFrame(animRef.current); };
   }, []);
 
-  // Get CSS-space mouse coords (accounts for devicePixelRatio)
+  // Get CSS-space mouse coords
   const getMousePos = (e) => {
     const rect = canvasRef.current.getBoundingClientRect();
     return { x: e.clientX - rect.left, y: e.clientY - rect.top };
@@ -242,9 +276,6 @@ export default function GraphView({ tasks, categories, onEditTask }) {
   };
 
   const handleMouseUp = () => {
-    if (draggedNodeRef.current?.type === 'task' && draggedNodeRef.current.taskData) {
-      // Only open editor if we didn't drag far (treat as click)
-    }
     draggedNodeRef.current = null;
   };
 
@@ -261,14 +292,22 @@ export default function GraphView({ tasks, categories, onEditTask }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%' }}>
       <div className="controls-header">
         <div>
-          <h2 style={{ fontFamily: 'var(--font-heading)', letterSpacing: '0.1em' }}>&gt;_ NEURAL NETWORK MAP</h2>
-          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-            Drag nodes to explore. Double-click a task node to edit it.
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span className="badge" style={{ background: '#ff0000', color: '#ffffff', fontWeight: 900, padding: '2px 6px', borderRadius: 0 }}>
+              警報
+            </span>
+            <h2 style={{ fontFamily: 'var(--font-heading)', letterSpacing: '0.1em', color: '#ff0000', textShadow: '0 0 10px rgba(255,0,0,0.5)' }}>
+              &gt;_ NEURAL CIRCUITRY NETWORK // MAGI SYSTEM
+            </h2>
+          </div>
+          <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '4px', fontFamily: 'var(--font)' }}>
+            MAGI-01 MELCHIOR • MAGI-02 BALTHASAR • MAGI-03 CASPER // DRAG NODES TO INSPECT. DOUBLE-CLICK TASK NODE TO MODIFY DIRECTIVE.
           </p>
         </div>
 
         <button
           className="btn btn-secondary"
+          style={{ borderRadius: 0, borderColor: '#ff0000', color: '#ff0000' }}
           onClick={() => {
             sounds.playClick();
             const rect = containerRef.current?.getBoundingClientRect();
@@ -276,20 +315,48 @@ export default function GraphView({ tasks, categories, onEditTask }) {
           }}
         >
           <RefreshCw size={15} />
-          <span>Reset Layout</span>
+          <span>RECALIBRATE MATRIX</span>
         </button>
       </div>
 
+      {/* Legend Container framed with corner brackets .nerv-frame */}
+      <div className="nerv-frame" style={{ background: '#000000', borderColor: '#ff0000' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap', fontSize: '0.78rem', fontFamily: 'var(--font)', fontWeight: 700 }}>
+          <span style={{ color: '#ff0000', letterSpacing: '0.05em' }}>[ NODE SYSTEM LEGEND ]</span>
+          
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ width: '12px', height: '12px', background: '#ff0000', display: 'inline-block', boxShadow: '0 0 6px #ff0000' }}></span>
+            <span style={{ color: '#ffffff' }}>MAGI RED (#ff0000): URGENT DIRECTIVE / CAT CORE</span>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ width: '12px', height: '12px', background: '#ff6600', display: 'inline-block', boxShadow: '0 0 6px #ff6600' }}></span>
+            <span style={{ color: '#ffffff' }}>NERV AMBER (#ff6600): ACTIVE OPERATION</span>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ width: '12px', height: '12px', background: '#00ff66', display: 'inline-block', boxShadow: '0 0 6px #00ff66' }}></span>
+            <span style={{ color: '#ffffff' }}>SYNC GREEN (#00ff66): COMPLETED CIRCUITRY</span>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ width: '12px', height: '12px', background: '#00ffcc', display: 'inline-block', boxShadow: '0 0 6px #00ffcc' }}></span>
+            <span style={{ color: '#ffffff' }}>CHEVRON CYAN (#00ffcc): TAG MATRIX</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Canvas Container framed with corner brackets .nerv-frame */}
       <div
         ref={containerRef}
-        className="card"
-        style={{ padding: 0, overflow: 'hidden', height: '550px', width: '100%', position: 'relative' }}
+        className="nerv-frame"
+        style={{ padding: 0, overflow: 'hidden', height: '550px', width: '100%', position: 'relative', background: '#000000', borderColor: '#ff0000' }}
       >
         {tasks.length === 0 ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--text-muted)' }}>
-            <Network size={44} style={{ opacity: 0.3, marginBottom: '12px' }} />
-            <p style={{ fontSize: '1.1rem', fontWeight: 600 }}>No task nodes in graph</p>
-            <p style={{ fontSize: '0.88rem', marginTop: '6px' }}>Create tasks or load demo data to view graph connections.</p>
+            <Network size={44} style={{ opacity: 0.3, marginBottom: '12px', color: '#ff0000' }} />
+            <p style={{ fontSize: '1.1rem', fontWeight: 700, color: '#ff0000', fontFamily: 'var(--font)' }}>NO NEURAL NODES IN MATRIX</p>
+            <p style={{ fontSize: '0.88rem', marginTop: '6px', fontFamily: 'var(--font)' }}>INITIALIZE TASKS OR LOAD MAGI DEMO DATA TO VIEW CIRCUIT CONNECTIONS.</p>
           </div>
         ) : (
           <canvas

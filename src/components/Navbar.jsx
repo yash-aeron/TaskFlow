@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, Search, Plus, Sun, Moon, Volume2, VolumeX, Download, Upload, Command, Sparkles } from 'lucide-react';
+import { Search, Plus, Sun, Moon, Volume2, VolumeX, Download, Upload, Command, Sparkles } from 'lucide-react';
 import { sounds } from '../utils/audio';
 
 export default function Navbar({ 
@@ -19,10 +19,29 @@ export default function Navbar({
   };
 
   return (
-    <header className="navbar">
+    <header className="navbar" style={{ position: 'relative' }}>
+      <div className="hazard-stripe-red" style={{ height: '4px', position: 'absolute', top: 0, left: 0, right: 0 }} />
       <div className="nav-brand">
-        <div className="brand-icon"><Zap size={14} /></div>
-        <span className="brand-title">&gt;_ TASKFLOW</span>
+        <div 
+          className="brand-icon hex-magi" 
+          style={{ 
+            display: 'inline-flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            width: '38px', 
+            height: '24px', 
+            background: '#ff0000', 
+            color: '#000000', 
+            fontWeight: '900', 
+            fontSize: '11px', 
+            clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)', 
+            letterSpacing: '1px',
+            fontFamily: 'var(--font-heading, sans-serif)'
+          }}
+        >
+          MAGI
+        </div>
+        <span className="brand-title">警報 NERV MAGI SYSTEM</span>
       </div>
 
       <div className="nav-search">
@@ -30,7 +49,7 @@ export default function Navbar({
           <Search size={14} />
           <input
             type="text" className="search-input"
-            placeholder="Search... ( / )"
+            placeholder="[ 警報 ] ENTER COMMAND / TARGET SEARCH..."
             value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
             id="task-search-input"
           />
@@ -43,11 +62,11 @@ export default function Navbar({
           className="form-select"
           style={{ padding: '3px 6px', fontSize: '11px', width: 'auto', borderRadius: '4px', fontFamily: 'var(--font)', letterSpacing: '0.04em', textTransform: 'uppercase' }}
         >
-          <option value="unit01">Unit-01</option>
-          <option value="unit00">Unit-00</option>
-          <option value="terminal">Terminal</option>
-          <option value="unit02">Unit-02</option>
-          <option value="warning">Warning</option>
+          <option value="magi_red">MAGI RED (Melchior-1)</option>
+          <option value="nerv_amber">NERV AMBER (Tokyo-3)</option>
+          <option value="terminal_cyan">TERMINAL CYAN (Sync)</option>
+          <option value="terminal_green">TERMINAL GREEN (CRT)</option>
+          <option value="seele_monolith">SEELE MONOLITH (Black)</option>
         </select>
 
         <button className="btn-icon" onClick={onLoadDemoData} title="Load demo data">
@@ -68,7 +87,7 @@ export default function Navbar({
         
         <button className="btn btn-primary" onClick={onOpenNewTask}>
           <Plus size={14} />
-          <span>NEW</span>
+          <span>[ 警報 ] INITIALIZE</span>
         </button>
       </div>
     </header>

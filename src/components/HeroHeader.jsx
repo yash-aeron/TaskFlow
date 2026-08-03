@@ -6,16 +6,45 @@ export default function HeroHeader({ tasks = [], onOpenNewTask }) {
   const active = tasks.length - completed;
 
   return (
-    <div className="controls-header" style={{ borderBottom: 'none', paddingBottom: 0 }}>
-      <div>
-        <h2 style={{ fontSize: '16px', fontFamily: 'var(--font-heading)', letterSpacing: '0.1em' }}>&gt;_ OPERATIONS LOG</h2>
-        <span style={{ fontSize: '11px', fontFamily: 'var(--font)', letterSpacing: '0.04em', color: 'var(--text-secondary)' }}>
-          {tasks.length === 0 ? 'NO OPERATIONS REGISTERED' : `[ACTIVE: ${active}] [COMPLETE: ${completed}]`}
-        </span>
+    <div className="controls-header nerv-frame" style={{ position: 'relative', borderBottom: 'none', padding: '16px', background: '#000000', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
+      {/* Red Hazard Stripe Accent Bar */}
+      <div className="hazard-stripe-red" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px' }} />
+      
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+          <span className="hazard-stripe-red" style={{ padding: '2px 8px', fontSize: '12px', fontWeight: '900', fontFamily: 'var(--font-kanji)', letterSpacing: '0.1em' }}>
+            第一種戦闘配置
+          </span>
+          <h2 style={{ fontSize: '18px', fontFamily: 'var(--font-heading)', letterSpacing: '0.15em', margin: 0, color: '#ffffff', textShadow: '0 0 10px rgba(255, 0, 0, 0.6)' }}>
+            第一種戦闘配置 // BATTLE STATIONS CONDITION ONE
+          </h2>
+        </div>
+        <div style={{ fontSize: '12px', fontFamily: 'var(--font)', letterSpacing: '0.08em', color: 'var(--nerv-amber)', display: 'flex', gap: '12px', flexWrap: 'wrap', alignItems: 'center' }}>
+          <span>[ 警報 ALERT ]</span>
+          <span>[ ACTIVE TARGETS: {active} ]</span>
+          <span>[ DEFEATED: {completed} ]</span>
+        </div>
       </div>
-      <button className="btn btn-primary" onClick={onOpenNewTask}>
-        <Plus size={14} />
-        <span>NEW OP</span>
+
+      <button 
+        className="btn btn-primary hazard-stripe-red" 
+        onClick={onOpenNewTask}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          padding: '10px 18px',
+          fontFamily: 'var(--font-heading)',
+          fontWeight: 800,
+          fontSize: '13px',
+          letterSpacing: '0.1em',
+          cursor: 'pointer',
+          border: '1px solid #ff0000',
+          boxShadow: '0 0 10px rgba(255, 0, 0, 0.5)'
+        }}
+      >
+        <Plus size={16} />
+        <span>[ 使徒襲来 ] INITIALIZE NEW OPERATION</span>
       </button>
     </div>
   );

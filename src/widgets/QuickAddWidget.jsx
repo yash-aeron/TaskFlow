@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Plus, X } from 'lucide-react';
+import { X } from 'lucide-react';
 
 export default function QuickAddWidget() {
   const [title, setTitle] = useState('');
@@ -40,8 +40,7 @@ export default function QuickAddWidget() {
     <div className="widget-container">
       <div className="widget-header">
         <div className="widget-title">
-          <Plus size={12} />
-          <span>// QUICK DEPLOY</span>
+          <span>[ 使徒襲来 ] QUICK DEPLOY</span>
         </div>
         <button className="widget-close" onClick={handleClose}><X size={12} /></button>
       </div>
@@ -50,24 +49,24 @@ export default function QuickAddWidget() {
         <input 
           type="text" 
           className="widget-input" 
-          placeholder=">_ OPERATION DESIGNATION..." 
+          placeholder="[ 警報 ] ENTER OPERATION CODE / DESIGNATION..." 
           value={title} 
           onChange={e => setTitle(e.target.value)}
           autoFocus 
         />
-        <div style={{ display: 'flex', gap: 6, justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 6, justifyContent: 'space-between', alignItems: 'center', marginTop: 4 }}>
           <select 
             className="widget-input" 
             style={{ width: 'auto', padding: '4px 6px', fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.04em' }}
             value={priority} 
             onChange={e => setPriority(e.target.value)}
           >
-            <option value="urgent">CRITICAL</option>
+            <option value="urgent">URGENT (警報)</option>
             <option value="high">HIGH</option>
             <option value="medium">MEDIUM</option>
             <option value="low">LOW</option>
           </select>
-          <button type="submit" className="widget-btn">DEPLOY</button>
+          <button type="submit" className="widget-btn">[ 使徒 ] DEPLOY</button>
         </div>
       </form>
     </div>

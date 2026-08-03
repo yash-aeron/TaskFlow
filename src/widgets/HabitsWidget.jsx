@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Flame, Check, X } from 'lucide-react';
+import { Check, X } from 'lucide-react';
 
 export default function HabitsWidget() {
   const [habits, setHabits] = useState([]);
@@ -26,45 +26,37 @@ export default function HabitsWidget() {
     if (window.widgetAPI) window.widgetAPI.closeWidget();
   };
 
-  const completedCount = habits.filter(h => !!h.history?.[todayStr]).length;
-
   return (
     <div className="widget-container">
       <div className="widget-header">
         <div className="widget-title">
-          <Flame size={12} />
-          <span>// PATTERNS [{completedCount}/{habits.length}]</span>
+          <span>[ SH06D NERV ] PATTERNS</span>
         </div>
         <button className="widget-close" onClick={handleClose}><X size={12} /></button>
       </div>
 
       <div className="widget-body">
         {habits.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '30px 10px', color: '#4a4a6e', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: 10 }}>
+          <div style={{ textAlign: 'center', padding: '30px 10px', color: '#ff9966', fontSize: 10 }}>
             NO PATTERNS REGISTERED
           </div>
         ) : (
           habits.map(habit => {
             const isChecked = !!habit.history?.[todayStr];
             return (
-              <div key={habit.id} className="widget-item-row" style={{
-                borderLeftColor: isChecked ? '#00cc34' : '#8B5CF6'
-              }}>
+              <div key={habit.id} className="widget-item-row" style={{ borderLeftColor: isChecked ? '#00ff66' : '#ff0000' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1 }}>
                   <div 
                     className={`widget-checkbox ${isChecked ? 'checked' : ''}`}
                     onClick={() => handleToggle(habit.id)}
-                    style={isChecked ? { background: '#00cc34', borderColor: '#00cc34' } : {}}
                   >
-                    {isChecked && <Check size={9} />}
+                    {isChecked && <Check size={10} style={{ color: '#000' }} />}
                   </div>
-                  <span style={{ fontSize: 11, opacity: isChecked ? 0.5 : 1 }}>{habit.title}</span>
+                  <span style={{ fontSize: 11, color: '#ffffff' }}>{habit.title}</span>
                 </div>
-                {isChecked && (
-                  <span style={{ fontSize: 8, fontWeight: 800, color: '#00cc34', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                    SYNCED
-                  </span>
-                )}
+                <span style={{ fontSize: 9, color: isChecked ? '#00ff66' : '#ff6600', fontWeight: 900 }}>
+                  {isChecked ? 'SYNCED' : 'PENDING'}
+                </span>
               </div>
             );
           })
