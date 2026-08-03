@@ -175,3 +175,20 @@ export const importData = (jsonData) => {
     return false;
   }
 };
+
+export const storage = {
+  loadTasks,
+  saveTasks,
+  loadCategories,
+  saveCategories,
+  loadHabits,
+  saveHabits,
+  loadSettings,
+  saveSettings
+};
+
+export const demoTasks = DEMO_TASKS;
+export const demoCategories = DEFAULT_CATEGORIES;
+export const demoHabits = DEMO_HABITS || [];
+
+

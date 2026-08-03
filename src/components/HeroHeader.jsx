@@ -1,10 +1,10 @@
 import React from 'react';
 import { Plus } from 'lucide-react';
 
-export default function HeroHeader({ tasks = [], onOpenNewTask }) {
+export default function HeroHeader({ tasks = [], onOpenNewTask, themeMode = 'nerv' }) {
   const completed = tasks.filter(t => t.status === 'completed').length;
   const active = tasks.length - completed;
-  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
+  const isPersona = themeMode === 'persona';
 
   if (isPersona) {
     return (

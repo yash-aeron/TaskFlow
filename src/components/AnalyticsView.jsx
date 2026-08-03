@@ -1,8 +1,8 @@
 import React from 'react';
 import { BarChart3, CheckCircle, Clock, Zap, Target } from 'lucide-react';
 
-export default function AnalyticsView({ tasks = [], categories = [] }) {
-  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
+export default function AnalyticsView({ tasks = [], categories = [], themeMode = 'nerv' }) {
+  const isPersona = themeMode === 'persona';
   const completedCount = tasks.filter(t => t.status === 'completed').length;
   const totalCount = tasks.length;
   const completionRate = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;

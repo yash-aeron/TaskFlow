@@ -23,13 +23,14 @@ export default function ListView({
   categories = [],
   onStartFocusTimer,
   onOpenNewTask,
-  onLoadDemoData
+  onLoadDemoData,
+  themeMode = 'nerv'
 }) {
   const [filter, setFilter] = useState('all');
   const [sortBy, setSortBy] = useState('dueDate');
   const [expandedTasks, setExpandedTasks] = useState({});
 
-  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
+  const isPersona = themeMode === 'persona';
 
   const getCategoryInfo = (catId) => {
     return categories.find(c => c.id === catId) || { name: 'General', color: '#6366f1' };

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Plus, Edit3, Trash2, CheckCircle } from 'lucide-react';
 
-export default function MatrixView({ tasks = [], onEditTask, onUpdateTaskStatus, onDeleteTask, onOpenNewTask }) {
-  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
+export default function MatrixView({ tasks = [], onEditTask, onUpdateTaskStatus, onDeleteTask, onOpenNewTask, themeMode = 'nerv' }) {
+  const isPersona = themeMode === 'persona';
 
   const quadrants = [
     {

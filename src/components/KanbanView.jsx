@@ -15,9 +15,10 @@ export default function KanbanView({
   onEditTask, 
   onDeleteTask,
   categories = [],
-  onOpenNewTask
+  onOpenNewTask,
+  themeMode = 'nerv'
 }) {
-  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
+  const isPersona = themeMode === 'persona';
 
   const getCategoryInfo = (catId) => {
     return categories.find(c => c.id === catId) || { name: 'General', color: '#6366f1' };
