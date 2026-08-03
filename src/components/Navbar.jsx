@@ -1,10 +1,11 @@
 import React from 'react';
-import { Search, Plus, Sun, Moon, Volume2, VolumeX, Download, Upload, Command, Sparkles } from 'lucide-react';
+import { Search, Plus, Sun, Moon, Volume2, VolumeX, Download, Upload, Command, Sparkles, RefreshCw } from 'lucide-react';
 import { sounds } from '../utils/audio';
 
 export default function Navbar({ 
   searchQuery, setSearchQuery, onOpenNewTask, 
   theme, setTheme, soundEnabled, setSoundEnabled,
+  themeMode = 'nerv', setThemeMode,
   accent, setAccent, onExportData, onImportData,
   onOpenShortcuts, onLoadDemoData
 }) {
@@ -18,30 +19,48 @@ export default function Navbar({
     reader.readAsText(file);
   };
 
+  const toggleThemeMode = () => {
+    sounds.playClick();
+    const nextMode = themeMode === 'nerv' ? 'persona' : 'nerv';
+    if (setThemeMode) setThemeMode(nextMode);
+  };
+
+  const isPersona = themeMode === 'persona';
+
   return (
     <header className="navbar" style={{ position: 'relative' }}>
-      <div className="hazard-stripe-red" style={{ height: '4px', position: 'absolute', top: 0, left: 0, right: 0 }} />
+      <div className={isPersona ? "" : "hazard-stripe-red"} style={isPersona ? { height: '3px', position: 'absolute', top: 0, left: 0, right: 0, background: 'linear-gradient(90deg, #e60012, #00e5ff)' } : { height: '4px', position: 'absolute', top: 0, left: 0, right: 0 }} />
+      
       <div className="nav-brand">
-        <div 
-          className="brand-icon hex-magi" 
-          style={{ 
-            display: 'inline-flex', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            width: '38px', 
-            height: '24px', 
-            background: '#ff0000', 
-            color: '#000000', 
-            fontWeight: '900', 
-            fontSize: '11px', 
-            clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)', 
-            letterSpacing: '1px',
-            fontFamily: 'var(--font-heading, sans-serif)'
-          }}
-        >
-          MAGI
-        </div>
-        <span className="brand-title">警報 NERV MAGI SYSTEM</span>
+        {isPersona ? (
+          <div 
+            style={{ 
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', 
+              padding: '2px 8px', background: '#e60012', color: '#ffffff', 
+              fontWeight: '900', fontSize: '12px', fontFamily: "'Impact', sans-serif",
+              letterSpacing: '1px', transform: 'skewX(-10deg)', border: '1px solid #ffffff'
+            }}
+          >
+            P5+P3
+          </div>
+        ) : (
+          <div 
+            className="brand-icon hex-magi" 
+            style={{ 
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', 
+              width: '38px', height: '24px', background: '#ff0000', color: '#000000', 
+              fontWeight: '900', fontSize: '11px', 
+              clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)', 
+              letterSpacing: '1px', fontFamily: 'var(--font-heading, sans-serif)'
+            }}
+          >
+            MAGI
+          </div>
+        )}
+        
+        <span className="brand-title" style={isPersona ? { color: '#00e5ff', fontFamily: "'Impact', sans-serif", letterSpacing: '0.1em' } : {}}>
+          {isPersona ? "♠ PERSONA PHANTOM RELOAD" : "警報 NERV MAGI SYSTEM"}
+        </span>
       </div>
 
       <div className="nav-search">
@@ -49,7 +68,7 @@ export default function Navbar({
           <Search size={14} />
           <input
             type="text" className="search-input"
-            placeholder="[ 警報 ] ENTER COMMAND / TARGET SEARCH..."
+            placeholder={isPersona ? "Search... ( / ) TAKES YOUR TIME" : "[ 警報 ] ENTER COMMAND / TARGET SEARCH..."}
             value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
             id="task-search-input"
           />
@@ -57,10 +76,28 @@ export default function Navbar({
       </div>
 
       <div className="nav-actions">
+        {/* THEME MODE SWITCHER BUTTON */}
+        <button 
+          className="btn" 
+          onClick={toggleThemeMode} 
+          title="Switch UI Theme (NERV MAGI ↔ PERSONA P5+P3 RELOAD)"
+          style={isPersona ? {
+            background: '#e60012', color: '#ffffff', border: '1px solid #00e5ff',
+            padding: '4px 10px', fontSize: '11px', fontWeight: '900', fontFamily: "'Impact', sans-serif",
+            transform: 'skewX(-8deg)'
+          } : {
+            background: '#ff6600', color: '#000000', border: '1px solid #ffffff',
+            padding: '4px 10px', fontSize: '11px', fontWeight: '900', fontFamily: 'var(--font)'
+          }}
+        >
+          <RefreshCw size={13} style={{ marginRight: '4px' }} />
+          <span>{isPersona ? '♠ PERSONA RELOAD' : '[ 警報 ] NERV UI'}</span>
+        </button>
+
         <select 
           value={accent} onChange={(e) => { setAccent(e.target.value); }}
           className="form-select"
-          style={{ padding: '3px 6px', fontSize: '11px', width: 'auto', borderRadius: '4px', fontFamily: 'var(--font)', letterSpacing: '0.04em', textTransform: 'uppercase' }}
+          style={{ padding: '3px 6px', fontSize: '11px', width: 'auto', borderRadius: '0px', fontFamily: 'var(--font)', letterSpacing: '0.04em', textTransform: 'uppercase' }}
         >
           <option value="magi_red">MAGI RED (Melchior-1)</option>
           <option value="nerv_amber">NERV AMBER (Tokyo-3)</option>
@@ -87,7 +124,7 @@ export default function Navbar({
         
         <button className="btn btn-primary" onClick={onOpenNewTask}>
           <Plus size={14} />
-          <span>[ 警報 ] INITIALIZE</span>
+          <span>{isPersona ? 'INITIALIZE' : '[ 警報 ] INITIALIZE'}</span>
         </button>
       </div>
     </header>

@@ -6,18 +6,21 @@ import {
 
 export default function Sidebar({ 
   currentView, setCurrentView, categories = [], activeCategory, setActiveCategory, 
-  tasks = [], allTags = [], activeTag, setActiveTag
+  tasks = [], allTags = [], activeTag, setActiveTag,
+  themeMode = 'nerv'
 }) {
+  const isPersona = document.documentElement.getAttribute('data-theme-mode') === 'persona';
+
   const views = [
-    { id: 'list', label: 'Tasks', icon: CheckSquare, count: tasks.length },
-    { id: 'kanban', label: 'Board', icon: Kanban },
-    { id: 'graph', label: 'Graph', icon: Network },
-    { id: 'matrix', label: 'Matrix', icon: Grid },
-    { id: 'timeline', label: 'Timeline', icon: Clock },
-    { id: 'calendar', label: 'Calendar', icon: CalendarIcon },
-    { id: 'habits', label: 'Habits', icon: Flame },
-    { id: 'focus', label: 'Focus', icon: Timer },
-    { id: 'analytics', label: 'Analytics', icon: BarChart3 },
+    { id: 'list', label: isPersona ? 'SKiLL / TaSKs' : 'Tasks', icon: CheckSquare, count: tasks.length },
+    { id: 'kanban', label: isPersona ? 'BOaRD' : 'Board', icon: Kanban },
+    { id: 'graph', label: isPersona ? 'GRaPH' : 'Graph', icon: Network },
+    { id: 'matrix', label: isPersona ? 'MATRiX' : 'Matrix', icon: Grid },
+    { id: 'timeline', label: isPersona ? 'TiMELiNE' : 'Timeline', icon: Clock },
+    { id: 'calendar', label: isPersona ? 'CALENDaR' : 'Calendar', icon: CalendarIcon },
+    { id: 'habits', label: isPersona ? 'HABiTS' : 'Habits', icon: Flame },
+    { id: 'focus', label: isPersona ? 'FoCUS' : 'Focus', icon: Timer },
+    { id: 'analytics', label: isPersona ? 'SYSTeM' : 'Analytics', icon: BarChart3 },
   ];
 
   const completedCount = tasks.filter(t => t.status === 'completed').length;
@@ -27,30 +30,38 @@ export default function Sidebar({
 
   return (
     <aside className="sidebar">
-      <div className="magi-status-box" style={{ padding: '8px 10px', marginBottom: '8px', borderBottom: '1px solid var(--border)' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px' }}>
-          <div style={{ background: '#ff0000', color: '#000000', padding: '6px 2px', textAlign: 'center', clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)', fontWeight: 'bold', fontSize: '9px', lineHeight: '1.2' }}>
-            <div>MAGI-1</div>
-            <div style={{ fontSize: '7.5px' }}>MELCHIOR</div>
-          </div>
-          <div style={{ background: '#ff0000', color: '#000000', padding: '6px 2px', textAlign: 'center', clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)', fontWeight: 'bold', fontSize: '9px', lineHeight: '1.2' }}>
-            <div>MAGI-2</div>
-            <div style={{ fontSize: '7.5px' }}>BALTHASAR</div>
-          </div>
-          <div style={{ background: '#ff0000', color: '#000000', padding: '6px 2px', textAlign: 'center', clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)', fontWeight: 'bold', fontSize: '9px', lineHeight: '1.2' }}>
-            <div>MAGI-3</div>
-            <div style={{ fontSize: '7.5px' }}>CASPER</div>
+      {!isPersona ? (
+        <div className="magi-status-box" style={{ padding: '8px 10px', marginBottom: '8px', borderBottom: '1px solid var(--border)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px' }}>
+            <div style={{ background: '#ff0000', color: '#000000', padding: '6px 2px', textAlign: 'center', clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)', fontWeight: 'bold', fontSize: '9px', lineHeight: '1.2' }}>
+              <div>MAGI-1</div>
+              <div style={{ fontSize: '7.5px' }}>MELCHIOR</div>
+            </div>
+            <div style={{ background: '#ff0000', color: '#000000', padding: '6px 2px', textAlign: 'center', clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)', fontWeight: 'bold', fontSize: '9px', lineHeight: '1.2' }}>
+              <div>MAGI-2</div>
+              <div style={{ fontSize: '7.5px' }}>BALTHASAR</div>
+            </div>
+            <div style={{ background: '#ff0000', color: '#000000', padding: '6px 2px', textAlign: 'center', clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)', fontWeight: 'bold', fontSize: '9px', lineHeight: '1.2' }}>
+              <div>MAGI-3</div>
+              <div style={{ fontSize: '7.5px' }}>CASPER</div>
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div style={{ padding: '8px', marginBottom: '4px', background: '#e60012', color: '#ffffff', fontFamily: "'Impact', sans-serif", fontSize: '13px', transform: 'skewX(-8deg)', border: '1px solid #00e5ff', textAlign: 'center' }}>
+          ♠ PHANTOM COMMAND ♠
+        </div>
+      )}
 
       <div className="sidebar-section">
-        <div className="sidebar-label">警報 // MAGI SYSTEMS</div>
+        <div className="sidebar-label">{isPersona ? "COMMAND SELECT" : "警報 // MAGI SYSTEMS"}</div>
         {views.map(v => {
           const Icon = v.icon;
           return (
             <button key={v.id} className={`nav-item ${currentView === v.id ? 'active' : ''}`}
-              onClick={() => setCurrentView(v.id)}>
+              onClick={() => setCurrentView(v.id)}
+              style={isPersona ? { fontFamily: "'Impact', sans-serif", fontSize: '13px', letterSpacing: '0.08em' } : {}}
+            >
               <div className="nav-item-left"><Icon size={14} /><span>{v.label}</span></div>
               {v.count != null && <span className="badge">{v.count}</span>}
             </button>
@@ -60,7 +71,7 @@ export default function Sidebar({
 
       <div className="sidebar-section">
         <div className="sidebar-label" style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <span>警報 // SECTOR COMMAND</span>
+          <span>{isPersona ? "PARTY & COOP" : "警報 // SECTOR COMMAND"}</span>
           {activeCategory && <span style={{ cursor: 'pointer', color: 'var(--text-primary)', textTransform: 'uppercase', letterSpacing: '0.06em', fontSize: '9px' }} onClick={() => setActiveCategory(null)}>Clear</span>}
         </div>
         {categories.map(cat => {
@@ -80,7 +91,7 @@ export default function Sidebar({
 
       {allTags.length > 0 && (
         <div className="sidebar-section">
-          <div className="sidebar-label">警報 // TARGET MARKERS</div>
+          <div className="sidebar-label">{isPersona ? "SOCIAL LINKS" : "警報 // TARGET MARKERS"}</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 3, padding: '0 4px' }}>
             {allTags.map(tag => (
               <span key={tag} className="tag-badge"
@@ -95,7 +106,7 @@ export default function Sidebar({
 
       <div style={{ marginTop: 'auto', padding: '8px', borderTop: '1px solid var(--border)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--text-secondary)', marginBottom: 4 }}>
-          <span>内部 SYNC RATE 外部</span><span>{completionRate}%</span>
+          <span>{isPersona ? "ALL-OUT SYNC" : "内部 SYNC RATE 外部"}</span><span>{completionRate}%</span>
         </div>
         <div className="chevron-bar-container" style={{ margin: '6px 0' }}>
           {Array.from({ length: totalSegments }).map((_, i) => {
@@ -116,7 +127,7 @@ export default function Sidebar({
           })}
         </div>
         <div style={{ fontSize: 11, color: 'var(--text-tertiary)', marginTop: 3 }}>
-          {completedCount}/{tasks.length} OPS
+          {completedCount}/{tasks.length} {isPersona ? 'MISSIONS' : 'OPS'}
         </div>
       </div>
     </aside>

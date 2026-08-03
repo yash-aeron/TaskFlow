@@ -82,9 +82,11 @@ export default function App() {
   useEffect(() => {
     saveSettings(settings);
     const theme = settings?.theme || 'dark';
-    const accent = settings?.accent || 'violet';
+    const accent = settings?.accent || 'magi_red';
+    const themeMode = settings?.themeMode || 'nerv';
     document.documentElement.setAttribute('data-theme', theme);
     document.documentElement.setAttribute('data-accent', accent);
+    document.documentElement.setAttribute('data-theme-mode', themeMode);
   }, [settings]);
 
   // Global Keyboard Shortcuts
@@ -267,7 +269,9 @@ export default function App() {
         setTheme={(newTheme) => setSettings({ ...(settings || {}), theme: newTheme })}
         soundEnabled={settings?.sound ?? true}
         setSoundEnabled={(newSound) => setSettings({ ...(settings || {}), sound: newSound })}
-        accent={settings?.accent || 'violet'}
+        themeMode={settings?.themeMode || 'nerv'}
+        setThemeMode={(newMode) => setSettings({ ...(settings || {}), themeMode: newMode })}
+        accent={settings?.accent || 'magi_red'}
         setAccent={(newAccent) => setSettings({ ...(settings || {}), accent: newAccent })}
         onExportData={exportAllData}
         onImportData={handleImportData}
