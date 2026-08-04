@@ -1,6 +1,7 @@
 # Agent & AI config
 .agents/
 .gemini/
+.cybersec-skills/
 
 # Dependencies
 node_modules/

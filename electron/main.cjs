@@ -262,18 +262,72 @@ function updateTrayMenu() {
 
 // ── IPC Handlers ──────────────────────────────────────────────────────────────
 
+const THEME_MODES = ['nerv', 'persona'];
+const TASK_STATUSES = ['todo', 'in_progress', 'completed', 'backlog'];
+const TASK_PRIORITIES = ['urgent', 'high', 'medium', 'low'];
+
+// Whitelist a task object coming from any renderer (main window OR widgets).
+function sanitizeTask(task) {
+  if (!task || typeof task !== 'object') return null;
+  return {
+    ...task,
+    id: (task.id && typeof task.id === 'string') ? task.id : `task-${Date.now()}`,
+    title: typeof task.title === 'string' ? task.title : 'Untitled Task',
+    description: typeof task.description === 'string' ? task.description : '',
+    status: TASK_STATUSES.includes(task.status) ? task.status : 'todo',
+    priority: TASK_PRIORITIES.includes(task.priority) ? task.priority : 'medium',
+    category: typeof task.category === 'string' ? task.category : 'work',
+    tags: Array.isArray(task.tags) ? task.tags.filter(t => typeof t === 'string') : [],
+    dueDate: (typeof task.dueDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(task.dueDate)) ? task.dueDate : null,
+    dueTime: typeof task.dueTime === 'string' ? task.dueTime : null,
+    estimatedMinutes: Number(task.estimatedMinutes) || 0,
+    actualMinutes: Number(task.actualMinutes) || 0,
+    createdAt: typeof task.createdAt === 'string' ? task.createdAt : new Date().toISOString(),
+    completedAt: typeof task.completedAt === 'string' ? task.completedAt : null,
+    subtasks: Array.isArray(task.subtasks) ? task.subtasks.map(st => ({
+      id: typeof st?.id === 'string' ? st.id : `subtask-${Date.now()}`,
+      title: typeof st?.title === 'string' ? st.title : '',
+      completed: Boolean(st?.completed)
+    })) : [],
+  };
+}
+
+// Whitelist a habit object, dropping any non-date history keys (prevents
+// prototype pollution via history map).
+function sanitizeHabit(habit) {
+  if (!habit || typeof habit !== 'object') return null;
+  const safeHistory = {};
+  if (habit.history && typeof habit.history === 'object') {
+    Object.keys(habit.history).forEach(k => {
+      if (/^\d{4}-\d{2}-\d{2}$/.test(k) && !['__proto__', 'constructor', 'prototype'].includes(k)) {
+        safeHistory[k] = Boolean(habit.history[k]);
+      }
+    });
+  }
+  return {
+    id: typeof habit.id === 'string' ? habit.id : `habit-${Date.now()}`,
+    title: typeof habit.title === 'string' ? habit.title : 'Untitled Habit',
+    frequency: ['daily', 'weekly'].includes(habit.frequency) ? habit.frequency : 'daily',
+    createdAt: typeof habit.createdAt === 'string' ? habit.createdAt : new Date().toISOString(),
+    history: safeHistory,
+  };
+}
+
 ipcMain.handle('load-db', () => loadDb());
 ipcMain.handle('get-tasks', () => appTasks);
 ipcMain.handle('get-habits', () => appHabits);
 
+// Sanitized sync: every task/habit revalidated here so a compromised widget
+// renderer cannot poison main-process state or the on-disk DB.
 ipcMain.on('sync-data', (_, payload) => {
-  if (payload && Array.isArray(payload.tasks)) {
-    appTasks = payload.tasks;
+  if (!payload || typeof payload !== 'object') return;
+  if (Array.isArray(payload.tasks)) {
+    appTasks = payload.tasks.map(sanitizeTask).filter(Boolean);
   }
-  if (payload && Array.isArray(payload.habits)) {
-    appHabits = payload.habits;
+  if (Array.isArray(payload.habits)) {
+    appHabits = payload.habits.map(sanitizeHabit).filter(Boolean);
   }
-  if (payload && typeof payload.themeMode === 'string') {
+  if (typeof payload.themeMode === 'string' && THEME_MODES.includes(payload.themeMode)) {
     appThemeMode = payload.themeMode;
   }
   saveDb();
@@ -282,14 +336,8 @@ ipcMain.on('sync-data', (_, payload) => {
 
 // Fix 2B: Validate task payload before adding to prevent malformed IPC data
 ipcMain.on('add-task', (_, task) => {
-  if (!task || typeof task !== 'object') return;
-  const safeTask = {
-    ...task,
-    id: (task.id && typeof task.id === 'string') ? task.id : `task-${Date.now()}`,
-    title: typeof task.title === 'string' ? task.title : 'Untitled Task',
-    status: typeof task.status === 'string' ? task.status : 'todo',
-    priority: typeof task.priority === 'string' ? task.priority : 'medium',
-  };
+  const safeTask = sanitizeTask(task);
+  if (!safeTask) return;
   appTasks = [safeTask, ...appTasks.filter(t => t.id !== safeTask.id)];
   saveDb();
   if (mainWindow && !mainWindow.isDestroyed()) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import HeroHeader from './components/HeroHeader';
@@ -16,16 +16,21 @@ import GraphView from './components/GraphView';
 import MatrixView from './components/MatrixView';
 import TimelineView from './components/TimelineView';
 import SplashIntro from './components/SplashIntro';
+import HUDOverlay from './components/HUDOverlay';
 
 import { storage, demoTasks, demoCategories, demoHabits } from './utils/storage';
 import { sounds } from './utils/audio';
 
 export default function App() {
+  // Electron: disk DB (main process) is the single source of truth.
+  // Browser dev: localStorage.
+  const isElectron = typeof window !== 'undefined' && !!window.electronAPI;
   const [showSplash, setShowSplash] = useState(true);
-  const [tasks, setTasks] = useState(() => storage.loadTasks());
+  const [tasks, setTasks] = useState(() => isElectron ? [] : storage.loadTasks());
   const [categories, setCategories] = useState(() => storage.loadCategories());
-  const [habits, setHabits] = useState(() => storage.loadHabits());
+  const [habits, setHabits] = useState(() => isElectron ? [] : storage.loadHabits());
   const [settings, setSettings] = useState(() => storage.loadSettings());
+  const hydratedRef = useRef(!isElectron); // skip sync until DB hydrated
 
   const [currentView, setCurrentView] = useState('list');
   const [searchQuery, setSearchQuery] = useState('');
@@ -61,20 +66,33 @@ export default function App() {
     document.documentElement.setAttribute('data-theme-mode', themeMode);
   }, [settings, safeAccent, themeMode]);
 
-  // Hydrate from persistent disk DB on Electron startup
+  // Keep the audio engine's enabled flag in sync with the persisted sound setting
+  useEffect(() => {
+    sounds.enabled = settings?.sound ?? true;
+  }, [settings?.sound]);
+
+  // Hydrate from persistent disk DB on Electron startup.
+  // Disk DB is authoritative: adopt its state even when empty (prevents stale
+  // localStorage copies resurrecting deleted tasks).
   useEffect(() => {
     if (window.electronAPI?.loadDb) {
       window.electronAPI.loadDb().then(db => {
-        if (db && Array.isArray(db.tasks) && db.tasks.length > 0) {
-          setTasks(db.tasks);
+        if (db) {
+          if (Array.isArray(db.tasks)) {
+            setTasks(db.tasks);
+          }
+          if (Array.isArray(db.habits)) {
+            setHabits(db.habits);
+          }
+          if (db.themeMode) {
+            setSettings(prev => ({ ...(prev || {}), themeMode: db.themeMode }));
+          }
         }
-        if (db && Array.isArray(db.habits) && db.habits.length > 0) {
-          setHabits(db.habits);
-        }
-        if (db && db.themeMode) {
-          setThemeMode(db.themeMode);
-        }
-      }).catch(err => console.error("Failed to load persistent DB", err));
+        hydratedRef.current = true;
+      }).catch(err => {
+        console.error("Failed to load persistent DB", err);
+        hydratedRef.current = true;
+      });
     }
   }, []);
 
@@ -106,11 +124,15 @@ export default function App() {
     storage.saveHabits(habits);
   }, [habits]);
 
-  // Sync data and themeMode to Electron main process / widgets
+  // Sync data and themeMode to Electron main process / widgets.
+  // Debounced (300ms) and gated until DB hydration completes so the initial
+  // empty state can never clobber the on-disk DB (Finding 7).
   useEffect(() => {
-    if (window.electronAPI) {
+    if (!window.electronAPI || !hydratedRef.current) return;
+    const timer = setTimeout(() => {
       window.electronAPI.syncData({ tasks, habits, themeMode });
-    }
+    }, 300);
+    return () => clearTimeout(timer);
   }, [tasks, habits, themeMode]);
 
   // Keyboard Shortcuts Listener
@@ -260,11 +282,15 @@ export default function App() {
 
   const handleImportData = (jsonString) => {
     try {
-      const parsed = JSON.parse(jsonString);
-      if (parsed.tasks) setTasks(parsed.tasks);
-      if (parsed.categories) setCategories(parsed.categories);
-      if (parsed.habits) setHabits(parsed.habits);
-      if (parsed.settings) setSettings(parsed.settings);
+      // Route through the whitelisting sanitizer in storage.js (protects against
+      // prototype pollution and injected markup) instead of trusting raw JSON.
+      const ok = storage.importData(jsonString);
+      if (!ok) throw new Error('import failed');
+      // Reload the sanitized, persisted copies so React state mirrors storage.
+      setTasks(storage.loadTasks());
+      setCategories(storage.loadCategories());
+      setHabits(storage.loadHabits());
+      setSettings(storage.loadSettings());
       showToast('Dataset imported successfully', 'info');
     } catch (e) {
       showToast('Failed to parse backup dataset', 'error');
@@ -284,6 +310,11 @@ export default function App() {
   });
 
   const allTags = Array.from(new Set(tasks.flatMap(t => t.tags || [])));
+
+  // Live EVA sync rate, driven by task completion
+  const hudSyncRate = tasks.length > 0
+    ? Math.round((tasks.filter(t => t.status === 'completed').length / tasks.length) * 100)
+    : 0;
 
   return (
     <div className="app-container">
@@ -451,6 +482,8 @@ export default function App() {
       />
 
       <Toast toast={toast} onClose={() => setToast(null)} themeMode={themeMode} />
+
+      <HUDOverlay syncRate={hudSyncRate} isPersona={themeMode === 'persona'} />
     </div>
   );
 }

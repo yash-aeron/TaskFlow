@@ -1,5 +1,15 @@
 // Local Storage Management for TaskFlow
 
+import DOMPurify from 'dompurify';
+
+// Plain-text extraction: strip ALL markup, keep only text content.
+// Whitelist approach (allow nothing) is not bypassable like the old
+// regex denylist was (encoded payloads, unquoted handlers, etc.).
+function sanitizeString(str) {
+  if (typeof str !== 'string') return '';
+  return DOMPurify.sanitize(str, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] }).trim();
+}
+
 export const DEFAULT_CATEGORIES = [
   { id: 'work', name: 'Work', color: '#6366f1', icon: 'Briefcase' },
   { id: 'personal', name: 'Personal', color: '#ec4899', icon: 'User' },
@@ -124,9 +134,9 @@ export const saveHabits = (habits) => {
 export const loadSettings = () => {
   try {
     const data = localStorage.getItem(KEYS.SETTINGS);
-    return data ? JSON.parse(data) : { theme: 'dark', sound: true, accent: 'magi_red', themeMode: 'nerv' };
+    return data ? JSON.parse(data) : { theme: 'dark', sound: true, accent: 'nerv_amber', themeMode: 'nerv' };
   } catch (e) {
-    return { theme: 'dark', sound: true, accent: 'magi_red', themeMode: 'nerv' };
+    return { theme: 'dark', sound: true, accent: 'nerv_amber', themeMode: 'nerv' };
   }
 };
 
@@ -137,15 +147,6 @@ export const saveSettings = (settings) => {
     console.error('Failed to save settings:', e);
   }
 };
-
-function sanitizeString(str) {
-  if (typeof str !== 'string') return '';
-  return str
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-    .replace(/on\w+="[^"]*"/gi, '')
-    .replace(/javascript:[^"]*/gi, '')
-    .trim();
-}
 
 export const importData = (jsonData) => {
   try {
