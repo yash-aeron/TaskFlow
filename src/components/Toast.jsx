@@ -19,16 +19,16 @@ export default function Toast({ toast, onClose, themeMode = 'nerv' }) {
       className={isPersona ? "toast-notification persona-card" : "toast-notification nerv-frame"}
       style={{
         display: 'flex', alignItems: 'center', gap: '12px',
-        border: isPersona ? '2px solid #00e5ff' : '2px solid #ff0000',
+        border: isPersona ? '2px solid #00e5ff' : '2px solid #ff9900',
         background: isPersona ? '#090918' : '#000000',
-        color: isPersona ? '#00e5ff' : '#ffe600',
-        boxShadow: isPersona ? '-4px 4px 0px #e60012' : '0 0 15px rgba(255, 0, 0, 0.5)'
+        color: isPersona ? '#00e5ff' : '#ffb000',
+        boxShadow: isPersona ? '-4px 4px 0px #e60012' : '0 0 15px rgba(255, 153, 0, 0.5)'
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
         <span style={{
           padding: '2px 6px',
-          background: isPersona ? '#e60012' : '#ff0000',
+          background: isPersona ? '#e60012' : '#ff9900',
           color: '#ffffff',
           fontWeight: 900,
           fontSize: '10px',

@@ -13,7 +13,7 @@ export default function AnalyticsView({ tasks = [], categories = [], themeMode =
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%' }}>
       {/* Header */}
       <div className={isPersona ? "persona-card" : "card nerv-frame"} style={{ padding: '16px' }}>
-        <h2 style={{ fontSize: '18px', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#00e5ff' : '#ff0000', letterSpacing: '0.12em', margin: 0 }}>
+        <h2 style={{ fontSize: '18px', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#00e5ff' : '#ff9900', letterSpacing: '0.12em', margin: 0 }}>
           {isPersona ? "PERSONA SYSTEM STATUS // STATS & QUEST ANALYTICS" : ">_ MAGI THREE-SYSTEM ANALYSIS // 第一種戦闘配置"}
         </h2>
         <p style={{ fontSize: '11px', color: isPersona ? '#ffffff' : 'var(--nerv-amber)', marginTop: '4px', fontFamily: 'var(--font)', letterSpacing: '0.06em' }}>
@@ -26,10 +26,10 @@ export default function AnalyticsView({ tasks = [], categories = [], themeMode =
         {/* Node 1 */}
         <div className={isPersona ? "persona-card" : "card nerv-frame"} style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '11px', fontWeight: 900, color: isPersona ? '#00e5ff' : '#ff0000', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font)' }}>
+            <span style={{ fontSize: '11px', fontWeight: 900, color: isPersona ? '#00e5ff' : '#ff9900', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font)' }}>
               {isPersona ? "NODE 1: MISSIONS" : "MAGI MELCHIOR 1"}
             </span>
-            <CheckCircle size={18} style={{ color: isPersona ? '#00e5ff' : '#ff0000' }} />
+            <CheckCircle size={18} style={{ color: isPersona ? '#00e5ff' : '#ff9900' }} />
           </div>
           <div style={{ fontSize: '2.2rem', fontWeight: 900, fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: '#ffffff' }}>
             {completedCount}/{totalCount}
@@ -42,10 +42,10 @@ export default function AnalyticsView({ tasks = [], categories = [], themeMode =
         {/* Node 2 */}
         <div className={isPersona ? "persona-card" : "card nerv-frame"} style={{ padding: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '11px', fontWeight: 900, color: isPersona ? '#e60012' : '#ff6600', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font)' }}>
+            <span style={{ fontSize: '11px', fontWeight: 900, color: isPersona ? '#e60012' : '#ff3ea5', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font)' }}>
               {isPersona ? "NODE 2: SYNC RATE" : "MAGI BALTHASAR 2"}
             </span>
-            <Target size={18} style={{ color: isPersona ? '#e60012' : '#ff6600' }} />
+            <Target size={18} style={{ color: isPersona ? '#e60012' : '#ff3ea5' }} />
           </div>
           <div style={{ fontSize: '2.2rem', fontWeight: 900, fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#00e5ff' : '#00ff66' }}>
             {completionRate}%

@@ -21,7 +21,7 @@ export default function MatrixView({ tasks = [], onEditTask, onUpdateTaskStatus,
       id: 'q3',
       title: isPersona ? 'ALL-OUT TACTICAL // DELEGATE' : 'MAGI CASPER 3 // TACTICAL (URGENT)',
       filter: (t) => (t.priority === 'urgent' || t.priority === 'high') && !t.dueDate,
-      color: '#ff6600'
+      color: '#ff3ea5'
     },
     {
       id: 'q4',
@@ -36,7 +36,7 @@ export default function MatrixView({ tasks = [], onEditTask, onUpdateTaskStatus,
       {/* Header */}
       <div className={isPersona ? "persona-card" : "card nerv-frame"} style={{ padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
-          <h2 style={{ fontSize: '18px', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#00e5ff' : '#ff0000', letterSpacing: '0.12em', margin: 0 }}>
+          <h2 style={{ fontSize: '18px', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#00e5ff' : '#ff9900', letterSpacing: '0.12em', margin: 0 }}>
             {isPersona ? "PERSONA EISENHOWER PRIORITY MATRIX // ♠ RELOAD" : ">_ MAGI EISENHOWER DECISION MATRIX // 警報 使徒襲来"}
           </h2>
           <p style={{ fontSize: '11px', color: isPersona ? '#ffffff' : 'var(--nerv-amber)', marginTop: '4px', fontFamily: 'var(--font)', letterSpacing: '0.06em' }}>

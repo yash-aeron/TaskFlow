@@ -4,7 +4,7 @@ import confetti from 'canvas-confetti';
 import { sounds } from '../utils/audio';
 
 const MODES = {
-  work: { label: 'SYNC', duration: 25 * 60, color: '#ff0000' },
+  work: { label: 'SYNC', duration: 25 * 60, color: '#ff9900' },
   shortBreak: { label: 'STANDBY', duration: 5 * 60, color: '#00ff66' },
   longBreak: { label: 'COOLDOWN', duration: 15 * 60, color: '#00ffcc' }
 };
@@ -77,7 +77,7 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
       {/* Header */}
       <div className={isPersona ? "persona-card" : "card nerv-frame"} style={{ padding: '16px', textAlign: 'center', position: 'relative' }}>
         {!isPersona && <div className="hazard-stripe-red" style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '4px' }} />}
-        <h2 style={{ fontSize: '20px', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#00e5ff' : '#ff0000', letterSpacing: '0.12em', margin: 0 }}>
+        <h2 style={{ fontSize: '20px', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#00e5ff' : '#ff9900', letterSpacing: '0.12em', margin: 0 }}>
           {isPersona ? "PERSONA 3 RELOAD // FOCUS CLOCK 4:59:10" : "ENTRY PLUG SYNCHRONIZATION TIMER // 内部・外部"}
         </h2>
         <p style={{ fontSize: '11px', color: isPersona ? '#ffffff' : 'var(--nerv-amber)', marginTop: '4px', fontFamily: 'var(--font)', letterSpacing: '0.06em' }}>
@@ -100,9 +100,9 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
               transform: 'skewX(-10deg)',
               boxShadow: mode === m ? '-3px 3px 0px #00e5ff' : 'none'
             } : {
-              background: mode === m ? '#ff0000' : '#0d0d0d',
+              background: mode === m ? '#ff9900' : '#0d0d0d',
               color: '#ffffff',
-              border: mode === m ? '1px solid #ffffff' : '1px solid #ff8800'
+              border: mode === m ? '1px solid #ffffff' : '1px solid #ff3ea5'
             }}
           >
             {isPersona ? (m === 'work' ? 'SKiLL FOCUS' : m === 'shortBreak' ? 'STANDBY' : 'RELOAD') : MODES[m].label}
@@ -116,12 +116,12 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
         style={{
           padding: '24px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px',
           background: isPersona ? '#0e0f24' : '#000000',
-          border: isPersona ? '2px solid #00e5ff' : '1px solid #ff8800'
+          border: isPersona ? '2px solid #00e5ff' : '1px solid #ff3ea5'
         }}
       >
         {/* Target Dropdown */}
         <div style={{ width: '100%', maxWidth: '480px' }}>
-          <label className="form-label" style={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '8px', color: isPersona ? '#00e5ff' : '#ff8800' }}>
+          <label className="form-label" style={{ textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', marginBottom: '8px', color: isPersona ? '#00e5ff' : '#ff3ea5' }}>
             <Target size={14} />
             <span>{isPersona ? "[ TARGET MISSION ] SELECT MISSION TARGET" : "[ TARGET ACQUISITION ] SELECT ANGEL / OPERATION TARGET"}</span>
           </label>
@@ -129,7 +129,7 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
             className="form-select"
             value={selectedTaskId}
             onChange={(e) => setSelectedTaskId(e.target.value)}
-            style={isPersona ? { background: '#04040c', color: '#00e5ff', border: '2px solid #00e5ff' } : { background: '#0a0a0a', color: '#ffffff', border: '1px solid #ff8800' }}
+            style={isPersona ? { background: '#04040c', color: '#00e5ff', border: '2px solid #00e5ff' } : { background: '#0a0a0a', color: '#ffffff', border: '1px solid #ff3ea5' }}
           >
             <option value="">{isPersona ? "-- SELECT MISSION TARGET --" : "-- SELECT ANGEL OPERATION --"}</option>
             {tasks.filter(t => t.status !== 'completed').map(t => (
@@ -148,11 +148,11 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
             color: isPersona ? '#00e5ff' : currentModeInfo.color,
             textShadow: isPersona ? '-5px 5px 0px #e60012' : `0 0 25px ${currentModeInfo.color}`,
             background: isPersona ? '#04040c' : '#080808',
-            border: isPersona ? '2px solid #00e5ff' : '2px solid #ff0000',
+            border: isPersona ? '2px solid #00e5ff' : '2px solid #ff9900',
             padding: '16px 32px',
             width: '100%',
             textAlign: 'center',
-            boxShadow: isPersona ? '-6px 6px 0px #e60012' : '0 0 15px rgba(255,0,0,0.3)'
+            boxShadow: isPersona ? '-6px 6px 0px #e60012' : '0 0 15px rgba(255,153,0,0.3)'
           }}
         >
           {formatTime(timeLeft)}
@@ -167,8 +167,8 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
             style={{
               width: '44px', height: '44px',
               background: isPersona ? '#04040c' : '#0d0d0d',
-              border: isPersona ? '2px solid #00e5ff' : '1px solid #ff8800',
-              color: isPersona ? '#00e5ff' : '#ff8800',
+              border: isPersona ? '2px solid #00e5ff' : '1px solid #ff3ea5',
+              color: isPersona ? '#00e5ff' : '#ff3ea5',
               transform: isPersona ? 'skewX(-6deg)' : 'none'
             }}
           >
@@ -179,10 +179,10 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
             className={`btn btn-primary ${!isPersona ? 'hazard-stripe-red' : ''}`}
             style={{ 
               padding: '14px 44px', fontSize: '1.25rem',
-              background: isPersona ? '#e60012' : '#ff0000',
+              background: isPersona ? '#e60012' : '#ff9900',
               color: '#ffffff',
               border: isPersona ? '2px solid #ffffff' : '1px solid #ffffff',
-              boxShadow: isPersona ? '-5px 5px 0px #00e5ff' : '0 0 16px rgba(255,0,0,0.8)',
+              boxShadow: isPersona ? '-5px 5px 0px #00e5ff' : '0 0 16px rgba(255,153,0,0.8)',
               fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)',
               transform: isPersona ? 'skewX(-10deg)' : 'none',
               letterSpacing: '0.12em'
@@ -200,8 +200,8 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
             style={{
               width: '44px', height: '44px',
               background: isPersona ? '#04040c' : '#0d0d0d',
-              border: isPersona ? '2px solid #00e5ff' : '1px solid #ff8800',
-              color: isPersona ? '#00e5ff' : '#ff8800',
+              border: isPersona ? '2px solid #00e5ff' : '1px solid #ff3ea5',
+              color: isPersona ? '#00e5ff' : '#ff3ea5',
               transform: isPersona ? 'skewX(-6deg)' : 'none'
             }}
           >
@@ -217,7 +217,7 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
               <div 
                 key={i} 
                 className={`chevron-segment ${isActiveSegment ? (isPersona ? 'active-green' : 'active-red') : ''}`}
-                style={{ flex: 1, height: '12px', background: isActiveSegment ? (isPersona ? '#00e5ff' : '#ff0000') : '#222222' }}
+                style={{ flex: 1, height: '12px', background: isActiveSegment ? (isPersona ? '#00e5ff' : '#ff9900') : '#222222' }}
               />
             );
           })}
@@ -227,8 +227,8 @@ export default function FocusTimer({ tasks = [], initialTask, onLogFocusTime, th
       {/* Session Stats */}
       <div style={{ display: 'flex', gap: '16px', width: '100%' }}>
         <div className={isPersona ? "persona-card" : "card nerv-frame"} style={{ flex: 1, textAlign: 'center', padding: '16px' }}>
-          <Award size={22} style={{ color: isPersona ? '#00e5ff' : '#ff8800', margin: '0 auto 6px' }} />
-          <div style={{ fontSize: '1.6rem', fontWeight: 900, fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#ffffff' : '#ff0000' }}>
+          <Award size={22} style={{ color: isPersona ? '#00e5ff' : '#ff3ea5', margin: '0 auto 6px' }} />
+          <div style={{ fontSize: '1.6rem', fontWeight: 900, fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#ffffff' : '#ff9900' }}>
             {completedSessions}
           </div>
           <div style={{ fontSize: '11px', color: 'var(--text-secondary)', fontFamily: 'var(--font)' }}>SESSIONS COMPLETED</div>

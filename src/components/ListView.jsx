@@ -320,7 +320,7 @@ export default function ListView({
                     )}
 
                     {dateMeta && (
-                      <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: dateMeta.class === 'overdue' ? '#ff0000' : 'var(--text-muted)' }}>
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '4px', color: dateMeta.class === 'overdue' ? '#ff9900' : 'var(--text-muted)' }}>
                         <Calendar size={13} />
                         {dateMeta.label} {task.dueTime ? `@ ${task.dueTime}` : ''}
                       </span>

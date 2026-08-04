@@ -25,11 +25,11 @@ body {
 .widget-container {
   width: 100%;
   height: 100%;
-  background: #000000;
-  border: 2px solid #ff0000;
+  background: #0a0a0a;
+  border: 2px solid #ff9900;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+  box-shadow: 0 0 20px rgba(255, 153, 0, 0.25);
   overflow: hidden;
   position: relative;
 }
@@ -38,12 +38,12 @@ body {
   height: 32px;
   background: repeating-linear-gradient(
     -45deg,
-    #ff0000,
-    #ff0000 10px,
+    #ff9900,
+    #ff9900 10px,
     #000000 10px,
     #000000 20px
   );
-  border-bottom: 2px solid #ff0000;
+  border-bottom: 2px solid #ff9900;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -70,8 +70,8 @@ body {
 .widget-close {
   -webkit-app-region: no-drag;
   background: #000000;
-  border: 1px solid #ff0000;
-  color: #ff0000;
+  border: 1px solid #ff9900;
+  color: #ff9900;
   cursor: pointer;
   width: 20px;
   height: 20px;
@@ -81,7 +81,7 @@ body {
   font-weight: 900;
 }
 .widget-close:hover {
-  background: #ff0000;
+  background: #ff9900;
   color: #ffffff;
 }
 
@@ -94,7 +94,7 @@ body {
   gap: 6px;
   -webkit-app-region: no-drag;
   position: relative;
-  background: #000000;
+  background: #0a0a0a;
 }
 
 .widget-item-row {
@@ -102,9 +102,9 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 6px 8px;
-  background: #050505;
-  border: 1px solid #ff6600;
-  border-left: 4px solid #ff0000;
+  background: #0a0a0a;
+  border: 1px solid rgba(255, 153, 0, 0.28);
+  border-left: 4px solid #ff9900;
   gap: 8px;
 }
 .widget-item-row.completed {
@@ -116,7 +116,7 @@ body {
 .widget-checkbox {
   width: 16px;
   height: 16px;
-  border: 2px solid #ff6600;
+  border: 2px solid #ff9900;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -125,8 +125,8 @@ body {
   background: #000000;
 }
 .widget-checkbox.checked {
-  background: #00ff66;
-  border-color: #00ff66;
+  background: #00ff00;
+  border-color: #00ff00;
   color: #000000;
 }
 
@@ -134,8 +134,8 @@ body {
   width: 100%;
   padding: 6px 8px;
   background: #000000;
-  border: 1px solid #ff6600;
-  color: #00ff66;
+  border: 1px solid #ff9900;
+  color: #00ff00;
   font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   outline: none;
@@ -143,12 +143,12 @@ body {
   letter-spacing: 0.04em;
 }
 .widget-input:focus {
-  border-color: #00ff66;
-  box-shadow: 0 0 10px rgba(0, 255, 102, 0.3);
+  border-color: #00ff00;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
 }
 
 .widget-btn {
-  background: #ff0000;
+  background: #ff9900;
   color: #ffffff;
   border: 1px solid #ffffff;
   padding: 6px 12px;
@@ -159,11 +159,11 @@ body {
   -webkit-app-region: no-drag;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  box-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+  box-shadow: 0 0 8px rgba(255, 153, 0, 0.4);
 }
 .widget-btn:hover {
-  background: #ff3333;
-  box-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
+  background: #ffb000;
+  box-shadow: 0 0 12px rgba(255, 153, 0, 0.8);
 }
 
 /* PERSONA WIDGET OVERRIDES */
@@ -234,4 +234,4 @@ body {
 
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: #000000; }
-::-webkit-scrollbar-thumb { background: #ff0000; }
+::-webkit-scrollbar-thumb { background: #ff9900; }

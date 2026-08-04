@@ -50,14 +50,14 @@ export default function SplashIntro({ onComplete }) {
         className="hazard-stripe-red" 
         style={{
           position: 'absolute', top: 0, left: 0, right: 0, height: '8px',
-          boxShadow: '0 0 15px #ff0000'
+          boxShadow: '0 0 15px #ff9900'
         }} 
       />
       <div 
         className="hazard-stripe-yellow" 
         style={{
           position: 'absolute', bottom: 0, left: 0, right: 0, height: '8px',
-          boxShadow: '0 0 15px #ffe600'
+          boxShadow: '0 0 15px #ffb000'
         }} 
       />
 
@@ -67,23 +67,23 @@ export default function SplashIntro({ onComplete }) {
           <div style={{ display: 'flex', gap: '16px' }}>
             <div className="magi-hex-node" style={{ width: '80px', height: '60px', fontSize: '10px' }}>
               <div style={{ fontWeight: '900' }}>MAGI-1</div>
-              <div style={{ fontSize: '8px', color: '#ffe600' }}>MELCHIOR</div>
+              <div style={{ fontSize: '8px', color: '#ffb000' }}>MELCHIOR</div>
             </div>
-            <div className="magi-hex-node" style={{ width: '80px', height: '60px', fontSize: '10px', background: '#ff6600' }}>
+            <div className="magi-hex-node" style={{ width: '80px', height: '60px', fontSize: '10px', background: '#ff3ea5' }}>
               <div style={{ fontWeight: '900' }}>MAGI-2</div>
               <div style={{ fontSize: '8px', color: '#ffffff' }}>BALTHASAR</div>
             </div>
             <div className="magi-hex-node" style={{ width: '80px', height: '60px', fontSize: '10px' }}>
               <div style={{ fontWeight: '900' }}>MAGI-3</div>
-              <div style={{ fontSize: '8px', color: '#ffe600' }}>CASPER</div>
+              <div style={{ fontSize: '8px', color: '#ffb000' }}>CASPER</div>
             </div>
           </div>
 
           <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <span style={{ fontSize: '18px', fontWeight: 900, fontFamily: 'var(--font-kanji)', color: '#ff0000', letterSpacing: '0.2em' }}>
+            <span style={{ fontSize: '18px', fontWeight: 900, fontFamily: 'var(--font-kanji)', color: '#ff9900', letterSpacing: '0.2em' }}>
               第一種戦闘配置 // NERV SYSTEM BOOT
             </span>
-            <div style={{ fontSize: '12px', color: '#ff8800', fontFamily: 'var(--font)', letterSpacing: '0.12em' }}>
+            <div style={{ fontSize: '12px', color: '#ff3ea5', fontFamily: 'var(--font)', letterSpacing: '0.12em' }}>
               INITIALIZING TOKYO-3 MAGI SUPERCOMPUTER NODES...
             </div>
           </div>

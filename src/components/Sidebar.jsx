@@ -33,15 +33,15 @@ export default function Sidebar({
       {!isPersona ? (
         <div className="magi-status-box" style={{ padding: '8px 10px', marginBottom: '8px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '4px' }}>
-            <div style={{ background: '#ff0000', color: '#000000', padding: '6px 2px', textAlign: 'center', clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)', fontWeight: 'bold', fontSize: '9px', lineHeight: '1.2' }}>
+            <div style={{ background: '#ff9900', color: '#000000', padding: '6px 2px', textAlign: 'center', clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)', fontWeight: 'bold', fontSize: '9px', lineHeight: '1.2' }}>
               <div>MAGI-1</div>
               <div style={{ fontSize: '7.5px' }}>MELCHIOR</div>
             </div>
-            <div style={{ background: '#ff0000', color: '#000000', padding: '6px 2px', textAlign: 'center', clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)', fontWeight: 'bold', fontSize: '9px', lineHeight: '1.2' }}>
+            <div style={{ background: '#ff9900', color: '#000000', padding: '6px 2px', textAlign: 'center', clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)', fontWeight: 'bold', fontSize: '9px', lineHeight: '1.2' }}>
               <div>MAGI-2</div>
               <div style={{ fontSize: '7.5px' }}>BALTHASAR</div>
             </div>
-            <div style={{ background: '#ff0000', color: '#000000', padding: '6px 2px', textAlign: 'center', clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)', fontWeight: 'bold', fontSize: '9px', lineHeight: '1.2' }}>
+            <div style={{ background: '#ff9900', color: '#000000', padding: '6px 2px', textAlign: 'center', clipPath: 'polygon(15% 0%, 85% 0%, 100% 50%, 85% 100%, 15% 100%, 0% 50%)', fontWeight: 'bold', fontSize: '9px', lineHeight: '1.2' }}>
               <div>MAGI-3</div>
               <div style={{ fontSize: '7.5px' }}>CASPER</div>
             </div>

@@ -44,7 +44,7 @@ export default function CommandPalette({
     <div className="modal-overlay" onClick={onClose}>
       <div className={isPersona ? "modal-content persona-card" : "modal-content nerv-frame"} style={{ maxWidth: '520px' }} onClick={e => e.stopPropagation()}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', borderBottom: '1px solid var(--border)', paddingBottom: '10px' }}>
-          <Search size={16} style={{ color: isPersona ? '#00e5ff' : '#ff0000' }} />
+          <Search size={16} style={{ color: isPersona ? '#00e5ff' : '#ff9900' }} />
           <input 
             type="text" 
             className="form-input" 
@@ -69,7 +69,7 @@ export default function CommandPalette({
                   background: '#000000', border: '1px solid var(--border)', cursor: 'pointer'
                 }}
               >
-                <Icon size={14} style={{ color: isPersona ? '#00e5ff' : '#ff6600' }} />
+                <Icon size={14} style={{ color: isPersona ? '#00e5ff' : '#ff3ea5' }} />
                 <span style={{ fontSize: '11px', fontWeight: 800, color: '#ffffff', fontFamily: 'var(--font)' }}>
                   {act.label}
                 </span>

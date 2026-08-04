@@ -102,7 +102,7 @@ export default function TaskModal({
         {/* Banner */}
         <div style={{
           padding: '8px 12px',
-          background: isPersona ? '#e60012' : '#ff0000',
+          background: isPersona ? '#e60012' : '#ff9900',
           color: '#ffffff',
           fontWeight: 900,
           fontSize: '12px',

@@ -20,8 +20,8 @@ export default function ShortcutsModal({ isOpen, onClose, themeMode = 'nerv' }) 
       <div className={isPersona ? "modal-content persona-card" : "modal-content nerv-frame"} style={{ maxWidth: '440px' }} onClick={(e) => e.stopPropagation()}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid var(--border)', paddingBottom: '10px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <Command size={18} style={{ color: isPersona ? '#00e5ff' : '#ff0000' }} />
-            <h3 style={{ fontSize: '14px', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#00e5ff' : '#ff0000' }}>
+            <Command size={18} style={{ color: isPersona ? '#00e5ff' : '#ff9900' }} />
+            <h3 style={{ fontSize: '14px', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#00e5ff' : '#ff9900' }}>
               {isPersona ? "PERSONA COMMAND MANUAL" : "NERV TACTICAL OPERATIONS MANUAL // 警報"}
             </h3>
           </div>
@@ -40,7 +40,7 @@ export default function ShortcutsModal({ isOpen, onClose, themeMode = 'nerv' }) 
               }}
             >
               <span style={{ fontSize: '11px', color: 'var(--text-secondary)', fontFamily: 'var(--font)' }}>{s.description}</span>
-              <kbd style={{ background: isPersona ? '#e60012' : '#ff6600', color: '#ffffff', padding: '2px 6px', fontSize: '11px', fontWeight: 900, fontFamily: 'var(--font)' }}>
+              <kbd style={{ background: isPersona ? '#e60012' : '#ff3ea5', color: '#ffffff', padding: '2px 6px', fontSize: '11px', fontWeight: 900, fontFamily: 'var(--font)' }}>
                 {s.key}
               </kbd>
             </div>

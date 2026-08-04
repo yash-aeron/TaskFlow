@@ -67,7 +67,7 @@ export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWith
           </div>
         </div>
 
-        {!isPersona && <div className="hazard-stripe-red" style={{ height: '6px', width: '100%', border: '1px solid #ff0000' }} />}
+        {!isPersona && <div className="hazard-stripe-red" style={{ height: '6px', width: '100%', border: '1px solid #ff9900' }} />}
       </div>
 
       {/* Days Header */}
@@ -98,8 +98,8 @@ export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWith
               key={cell.dateStr} 
               className={`calendar-day-cell ${isToday ? 'today' : ''} ${isPersona ? 'persona-card' : ''}`}
               style={{
-                border: isToday ? (isPersona ? '2px solid #00e5ff' : '2px solid #ff0000') : '1px solid var(--border)',
-                background: isToday ? (isPersona ? 'rgba(0, 229, 255, 0.15)' : 'rgba(255, 0, 0, 0.08)') : '#050505',
+                border: isToday ? (isPersona ? '2px solid #00e5ff' : '2px solid #ff9900') : '1px solid var(--border)',
+                background: isToday ? (isPersona ? 'rgba(0, 229, 255, 0.15)' : 'rgba(255, 153, 0, 0.08)') : '#050505',
                 position: 'relative'
               }}
             >
@@ -113,7 +113,7 @@ export default function CalendarView({ tasks = [], onEditTask, onOpenNewTaskWith
                     <span 
                       style={{ 
                         fontSize: '9px', fontWeight: 900, padding: '1px 5px',
-                        background: isPersona ? '#e60012' : '#ff0000',
+                        background: isPersona ? '#e60012' : '#ff9900',
                         color: '#ffffff', border: '1px solid #ffffff', fontFamily: 'var(--font)'
                       }}
                     >

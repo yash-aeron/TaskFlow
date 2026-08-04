@@ -2,83 +2,97 @@
    TASKFLOW — ULTRA HIGH-IMPACT ANIME DESIGN SYSTEM ENGINE
    ══════════════════════════════════════════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Noto+Sans+JP:wght@700;900&family=Orbitron:wght@600;800;900&family=Impact&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&family=Noto+Sans+JP:wght@700;900&family=Orbitron:wght@600;800;900&family=Impact&family=Oswald:wght@400;500;600;700&family=Fira+Code:wght@400;500;700&display=swap');
 
 /* ══════════════════════════════════════════════════════════════════════════════
    1. CRISP NERV MAGI DESIGN SYSTEM ([data-theme-mode="nerv"])
    ══════════════════════════════════════════════════════════════════════════════ */
 
 :root, [data-theme-mode="nerv"] {
+  /* The void */
   --bg-0: #000000;
-  --bg-1: #080808;
+  --bg-1: #0a0a0a;
   --bg-2: #121212;
   --bg-3: #1a1a1a;
-  --bg-hover: #260d00;
-  --bg-active: #401800;
+  --bg-hover: #1a1a00;
+  --bg-active: #332b00;
 
-  --nerv-red: #ff0000;
-  --nerv-red-dark: #800000;
-  --nerv-red-glow: rgba(255, 0, 0, 0.5);
+  /* Core EVA colors — orange is primary text/accent, green for terminal/grid,
+     cyan for data readouts, red reserved for alerts (nerv-ui reference). */
+  --nerv-orange: #ff9900;
+  --nerv-orange-dark: #b36a00;
+  --nerv-orange-glow: rgba(255, 153, 0, 0.4);
 
-  --nerv-amber: #ff8800;
-  --nerv-amber-dark: #993d00;
-  --nerv-amber-glow: rgba(255, 136, 0, 0.4);
+  --nerv-green: #00ff00;
+  --nerv-green-dark: #009900;
+  --nerv-green-glow: rgba(0, 255, 0, 0.4);
 
-  --nerv-yellow: #ffe600;
-  --nerv-yellow-glow: rgba(255, 230, 0, 0.4);
+  --nerv-cyan: #00f6ff;
+  --nerv-cyan-glow: rgba(0, 246, 255, 0.35);
 
-  --terminal-green: #00ff66;
-  --terminal-green-dim: #009933;
+  --nerv-red: #ff2b1d;
+  --nerv-red-dark: #99000a;
+  --nerv-red-glow: rgba(255, 43, 29, 0.4);
 
-  --accent: var(--nerv-red);
-  --accent-dark: var(--nerv-red-dark);
+  --nerv-amber: #ffb000;
+  --nerv-amber-dark: #8a6100;
+  --nerv-amber-glow: rgba(255, 176, 0, 0.4);
 
-  --border: #551900;
-  --border-hover: #ff0000;
-  --border-amber: #ff8800;
+  --nerv-magenta: #ff00ff;
+  --nerv-lcd: #39ff14;
 
-  --text-primary: #ffffff;
-  --text-secondary: #ffaa55;
-  --text-tertiary: #ff7733;
+  --terminal-green: var(--nerv-green);
+  --terminal-green-dim: var(--nerv-green-dark);
+
+  --accent: var(--nerv-orange);
+  --accent-dark: var(--nerv-orange-dark);
+
+  --border: rgba(255, 153, 0, 0.28);
+  --border-hover: var(--nerv-orange);
+  --border-amber: #4e4e4e;
+
+  --text-primary: #e3ddd4;
+  --text-secondary: #ff9900;
+  --text-tertiary: #8f8f8f;
 
   --font: 'JetBrains Mono', monospace;
-  --font-heading: 'Orbitron', sans-serif;
+  --font-heading: 'Oswald', 'Impact', sans-serif;
   --font-kanji: 'Noto Sans JP', sans-serif;
   --radius: 0px;
 
   --priority-urgent: var(--nerv-red);
-  --priority-urgent-bg: rgba(255, 0, 0, 0.25);
+  --priority-urgent-bg: rgba(255, 43, 29, 0.25);
   --priority-high: var(--nerv-amber);
-  --priority-high-bg: rgba(255, 136, 0, 0.25);
-  --priority-medium: var(--nerv-yellow);
-  --priority-medium-bg: rgba(255, 230, 0, 0.2);
+  --priority-high-bg: rgba(255, 176, 0, 0.22);
+  --priority-medium: var(--nerv-cyan);
+  --priority-medium-bg: rgba(0, 246, 255, 0.18);
   --priority-low: var(--terminal-green);
-  --priority-low-bg: rgba(0, 255, 102, 0.2);
+  --priority-low-bg: rgba(0, 255, 0, 0.16);
 }
 
 /* ACCENT DROPDOWN OVERRIDES */
 [data-accent="magi_red"] {
-  --accent: #ff0000;
-  --accent-dark: #800000;
-  --border-hover: #ff0000;
+  --accent: #ff2b1d;
+  --accent-dark: #99000a;
+  --border-hover: #ff2b1d;
 }
 
 [data-accent="nerv_amber"] {
-  --accent: #ff8800;
-  --accent-dark: #993d00;
-  --border-hover: #ff8800;
+  --accent: #ff9900;
+  --accent-dark: #b36a00;
+  --border-hover: #ff9900;
 }
 
 [data-accent="terminal_cyan"] {
-  --accent: #00e5ff;
-  --accent-dark: #0088cc;
-  --border-hover: #00e5ff;
+  --accent: #00f6ff;
+  --accent-dark: #008a92;
+  --border-hover: #00f6ff;
 }
 
 [data-accent="terminal_green"] {
-  --accent: #00ff66;
-  --accent-dark: #009933;
-  --border-hover: #00ff66;
+  --accent: #00ff00;
+  --accent-dark: #009900;
+  --border-hover: #00ff00;
 }
 
 [data-accent="seele_monolith"] {
@@ -87,22 +101,39 @@
   --border-hover: #ffffff;
 }
 
-/* NERV BACKGROUND GRID & HUD CANVASES */
+/* NERV BACKGROUND — the void: orange glow from top + green grid + CRT scanlines */
 [data-theme-mode="nerv"] body,
 [data-theme-mode="nerv"] .content-wrapper,
 [data-theme-mode="nerv"] .app-container {
   background-color: #000000 !important;
-  background-image: 
-    linear-gradient(rgba(255, 0, 0, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 0, 0, 0.05) 1px, transparent 1px) !important;
-  background-size: 28px 28px !important;
+  background-image:
+    radial-gradient(circle at top center, rgba(255, 153, 0, 0.06), transparent 32%),
+    linear-gradient(rgba(0, 255, 0, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 0, 0.045) 1px, transparent 1px) !important;
+  background-size: 100% 100%, 24px 24px, 24px 24px !important;
+}
+
+/* CRT scanline texture overlaying the whole NERV UI (nerv-ui reference pattern) */
+[data-theme-mode="nerv"] .app-container::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.04) 2px,
+    rgba(0, 0, 0, 0.04) 4px
+  );
 }
 
 /* NERV SIDEBAR STYLING & HOVER */
 [data-theme-mode="nerv"] .sidebar {
   width: 230px;
-  background: #040404;
-  border-right: 2px solid #ff0000;
+  background: #0a0a0a;
+  border-right: 2px solid rgba(255, 153, 0, 0.7);
   display: flex;
   flex-direction: column;
   padding: 12px 8px;
@@ -110,7 +141,7 @@
   overflow-y: auto;
   flex-shrink: 0;
   font-size: 12px;
-  box-shadow: 5px 0 20px rgba(255, 0, 0, 0.2);
+  box-shadow: 5px 0 20px rgba(255, 153, 0, 0.08);
 }
 
 [data-theme-mode="nerv"] .sidebar-label {
@@ -119,11 +150,11 @@
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: #ff8800;
+  color: #ff9900;
   padding: 6px 8px;
-  background: #180800;
-  border: 1px solid #551c00;
-  border-left: 4px solid #ff8800;
+  background: #000000;
+  border: 1px solid rgba(255, 153, 0, 0.28);
+  border-left: 4px solid #ff9900;
   margin-bottom: 6px;
 }
 
@@ -132,13 +163,13 @@
   align-items: center;
   justify-content: space-between;
   padding: 8px 12px;
-  color: #ffccaa;
+  color: #e3ddd4;
   font-size: 11px;
   font-weight: 800;
   cursor: pointer;
-  background: #0a0a0a;
-  border: 1px solid #441500;
-  border-left: 3px solid #ff8800;
+  background: #050505;
+  border: 1px solid rgba(255, 153, 0, 0.25);
+  border-left: 3px solid #ff9900;
   width: 100%;
   text-align: left;
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
@@ -149,21 +180,21 @@
 }
 
 [data-theme-mode="nerv"] .nav-item:hover {
-  background: #280b00 !important;
+  background: rgba(255, 153, 0, 0.08) !important;
   color: #ffffff !important;
-  border-color: #ff0000 !important;
-  border-left: 4px solid #ff0000 !important;
+  border-color: #ff9900 !important;
+  border-left: 4px solid #ff9900 !important;
   transform: translateX(4px);
-  box-shadow: 0 0 14px rgba(255, 0, 0, 0.6) !important;
+  box-shadow: 0 0 12px rgba(255, 153, 0, 0.4) !important;
 }
 
 [data-theme-mode="nerv"] .nav-item.active {
-  background: #ff0000 !important;
-  color: #ffffff !important;
+  background: #ff9900 !important;
+  color: #000000 !important;
   font-weight: 900 !important;
-  border: 1px solid #ffffff !important;
-  border-left: 4px solid #ffffff !important;
-  box-shadow: 0 0 16px rgba(255, 0, 0, 0.9) !important;
+  border: 1px solid #ff9900 !important;
+  border-left: 4px solid #ff9900 !important;
+  box-shadow: 0 0 16px rgba(255, 153, 0, 0.6) !important;
 }
 
 [data-theme-mode="nerv"] .badge {
@@ -172,46 +203,46 @@
   font-weight: 900;
   padding: 1px 6px;
   background: #000000;
-  color: #ffe600;
-  border: 1px solid #ffe600;
+  color: #ff9900;
+  border: 1px solid #ff9900;
   transition: all 0.15s;
 }
 
 [data-theme-mode="nerv"] .card,
 [data-theme-mode="nerv"] .task-item {
-  background: #050505 !important;
-  border: 1px solid #ff8800 !important;
-  border-left: 4px solid #ff0000 !important;
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.25) !important;
+  background: #0a0a0a !important;
+  border: 1px solid rgba(255, 153, 0, 0.28) !important;
+  border-left: 4px solid #ff9900 !important;
+  box-shadow: 0 0 8px rgba(255, 153, 0, 0.12) !important;
 }
 
 [data-theme-mode="nerv"] .card:hover,
 [data-theme-mode="nerv"] .task-item:hover {
-  border-color: #ff0000 !important;
+  border-color: #ff9900 !important;
   transform: translateY(-2px);
-  box-shadow: 0 0 18px rgba(255, 0, 0, 0.6) !important;
+  box-shadow: 0 0 14px rgba(255, 153, 0, 0.35) !important;
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 [data-theme-mode="nerv"] .pill-btn {
-  background: #0d0d0d !important;
-  color: #ff8800 !important;
-  border: 1px solid #ff8800 !important;
+  background: #050505 !important;
+  color: #ff9900 !important;
+  border: 1px solid rgba(255, 153, 0, 0.6) !important;
 }
 
 [data-theme-mode="nerv"] .pill-btn:hover {
-  background: #ff0000 !important;
-  color: #ffffff !important;
+  background: #ff9900 !important;
+  color: #000000 !important;
   border-color: #ffffff !important;
   transform: translateY(-1px);
-  box-shadow: 0 0 12px rgba(255, 0, 0, 0.7) !important;
+  box-shadow: 0 0 12px rgba(255, 153, 0, 0.6) !important;
 }
 
 [data-theme-mode="nerv"] .pill-btn.active {
-  background: #ff0000 !important;
-  color: #ffffff !important;
+  background: #ff9900 !important;
+  color: #000000 !important;
   border-color: #ffffff !important;
-  box-shadow: 0 0 14px rgba(255, 0, 0, 0.8) !important;
+  box-shadow: 0 0 14px rgba(255, 153, 0, 0.7) !important;
 }
 
 /* NERV HAZARD STRIPES & MAGI HEX NODES */
@@ -229,8 +260,8 @@
 .hazard-stripe-red {
   background: repeating-linear-gradient(
     -45deg,
-    #ff0000,
-    #ff0000 12px,
+    #ff2b1d,
+    #ff2b1d 12px,
     #000000 12px,
     #000000 24px
   ) !important;
@@ -239,23 +270,80 @@
 
 .magi-hex-node {
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  background: #ff0000;
+  background: linear-gradient(160deg, #ffb000 0%, #ff9900 55%, #b36a00 100%);
   color: #ffffff;
   border: 2px solid #ffffff;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 16px; position: relative;
+  box-shadow: 0 0 12px rgba(255, 153, 0, 0.55), inset 0 0 8px rgba(0,0,0,0.35);
 }
 
 .nerv-frame {
-  position: relative; background: #050505; border: 1px solid var(--border-amber); padding: 14px;
+  position: relative; background: #0a0a0a; border: 1px solid var(--border-amber); padding: 14px;
+  box-shadow: 0 0 0 1px rgba(255, 153, 0, 0.12), inset 0 0 14px rgba(255, 153, 0, 0.05);
 }
 .nerv-frame::before {
   content: ''; position: absolute; top: -1px; left: -1px; width: 10px; height: 10px;
-  border-top: 2px solid #ff0000; border-left: 2px solid #ff0000;
+  border-top: 2px solid #ff9900; border-left: 2px solid #ff9900;
 }
 .nerv-frame::after {
   content: ''; position: absolute; bottom: -1px; right: -1px; width: 10px; height: 10px;
-  border-bottom: 2px solid #ff0000; border-right: 2px solid #ff0000;
+  border-bottom: 2px solid #ff9900; border-right: 2px solid #ff9900;
+}
+
+/* NERV emblem — white leaf mark on a red disc (anime logo) */
+.nerv-emblem {
+  position: relative;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 26%, #ffffff, #e6ebf4 55%, #a9b2c8);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 12px rgba(255, 153, 0, 0.55);
+  flex-shrink: 0;
+}
+.nerv-emblem .leaf {
+  position: relative;
+  width: 62%; height: 74%;
+  background: linear-gradient(140deg, #ff5565, #e6112a 72%);
+  border-radius: 62% 30% 48% 42% / 56% 46% 54% 46%;
+  transform: rotate(-14deg);
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.45));
+}
+.nerv-emblem .leaf::before {
+  content: ''; position: absolute; left: 50%; top: 6%; bottom: 6%; width: 2px;
+  background: rgba(255,255,255,0.55); transform: translateX(-50%);
+}
+
+/* ── EVA ENTRY-PLUG HUD (subtle: framing brackets + faint reticle + sync chip) ── */
+[data-theme-mode="nerv"] .eva-hud {
+  position: fixed; inset: 0; pointer-events: none; z-index: 2; overflow: hidden;
+  color: var(--nerv-orange);
+  font-family: 'JetBrains Mono', monospace;
+}
+/* Faint full-canvas targeting reticle used purely as background texture */
+[data-theme-mode="nerv"] .hud-reticle {
+  position: absolute; left: 50%; top: 50%; width: min(120vmin, 120vh); height: auto;
+  transform: translate(-50%, -50%); opacity: 0.05;
+  color: var(--nerv-orange);
+}
+/* Small targeting brackets at the extreme screen corners */
+[data-theme-mode="nerv"] .hud-bracket {
+  position: absolute; width: 26px; height: 26px;
+  border: 2px solid rgba(255, 153, 0, 0.55); opacity: 0.9;
+}
+[data-theme-mode="nerv"] .hud-br-tl { top: 58px; left: 8px; border-right: none; border-bottom: none; }
+[data-theme-mode="nerv"] .hud-br-tr { top: 58px; right: 8px; border-left: none; border-bottom: none; }
+[data-theme-mode="nerv"] .hud-br-bl { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+[data-theme-mode="nerv"] .hud-br-br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+/* Compact sync readout pinned to the bottom edge */
+[data-theme-mode="nerv"] .hud-chip {
+  position: absolute; bottom: 10px; right: 46px; display: flex; align-items: center; gap: 8px;
+  font-size: 9px; letter-spacing: 0.12em; color: var(--nerv-cyan); text-transform: uppercase;
+  background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255, 153, 0, 0.3); padding: 3px 8px;
+}
+[data-theme-mode="nerv"] .hud-chip-num {
+  color: var(--nerv-orange); font-weight: 900; font-size: 11px;
+  text-shadow: 0 0 6px rgba(255, 153, 0, 0.7);
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
@@ -301,13 +389,50 @@
   --priority-low-bg: #0055ff;
 }
 
-/* PERSONA HALFTONE BACKGROUND PATTERN */
+/* PERSONA HALFTONE BACKGROUND PATTERN (cyan halftone + red "Phantom" wash) */
 [data-theme-mode="persona"] body,
 [data-theme-mode="persona"] .content-wrapper,
 [data-theme-mode="persona"] .app-container {
   background-color: #04040c !important;
-  background-image: radial-gradient(rgba(0, 229, 255, 0.15) 1px, transparent 0) !important;
-  background-size: 24px 24px !important;
+  background-image:
+    radial-gradient(rgba(0, 229, 255, 0.14) 1px, transparent 1.5px),
+    radial-gradient(circle at 50% -8%, rgba(230, 0, 18, 0.10), transparent 52%) !important;
+  background-size: 26px 26px, 100% 100% !important;
+}
+
+/* P5-style starburst badge (spiked radial spokes masked to a disc) */
+.persona-starburst {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 92px; height: 92px;
+  background: repeating-conic-gradient(from -8deg, #e60012 0deg 10deg, transparent 10deg 20deg);
+  -webkit-mask: radial-gradient(circle, black 58%, transparent 60%);
+  mask: radial-gradient(circle, black 58%, transparent 60%);
+  filter: drop-shadow(-4px 4px 0 #00e5ff);
+  flex-shrink: 0;
+}
+.persona-starburst span {
+  font-family: 'Impact', sans-serif; font-weight: 900;
+  color: #ffffff; font-size: 12px; line-height: 1.05; text-align: center;
+  padding: 6px; letter-spacing: 0.04em;
+  background: rgba(0,0,0,0.45);
+  transform: rotate(-4deg);
+}
+
+/* P5 glitch text — RGB-split wobble on hover for brand identity */
+.persona-glitch {
+  position: relative; display: inline-block;
+}
+.persona-glitch:hover {
+  animation: personaGlitch 0.28s steps(2, jump-none) 2;
+  text-shadow: -2px 0 #00e5ff, 2px 0 #e60012;
+}
+@keyframes personaGlitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, 2px); }
+  80% { transform: translate(1px, -2px); }
+  100% { transform: translate(0); }
 }
 
 [data-theme-mode="persona"] .sidebar {
@@ -367,13 +492,23 @@
   transform: skewX(-10deg);
 }
 
-[data-theme-mode="persona"] .card, 
+[data-theme-mode="persona"] .card,
 [data-theme-mode="persona"] .persona-card {
+  position: relative;
   background: #0e0f24 !important;
   border: 2px solid #00e5ff !important;
   box-shadow: -8px 8px 0px #e60012 !important;
   transform: rotate(-0.8deg) !important;
   transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* P5 signature: red notched corner on every panel */
+[data-theme-mode="persona"] .persona-card::after,
+[data-theme-mode="persona"] .card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; pointer-events: none;
+  border-top: 16px solid #e60012;
+  border-right: 16px solid transparent;
 }
 
 [data-theme-mode="persona"] .card:hover, 
@@ -447,6 +582,24 @@
   color: #ffffff !important;
   border-color: #ffffff !important;
   box-shadow: -4px 4px 0px #00e5ff !important;
+}
+
+/* P5-style slanted red/white strip under the navbar */
+[data-theme-mode="persona"] .navbar::after {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: -7px; height: 7px; z-index: 5; pointer-events: none;
+  background: repeating-linear-gradient(-45deg, #e60012 0 12px, #ffffff 12px 24px);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 60% 100%, 0 30%);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Phantom-thieves halftone across the sidebar + scan sheen on content */
+[data-theme-mode="persona"] .sidebar {
+  background-color: #0e0f24 !important;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1.5px),
+    radial-gradient(rgba(230, 0, 18, 0.10) 1px, transparent 1.5px) !important;
+  background-size: 16px 16px, 16px 16px !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════

@@ -13,7 +13,7 @@ export default function TimelineView({ tasks = [], onEditTask, themeMode = 'nerv
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%' }}>
       <div className={isPersona ? "persona-card" : "card nerv-frame"} style={{ padding: '16px' }}>
-        <h2 style={{ fontSize: '18px', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#00e5ff' : '#ff0000', margin: 0 }}>
+        <h2 style={{ fontSize: '18px', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#00e5ff' : '#ff9900', margin: 0 }}>
           {isPersona ? "PERSONA CHRONOLOGICAL TIMELINE // PALACE LOG" : ">_ CHRONOLOGICAL OPERATIONS LOG // 第一種戦闘配置"}
         </h2>
       </div>
@@ -22,7 +22,7 @@ export default function TimelineView({ tasks = [], onEditTask, themeMode = 'nerv
         {/* Timeline Spine Line */}
         <div style={{
           position: 'absolute', left: '30px', top: '20px', bottom: '20px', width: '4px',
-          background: isPersona ? 'linear-gradient(180deg, #e60012 0%, #00e5ff 100%)' : 'repeating-linear-gradient(-45deg, #ff0000, #ff0000 8px, #ffe600 8px, #ffe600 16px)'
+          background: isPersona ? 'linear-gradient(180deg, #e60012 0%, #00e5ff 100%)' : 'repeating-linear-gradient(-45deg, #ff9900, #ff9900 8px, #ffb000 8px, #ffb000 16px)'
         }} />
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', paddingLeft: '30px' }}>

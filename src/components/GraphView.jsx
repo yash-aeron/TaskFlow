@@ -23,7 +23,7 @@ export default function GraphView({ tasks = [], categories = [], themeMode = 'ne
       completed: t.status === 'completed',
       x: 100 + (idx * 140) % (width - 150),
       y: 80 + (Math.sin(idx) * 100 + 120),
-      color: t.status === 'completed' ? (isPersona ? '#00e5ff' : '#00ff66') : (isPersona ? '#e60012' : '#ff0000')
+      color: t.status === 'completed' ? (isPersona ? '#00e5ff' : '#00ff66') : (isPersona ? '#e60012' : '#ff9900')
     }));
 
     // Draw lines
@@ -53,7 +53,7 @@ export default function GraphView({ tasks = [], categories = [], themeMode = 'ne
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
       <div className={isPersona ? "persona-card" : "card nerv-frame"} style={{ padding: '16px' }}>
-        <h2 style={{ fontSize: '18px', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#00e5ff' : '#ff0000', margin: 0 }}>
+        <h2 style={{ fontSize: '18px', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#00e5ff' : '#ff9900', margin: 0 }}>
           {isPersona ? "PERSONA NETWORK CIRCUIT // SOCIAL & MISSION LINKS" : ">_ NEURAL CIRCUITRY NETWORK // MAGI SYSTEM 警報"}
         </h2>
       </div>

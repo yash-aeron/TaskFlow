@@ -57,7 +57,7 @@ export default function HabitTracker({ habits = [], onSaveHabit, onDeleteHabit, 
       {/* Header */}
       <div className={isPersona ? "persona-card" : "card nerv-frame"} style={{ padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '16px' }}>
         <div>
-          <h2 style={{ fontSize: '18px', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#00e5ff' : '#ff0000', letterSpacing: '0.12em', margin: 0 }}>
+          <h2 style={{ fontSize: '18px', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font-heading)', color: isPersona ? '#00e5ff' : '#ff9900', letterSpacing: '0.12em', margin: 0 }}>
             {isPersona ? "CONFIDANT SOCIAL LINKS // HABIT FREQUENCY MATRIX" : ">_ PATTERN RECOGNITION SYSTEM // 警報 使徒襲来"}
           </h2>
           <p style={{ fontSize: '11px', color: isPersona ? '#ffffff' : 'var(--nerv-amber)', marginTop: '4px', fontFamily: 'var(--font)', letterSpacing: '0.06em' }}>
@@ -98,7 +98,7 @@ export default function HabitTracker({ habits = [], onSaveHabit, onDeleteHabit, 
             <div className="empty-icon-wrapper">
               <Flame size={28} />
             </div>
-            <h3 style={{ color: isPersona ? '#00e5ff' : '#ff0000' }}>
+            <h3 style={{ color: isPersona ? '#00e5ff' : '#ff9900' }}>
               {isPersona ? "NO CONFIDANT SOCIAL LINKS" : "NO PATTERNS REGISTERED"}
             </h3>
             <p>
@@ -114,7 +114,7 @@ export default function HabitTracker({ habits = [], onSaveHabit, onDeleteHabit, 
               <div key={habit.id} className={isPersona ? "persona-card" : "card nerv-frame"} style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <Flame size={18} style={{ color: isPersona ? '#e60012' : '#ff0000' }} />
+                    <Flame size={18} style={{ color: isPersona ? '#e60012' : '#ff9900' }} />
                     <span style={{ fontSize: '14px', fontWeight: 900, color: '#ffffff', fontFamily: isPersona ? "'Impact', sans-serif" : 'var(--font)' }}>
                       {habit.title}
                     </span>
@@ -125,7 +125,7 @@ export default function HabitTracker({ habits = [], onSaveHabit, onDeleteHabit, 
                       fontSize: '11px', fontWeight: 900, padding: '2px 8px',
                       background: isPersona ? '#e60012' : '#000000',
                       color: '#ffffff',
-                      border: isPersona ? '1px solid #00e5ff' : '1px solid #ff6600',
+                      border: isPersona ? '1px solid #00e5ff' : '1px solid #ff3ea5',
                       fontFamily: 'var(--font)'
                     }}>
                       {isPersona ? `[ RANK ${streak} ] STREAK` : `[ SH06D NERV ] STREAK: ${streak}D // ACTIVE`}

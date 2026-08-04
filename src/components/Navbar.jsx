@@ -44,21 +44,12 @@ export default function Navbar({
             P5+P3
           </div>
         ) : (
-          <div 
-            className="brand-icon hex-magi" 
-            style={{ 
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', 
-              width: '38px', height: '24px', background: '#ff0000', color: '#000000', 
-              fontWeight: '900', fontSize: '11px', 
-              clipPath: 'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)', 
-              letterSpacing: '1px', fontFamily: 'var(--font-heading, sans-serif)'
-            }}
-          >
-            MAGI
+          <div className="nerv-emblem" title="NERV">
+            <span className="leaf" />
           </div>
         )}
-        
-        <span className="brand-title" style={isPersona ? { color: '#00e5ff', fontFamily: "'Impact', sans-serif", letterSpacing: '0.1em' } : {}}>
+
+        <span className={`brand-title ${isPersona ? 'persona-glitch' : ''}`} style={isPersona ? { color: '#00e5ff', fontFamily: "'Impact', sans-serif", letterSpacing: '0.1em' } : {}}>
           {isPersona ? "♠ PERSONA PHANTOM RELOAD" : "警報 NERV MAGI SYSTEM"}
         </span>
       </div>
@@ -86,7 +77,7 @@ export default function Navbar({
             padding: '4px 10px', fontSize: '11px', fontWeight: '900', fontFamily: "'Impact', sans-serif",
             transform: 'skewX(-8deg)'
           } : {
-            background: '#ff6600', color: '#000000', border: '1px solid #ffffff',
+            background: '#ff9900', color: '#ffffff', border: '1px solid #ffffff',
             padding: '4px 10px', fontSize: '11px', fontWeight: '900', fontFamily: 'var(--font)'
           }}
         >

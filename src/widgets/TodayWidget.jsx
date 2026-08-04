@@ -44,7 +44,7 @@ export default function TodayWidget() {
 
       <div className="widget-body">
         {todayTasks.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '30px 10px', color: isPersona ? '#00e5ff' : '#ff9966', fontFamily: 'var(--font)', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: 10 }}>
+          <div style={{ textAlign: 'center', padding: '30px 10px', color: isPersona ? '#00e5ff' : '#ff9ec0', fontFamily: 'var(--font)', textTransform: 'uppercase', letterSpacing: '0.08em', fontSize: 10 }}>
             {isPersona ? "♠ NO MISSIONS SCHEDULED TODAY" : "[ 警報 ] NO OPERATIONS SCHEDULED TODAY"}
           </div>
         ) : (
@@ -67,7 +67,7 @@ export default function TodayWidget() {
                   <span style={{ 
                     fontSize: 8, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.08em',
                     padding: '1px 5px', border: '1px solid',
-                    background: task.priority === 'urgent' ? (isPersona ? '#e60012' : '#ff0000') : '#ff6600',
+                    background: task.priority === 'urgent' ? (isPersona ? '#e60012' : '#ff9900') : '#ff3ea5',
                     color: '#ffffff', borderColor: '#ffffff'
                   }}>
                     {task.priority === 'urgent' ? 'URGENT' : task.priority.toUpperCase()}

@@ -43,14 +43,14 @@ export default function HabitsWidget() {
 
       <div className="widget-body">
         {habits.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '30px 10px', color: isPersona ? '#00e5ff' : '#ff9966', fontSize: 10 }}>
+          <div style={{ textAlign: 'center', padding: '30px 10px', color: isPersona ? '#00e5ff' : '#ff9ec0', fontSize: 10 }}>
             {isPersona ? "NO SOCIAL LINKS FOUND" : "NO PATTERNS REGISTERED"}
           </div>
         ) : (
           habits.map(habit => {
             const isChecked = !!habit.history?.[todayStr];
             return (
-              <div key={habit.id} className="widget-item-row" style={{ borderLeftColor: isChecked ? (isPersona ? '#00e5ff' : '#00ff66') : (isPersona ? '#e60012' : '#ff0000') }}>
+              <div key={habit.id} className="widget-item-row" style={{ borderLeftColor: isChecked ? (isPersona ? '#00e5ff' : '#00ff66') : (isPersona ? '#e60012' : '#ff9900') }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1 }}>
                   <div 
                     className={`widget-checkbox ${isChecked ? 'checked' : ''}`}
@@ -60,7 +60,7 @@ export default function HabitsWidget() {
                   </div>
                   <span style={{ fontSize: 11, color: '#ffffff' }}>{habit.title}</span>
                 </div>
-                <span style={{ fontSize: 9, color: isChecked ? (isPersona ? '#00e5ff' : '#00ff66') : (isPersona ? '#e60012' : '#ff6600'), fontWeight: 900 }}>
+                <span style={{ fontSize: 9, color: isChecked ? (isPersona ? '#00e5ff' : '#00ff66') : (isPersona ? '#e60012' : '#ff3ea5'), fontWeight: 900 }}>
                   {isChecked ? (isPersona ? 'RANK UP' : 'SYNCED') : (isPersona ? 'INACTIVE' : 'PENDING')}
                 </span>
               </div>

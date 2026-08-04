@@ -52,19 +52,19 @@ export default function TimerWidget() {
       <div className="widget-body" style={{ alignItems: 'center', justifyContent: 'center', gap: 10 }}>
         <div style={{ display: 'flex', gap: 2, fontSize: 8, fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.08em', width: '100%', justifyContent: 'center' }}>
           <span style={{ background: isPersona ? '#00e5ff' : '#00ff66', color: '#000', padding: '1px 4px' }}>STOP</span>
-          <span style={{ background: '#ffe600', color: '#000', padding: '1px 4px' }}>SLOW</span>
-          <span style={{ background: isActive ? (isPersona ? '#e60012' : '#ff0000') : '#333333', color: '#fff', padding: '1px 4px' }}>RACING</span>
-          <span style={{ background: isActive ? (isPersona ? '#e60012' : '#ff0000') : '#222', color: '#fff', padding: '1px 4px' }}>DANGER</span>
+          <span style={{ background: '#ffb000', color: '#000', padding: '1px 4px' }}>SLOW</span>
+          <span style={{ background: isActive ? (isPersona ? '#e60012' : '#ff9900') : '#333333', color: '#fff', padding: '1px 4px' }}>RACING</span>
+          <span style={{ background: isActive ? (isPersona ? '#e60012' : '#ff9900') : '#222', color: '#fff', padding: '1px 4px' }}>DANGER</span>
         </div>
 
         <div style={{ 
           fontSize: 34, fontWeight: 900, 
           fontFamily: isPersona ? 'Impact, sans-serif' : 'Orbitron, sans-serif', 
           letterSpacing: 2,
-          color: isActive ? (isPersona ? '#e60012' : '#ff0000') : (isPersona ? '#00e5ff' : '#00ff66'),
-          textShadow: isActive ? '0 0 15px rgba(255,0,0,0.8)' : '0 0 10px rgba(0,229,255,0.5)',
+          color: isActive ? (isPersona ? '#e60012' : '#ff9900') : (isPersona ? '#00e5ff' : '#00ff66'),
+          textShadow: isActive ? '0 0 15px rgba(255,153,0,0.8)' : '0 0 10px rgba(0,229,255,0.5)',
           background: isPersona ? '#090918' : '#000000',
-          border: isPersona ? '1px solid #00e5ff' : '1px solid #ff6600',
+          border: isPersona ? '1px solid #00e5ff' : '1px solid #ff3ea5',
           padding: '4px 12px',
           width: '100%',
           textAlign: 'center'
@@ -76,7 +76,7 @@ export default function TimerWidget() {
           <button className="widget-btn" onClick={() => setIsActive(!isActive)}>
             {isActive ? <Pause size={13} /> : <Play size={13} />}
           </button>
-          <button className="widget-btn" style={{ background: isPersona ? '#090918' : '#000000', borderColor: isPersona ? '#00e5ff' : '#ff6600', color: isPersona ? '#00e5ff' : '#ff6600' }} onClick={() => { setIsActive(false); setTimeLeft(25 * 60); }}>
+          <button className="widget-btn" style={{ background: isPersona ? '#090918' : '#000000', borderColor: isPersona ? '#00e5ff' : '#ff3ea5', color: isPersona ? '#00e5ff' : '#ff3ea5' }} onClick={() => { setIsActive(false); setTimeLeft(25 * 60); }}>
             <RotateCcw size={13} />
           </button>
         </div>
