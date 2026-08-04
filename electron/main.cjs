@@ -19,9 +19,33 @@ function saveConfig(data) {
   catch (e) { console.error('Config save failed', e); }
 }
 
-// ── In-memory data (synced from main window via IPC) ──────────────────────────
+// ── Persistent database (tasks, habits, theme) ────────────────────────────────
+function getDbPath() {
+  return path.join(app.getPath('userData'), 'taskflow-db.json');
+}
+function loadDb() {
+  try {
+    const data = JSON.parse(fs.readFileSync(getDbPath(), 'utf8'));
+    if (Array.isArray(data.tasks)) appTasks = data.tasks;
+    if (Array.isArray(data.habits)) appHabits = data.habits;
+    if (typeof data.themeMode === 'string') appThemeMode = data.themeMode;
+    return { tasks: appTasks, habits: appHabits, themeMode: appThemeMode };
+  } catch {
+    return { tasks: appTasks, habits: appHabits, themeMode: appThemeMode };
+  }
+}
+function saveDb() {
+  try {
+    fs.writeFileSync(getDbPath(), JSON.stringify({ tasks: appTasks, habits: appHabits, themeMode: appThemeMode }, null, 2));
+  } catch (e) {
+    console.error('DB save failed', e);
+  }
+}
+
+// ── In-memory data (synced from main window & disk DB) ─────────────────────────
 let appTasks = [];
 let appHabits = [];
+let appThemeMode = 'nerv';
 
 // ── Windows ───────────────────────────────────────────────────────────────────
 let mainWindow = null;
@@ -238,7 +262,9 @@ function updateTrayMenu() {
 
 // ── IPC Handlers ──────────────────────────────────────────────────────────────
 
-let appThemeMode = 'nerv';
+ipcMain.handle('load-db', () => loadDb());
+ipcMain.handle('get-tasks', () => appTasks);
+ipcMain.handle('get-habits', () => appHabits);
 
 ipcMain.on('sync-data', (_, payload) => {
   if (payload && Array.isArray(payload.tasks)) {
@@ -250,11 +276,9 @@ ipcMain.on('sync-data', (_, payload) => {
   if (payload && typeof payload.themeMode === 'string') {
     appThemeMode = payload.themeMode;
   }
+  saveDb();
   broadcastToWidgets('data-update', { tasks: appTasks, habits: appHabits, themeMode: appThemeMode });
 });
-
-ipcMain.handle('get-tasks',  () => appTasks);
-ipcMain.handle('get-habits', () => appHabits);
 
 // Fix 2B: Validate task payload before adding to prevent malformed IPC data
 ipcMain.on('add-task', (_, task) => {
@@ -267,6 +291,7 @@ ipcMain.on('add-task', (_, task) => {
     priority: typeof task.priority === 'string' ? task.priority : 'medium',
   };
   appTasks = [safeTask, ...appTasks.filter(t => t.id !== safeTask.id)];
+  saveDb();
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.webContents.send('data-updated', { tasks: appTasks });
   }
@@ -284,6 +309,7 @@ ipcMain.on('toggle-task', (_, taskId) => {
       completedAt: completed ? new Date().toISOString() : null,
     };
   });
+  saveDb();
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.webContents.send('data-updated', { tasks: appTasks });
   }
@@ -305,6 +331,7 @@ ipcMain.on('toggle-habit', (_, payload) => {
     history[dateStr] = !history[dateStr];
     return { ...h, history };
   });
+  saveDb();
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.webContents.send('data-updated', { habits: appHabits });
   }
@@ -323,6 +350,7 @@ ipcMain.on('log-focus', (_, payload) => {
     const currentMins = Number(t.actualMinutes) || 0;
     return { ...t, actualMinutes: currentMins + addedMins };
   });
+  saveDb();
   if (mainWindow && !mainWindow.isDestroyed()) {
     mainWindow.webContents.send('data-updated', { tasks: appTasks });
   }
@@ -336,6 +364,7 @@ ipcMain.on('close-widget', (event) => {
 
 // ── App Lifecycle ─────────────────────────────────────────────────────────────
 app.whenReady().then(() => {
+  loadDb();
   createMainWindow();
   createTray();
 

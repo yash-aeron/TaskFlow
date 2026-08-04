@@ -61,6 +61,38 @@ export default function App() {
     document.documentElement.setAttribute('data-theme-mode', themeMode);
   }, [settings, safeAccent, themeMode]);
 
+  // Hydrate from persistent disk DB on Electron startup
+  useEffect(() => {
+    if (window.electronAPI?.loadDb) {
+      window.electronAPI.loadDb().then(db => {
+        if (db && Array.isArray(db.tasks) && db.tasks.length > 0) {
+          setTasks(db.tasks);
+        }
+        if (db && Array.isArray(db.habits) && db.habits.length > 0) {
+          setHabits(db.habits);
+        }
+        if (db && db.themeMode) {
+          setThemeMode(db.themeMode);
+        }
+      }).catch(err => console.error("Failed to load persistent DB", err));
+    }
+  }, []);
+
+  // Listen for real-time updates from IPC / widgets
+  useEffect(() => {
+    if (window.electronAPI?.onDataUpdated) {
+      const cleanup = window.electronAPI.onDataUpdated((payload) => {
+        if (payload && Array.isArray(payload.tasks)) {
+          setTasks(payload.tasks);
+        }
+        if (payload && Array.isArray(payload.habits)) {
+          setHabits(payload.habits);
+        }
+      });
+      return cleanup;
+    }
+  }, []);
+
   // Sync changes back to storage
   useEffect(() => {
     storage.saveTasks(tasks);
