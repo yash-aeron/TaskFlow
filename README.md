@@ -44,13 +44,14 @@ TaskFlow includes four frameless, translucent, always-on-top floating desktop wi
 
 ## Tech Stack & Dependencies
 
-- **Framework**: React 18.2
-- **Desktop Runtime**: Electron 31.7
-- **Bundler & Dev Server**: Vite 5.4
+- **Framework**: React 18.3
+- **Desktop Runtime**: Electron 43.2 (current supported major, security-patched)
+- **Bundler & Dev Server**: Vite 8.2 (Rolldown-powered)
 - **Icons**: Lucide React 0.344
-- **Packaging & Distribution**: Electron Builder 24.13 (NSIS / Windows x64 Executable)
+- **Packaging & Distribution**: Electron Builder 26.15 (NSIS / Windows x64 Executable)
 - **Styling**: Pure Modular CSS with HSL design tokens and hardware-accelerated transitions
 - **Audio**: Web Audio API Synthesizer (custom click, completion, alert, and purge sound effects)
+- **Sanitization**: DOMPurify 3.4 (whitelist-based plain-text extraction for all imported data)
 
 ---
 
@@ -76,6 +77,7 @@ TaskFlow includes four frameless, translucent, always-on-top floating desktop wi
 ├── timer.html               # Vite entry point for Timer Widget
 ├── today.html               # Vite entry point for Today Tasks Widget
 ├── package.json             # Project manifest, script declarations, and build configuration
+├── SECURITY_AUDIT.md        # Security audit findings and remediation record
 └── vite.config.js           # Vite multi-page build configuration
 ```
 
@@ -141,6 +143,22 @@ Generated output artifacts in `release/`:
 - `/`: Focus search input bar
 - `?`: Toggle keyboard shortcuts manual
 - `Esc`: Close active modal or dialog window
+
+---
+
+## Security
+
+TaskFlow ships with defense-in-depth hardening applied across the Electron main process, renderer, and build pipeline:
+
+- **Hardened Electron runtime**: `contextIsolation: true`, `nodeIntegration: false`, and `sandboxed` defaults on all windows; `window.open` denied and all navigation intercepted to bundled `file://` assets.
+- **Content Security Policy**: A strict CSP (`default-src 'self'; script-src 'self'; object-src 'none'`) is injected into every built HTML entry, allowing only self-hosted scripts, inline styles, and the Google Fonts CDN.
+- **Validated IPC boundary**: Every IPC channel (`sync-data`, `add-task`, `toggle-task`, `toggle-habit`, `log-focus`) whitelists payload shapes, enums, and date formats in the main process — a compromised renderer cannot poison app state or the on-disk database.
+- **Prototype-pollution resistant storage**: All persisted history maps reject `__proto__` / `constructor` / `prototype` keys and accept only strict `YYYY-MM-DD` keys.
+- **Safe import pipeline**: Backup imports pass through DOMPurify whitelist sanitization (plain-text extraction — no markup survives), so malicious JSON cannot inject XSS.
+- **Patched dependency tree**: Electron 43.2, Vite 8.2, and Electron Builder 26.15 with `npm audit` reporting **0 vulnerabilities**.
+- **Dev-server hardening**: Vite dev server runs with `cors: false` and strict filesystem allow-listing to block cross-origin reads and path-traversal via the localhost port.
+
+A full audit trail is maintained in [`SECURITY_AUDIT.md`](SECURITY_AUDIT.md).
 
 ---
 
